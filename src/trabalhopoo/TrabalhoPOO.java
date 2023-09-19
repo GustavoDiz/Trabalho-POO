@@ -50,6 +50,7 @@ public class TrabalhoPOO {
         }
 
         menuLogin();
+        System.out.println("Olaa");
     }
   
   private static AlimentoReceita criarDieta() {
