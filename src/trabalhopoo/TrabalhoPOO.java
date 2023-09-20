@@ -2,6 +2,8 @@ package trabalhopoo;
 
 import Classes.AlimentoReceita;
 import classes.Pessoa;
+
+import javax.swing.*;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -49,7 +51,8 @@ public class TrabalhoPOO {
             System.out.println(receita.toString());
         }
 
-        menuLogin();
+//        menuLogin();
+        jMenuLogin();
         System.out.println("Olaa");
     }
   
@@ -257,6 +260,46 @@ public class TrabalhoPOO {
         String menu = "Bem Vindo a Nutrisoft! ";
     }
 
+    public static  Pessoa jLogin(){
+        String username = JOptionPane.showInputDialog("Login");
+        String password = JOptionPane.showInputDialog("Senha");
+        for (Pessoa user:
+                users) {
+            if (user.getLogin().equals(username) && user.getSenha().equals(password)){
+                System.out.println("Login feito com Sucesso!");
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public  static void jMenuLogin(){
+        int op;
+        String[] options = {"Login","Cadastro","Sair"};
+        do {
+            op = JOptionPane.showOptionDialog(null, "Bem Vindo a Nutrisoft!", "Boas Vindas!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+            System.out.println(op);
+            switch (op) {
+                case 0:
+                    Pessoa user = jLogin();
+                    if (user == null) {
+                        jError("Username ou Senha não encontrado!");
+                    } else {
+                        menuUpdate(user.getId());
+                    }
+                    break;
+                case 1:
+                    register();
+                    break;
+            }
+        }while (op != 2);
+    }
+
+    public static  void jError(String msg){
+        JOptionPane.showMessageDialog(null,msg,"alerta", JOptionPane.ERROR_MESSAGE);
+    }
+
+
     public static void menuLogin(){
         int op;
         do{
@@ -269,7 +312,7 @@ public class TrabalhoPOO {
             op = Integer.parseInt(scanner.nextLine());
             switch(op){
                 case 1:
-                    Pessoa user = login();
+                    Pessoa user = jLogin();
                     if(user == null){
                         System.out.println("Username ou Senha não encontrado!");
                     }else{
