@@ -1,13 +1,9 @@
 package trabalhopoo;
-
 import classes.*;
 import dao.PessoaDAO;
-
 import javax.swing.*;
 import java.util.Scanner;
 import java.time.LocalDate;
-import java.util.ArrayList;
-
 import static classes.JMenu.*;
 
 
@@ -18,7 +14,8 @@ import static classes.JMenu.*;
 public class TrabalhoPOO {
     static Scanner scanner = new Scanner(System.in);
     static Pessoa[] users = new Pessoa[10];
-    static AlimentoReceita[] receita = new AlimentoReceita[10];
+    static AlimentoReceita[] receita = new AlimentoReceita[2];
+    static TipoDieta[] tiposDeDieta = new TipoDieta[10];
 
     public static void main(String[] args) {
         PessoaDAO users = new PessoaDAO();
@@ -35,21 +32,31 @@ public class TrabalhoPOO {
         tiposDeDieta[4] = new TipoDieta("Dieta 5", 30.0, 40.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23));
 
       
-      for (int i = 0; i < 10; i++) {
-            receita[i] = criarDieta();
+      for (int i = 0; i < 2; i++) {
+            receita[i] = createRecipe();
         }
       
-      for (AlimentoReceita receita2 : receita) {
+      for (AlimentoReceita receita2 : receita){
             System.out.println(receita2.toString());
         }
+      jmenuUpdateFood();
 
-        //boolean b = deletarPorId(4);
-        atualizarPorIdReceita(4);
-
-        jMenuLogin();
+      jMenuLogin();
     }
-  
-  private static AlimentoReceita criarDieta() {
+
+    private static jmenusRecipe(){
+        int opcao = Integer.parseInt(JOptionPane.showInputDialog("Bem vindo ao menu de dietas, informe oque você deseja \n" +
+                "                1-  Nome \n" +
+                "                2 - Quantidade de carboidratos \n" +
+                "                3 - Quantidade de proteínas \n" +
+                "                4 - Quantidade de gorduras \n" +
+                "                5 - Quantidade de calorias \n" +
+                "                6 - Porção da dieta \n" +
+                "                6 - Tipo de usuário \n\n" +
+                ""));
+    }
+
+    private static AlimentoReceita createRecipe() {
 
         AlimentoReceita d1 = new AlimentoReceita();
 
@@ -69,11 +76,10 @@ public class TrabalhoPOO {
 
         d1.setDataCriacao(LocalDate.now());
         d1.setDataModificacao(LocalDate.now());
-
         return d1;
 }
 
-    public static boolean deletarPorIdReceitas(int id) {
+    public static boolean deleteByIdRecipes(int id) {
         for (int i = 0; i < receita.length; i++) {
             if (id == receita[i].getId()) {
                 receita[i] = null;
@@ -83,75 +89,55 @@ public class TrabalhoPOO {
         return false;
     }
 
-
-    public static boolean atualizarPorIdReceita(int id) {
-        for (int i = 0; i < receita.length; i++) {
-            if (id == receita[i].getId()) {
-                AlimentoReceita receita = null;
-                receita = receita[i];
-                receita.setDataModificacao(LocalDate.now());
-//                menuUpdateFood(i);
-                return true;
+    public static AlimentoReceita getRecipeById(int id){
+        for(int i = 0; i < receita.length; i++) {
+            if (receita[i].getId() == id){
+                return receita[i];
             }
         }
-        return false;
-    }      
-    
+        return null;
+    }
 
-    public static void menuUpdateFood(int index) {
+    public static void jmenuUpdateFood(){
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o seu ID de cadastro para ser atualizado"));
+        AlimentoReceita updatedat = TrabalhoPOO.getRecipeById(id);
 
         int opc = Integer.parseInt(JOptionPane.showInputDialog("Qual seria o campo a ser atualizado? Digite o número  \n" +
                 "                1-  Nome \n" +
                 "                2 - Quantidade de carboidratos \n" +
-                "                3 - Quantidade de proteinas \n" +
+                "                3 - Quantidade de proteínas \n" +
                 "                4 - Quantidade de gorduras \n" +
                 "                5 - Quantidade de calorias \n" +
                 "                6 - Porção da dieta \n" +
                 "                6 - Tipo de usuário \n\n" +
                 ""));
 
-        switch (opc) {
-            case 1:
-                receita[index].setNome(JOptionPane.showInputDialog("Digite o novo nome \n"));
-                break;
-            case 2:
-                receita[index].setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de carboidratos \n")));
-                break;
-            case 3:
-                receita[index].setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de proteinas \n")));
-                break;
-            case 4:
-                receita[index].setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de gorduras \n")));
-                break;
-            case 5:
-                receita[index].setCalorias(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de calorias \n")));
-                break;
-            case 6:
-                receita[index].setPorcao(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova porção \n")));
-                break;
-            case 7:
-                receita[index].setTipoUsuario((JOptionPane.showInputDialog("Digite o novo tipo de usuario \n")));
-                break;
+        if(updatedat != null){
+            switch (opc) {
+                case 1:
+                    updatedat.setNome(JOptionPane.showInputDialog("Digite o novo nome \n"));
+                    break;
+                case 2:
+                    updatedat.setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de carboidratos \n")));
+                    break;
+                case 3:
+                    updatedat.setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de proteinas \n")));
+                    break;
+                case 4:
+                    updatedat.setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de gorduras \n")));
+                    break;
+                case 5:
+                    updatedat.setCalorias(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de calorias \n")));
+                    break;
+                case 6:
+                    updatedat.setPorcao(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova porção \n")));
+                    break;
+                case 7:
+                    updatedat.setTipoUsuario((JOptionPane.showInputDialog("Digite o novo tipo de usuario \n")));
+                    break;
+            }
         }
+        else
+            System.out.println("Dieta não existente não existente.");
     }
-
-
-    /*public void menuEscolha{
-        int red = Integer.parseInt(JOptionPane.showInputDialog(" 1 - Cadastrar Dieta \n" +
-                                                "                2 - Atualizar dieta \n" +
-                                                "                3 - Verificar dieta atual \n\n" +
-                                                "                4 - Mudar usuario \n" +
-                                                "                5 - Sair \n" +
-                                                "                6 - Tipo de usuario \n\n" +
-                                                ""));
-    }*/
-
-
-
-
-
-
-    // -------- UTILS ------ //
-
-
 }
