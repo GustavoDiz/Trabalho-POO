@@ -5,6 +5,7 @@
 package classes;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.time.LocalDate;
 /**
@@ -16,7 +17,7 @@ public class Pessoa {
     private int id;
     private String nome;
     private char sexo;
-    private Date birthday;
+    private LocalDate birthday;
     private String login;
     private String senha;
     private int tipoUsuario;
@@ -34,7 +35,7 @@ public class Pessoa {
 
         // Convertendo as datas de String para Date
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        this.birthday = sdf.parse(dataNascimento);
+        this.birthday = LocalDate.parse(dataNascimento,DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         this.dataCriacao = LocalDate.now();
         this.dataModificacao = LocalDate.now();
         this.login = login;
@@ -62,11 +63,11 @@ public class Pessoa {
         this.sexo = sexo;
     }
     
-    public Date getNascimento(){
+    public LocalDate getNascimento(){
         return birthday;
     }
     
-    public void setNascimento(Date nascimento){
+    public void setNascimento(LocalDate nascimento){
         this.birthday = nascimento;
     }
     
