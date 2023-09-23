@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class TrabalhoPOO {
     static Scanner scanner = new Scanner(System.in);
     static Pessoa[] users = new Pessoa[10];
-    static ArrayList<AlimentoReceita> receitas = new ArrayList<>(4);
+    static AlimentoReceita[] receita = new AlimentoReceita[10];
 
     public static void main(String[] args) {
         try {
@@ -38,17 +38,16 @@ public class TrabalhoPOO {
             e.printStackTrace();
         }
       
-      for (int i = 0; i < receitas.size(); i++) {
-            AlimentoReceita novaReceita = criarDieta();
-            receitas.add(novaReceita);
+      for (int i = 0; i < 10; i++) {
+            receita[i] = criarDieta();
+        }
+      
+      for (AlimentoReceita receita2 : receita) {
+            System.out.println(receita2.toString());
         }
 
         //boolean b = deletarPorId(4);
         atualizarPorIdReceita(4);
-
-        for (AlimentoReceita receita : receitas) {
-            System.out.println(receita.toString());
-        }
 
         jMenuLogin();
     }
@@ -57,26 +56,19 @@ public class TrabalhoPOO {
 
         AlimentoReceita d1 = new AlimentoReceita();
 
-        System.out.println("Digite o nome da dieta");
-        d1.setNome(scanner.nextLine());
+        d1.setNome(JOptionPane.showInputDialog("Digite o nome da dieta"));
 
-        System.out.println("Digite a quantidade de carboidratos da dieta");
-        d1.setCarboidratos(Double.parseDouble(scanner.nextLine()));
+        d1.setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de carboidratos da dieta")));
 
-        System.out.println("Digite a quantidade de proteinas da dieta");
-        d1.setProteinas(Double.parseDouble(scanner.nextLine()));
+        d1.setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de proteinas da dieta")));
 
-        System.out.println("Digite a quantidade de gorduras da dieta");
-        d1.setGorduras(Double.parseDouble(scanner.nextLine()));
+        d1.setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de gorduras da dieta")));
 
-        System.out.println("Digite a quantidade de calorias da dieta");
-        d1.setCalorias(Double.parseDouble(scanner.nextLine()));
+        d1.setCalorias(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de calorias da dieta")));
 
-        System.out.println("Digite a Porcao da dieta>>");
-        d1.setPorcao(Double.parseDouble(scanner.nextLine()));
+        d1.setPorcao(Double.parseDouble(JOptionPane.showInputDialog("Digite a porção da dieta")));
 
-        System.out.println("Digite o tipo de usuario da dieta");
-        d1.setTipoUsuario(scanner.nextLine());
+        d1.setTipoUsuario(JOptionPane.showInputDialog("Digite a porção da dieta"));
 
         d1.setDataCriacao(LocalDate.now());
         d1.setDataModificacao(LocalDate.now());
@@ -85,9 +77,9 @@ public class TrabalhoPOO {
 }
 
     public static boolean deletarPorIdReceitas(int id) {
-        for (int i = 0; i < receitas.size(); i++) {
-            if (receitas.get(i).getId() == id) {
-                receitas.remove(i);
+        for (int i = 0; i < receita.length; i++) {
+            if (id == receita[i].getId()) {
+                receita[i] = null;
                 return  true;
             }
         }
@@ -96,11 +88,12 @@ public class TrabalhoPOO {
 
 
     public static boolean atualizarPorIdReceita(int id) {
-        for (int i = 0; i < receitas.size(); i++) {
-            if (receitas.get(i).getId() == id) {
-                AlimentoReceita receita = receitas.get(i);
+        for (int i = 0; i < receita.length; i++) {
+            if (id == receita[i].getId()) {
+                AlimentoReceita receita = null;
+                receita = receita[i];
                 receita.setDataModificacao(LocalDate.now());
-//                menuUpdate(i);
+//                menuUpdateFood(i);
                 return true;
             }
         }
@@ -122,26 +115,25 @@ public class TrabalhoPOO {
 
         switch (opc) {
             case 1:
-                receitas.get(index).setNome(JOptionPane.showInputDialog("Digite o novo nome \n"));
-
+                receita[index].setNome(JOptionPane.showInputDialog("Digite o novo nome \n"));
                 break;
             case 2:
-                receitas.get(index).setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de carboidratos \n")));
+                receita[index].setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de carboidratos \n")));
                 break;
             case 3:
-                receitas.get(index).setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de proteinas \n")));
+                receita[index].setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de proteinas \n")));
                 break;
             case 4:
-                receitas.get(index).setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de gorduras \n")));
+                receita[index].setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de gorduras \n")));
                 break;
             case 5:
-                receitas.get(index).setCalorias(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de calorias \n")));
+                receita[index].setCalorias(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de calorias \n")));
                 break;
             case 6:
-                receitas.get(index).setPorcao(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova porção \n")));
+                receita[index].setPorcao(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova porção \n")));
                 break;
             case 7:
-                receitas.get(index).setTipoUsuario((JOptionPane.showInputDialog("Digite o novo tipo de usuario \n")));
+                receita[index].setTipoUsuario((JOptionPane.showInputDialog("Digite o novo tipo de usuario \n")));
                 break;
         }
     }
