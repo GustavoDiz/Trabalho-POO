@@ -52,6 +52,7 @@ public class TrabalhoPOO {
         }
 
 //        menuLogin();
+
         jMenuLogin();
         System.out.println("Olaa");
     }
@@ -170,61 +171,56 @@ public class TrabalhoPOO {
 
     public static void menuUpdateFood(int index) {
 
-        AlimentoReceita d1 = new AlimentoReceita();
+        int opc = Integer.parseInt(JOptionPane.showInputDialog("Qual seria o campo a ser atualizado? Digite o número  \n" +
+                "                1-  Nome \n" +
+                "                2 - Quantidade de carboidratos \n" +
+                "                3 - Quantidade de proteinas \n" +
+                "                4 - Quantidade de gorduras \n" +
+                "                5 - Quantidade de calorias \n" +
+                "                6 - Porção da dieta \n" +
+                "                6 - Tipo de usuário \n\n" +
+                ""));
 
-        System.out.println("Digite ");
-        System.out.println("1 - Nome ");
-        System.out.println("2 - Carboídratos ");
-        System.out.println("3 - Proteínas ");
-        System.out.println("4 - Gorduras ");
-        System.out.println("5 - Calorias ");
-        System.out.println("6 - Porção ");
-        System.out.println("7 - Tipo do usuario ");
-        int flag = Integer.parseInt(scanner.nextLine());
-
-        switch (flag) {
+        switch (opc) {
             case 1:
-                System.out.println("Digite o novo nome >>");
-                receitas.get(index).setNome(scanner.nextLine());
+                receitas.get(index).setNome(JOptionPane.showInputDialog("Digite o novo nome \n"));
 
                 break;
             case 2:
-                System.out.println("Digite a quantidade de carboidratos da dieta");
-                receitas.get(index).setCarboidratos(Double.parseDouble(scanner.nextLine()));
+                receitas.get(index).setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de carboidratos \n")));
                 break;
 
             case 3:
-                System.out.println("Digite a quantidade de proteinas da dieta");
-                receitas.get(index).setProteinas(Double.parseDouble(scanner.nextLine()));
+                receitas.get(index).setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de proteinas \n")));
                 break;
-
             case 4:
-                System.out.println("Digite a quantidade de gorduras da dieta");
-                receitas.get(index).setGorduras(Double.parseDouble(scanner.nextLine()));
+                receitas.get(index).setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de gorduras \n")));
                 break;
             case 5:
-                System.out.println("Digite a quantidade de calorias da dieta");
-                receitas.get(index).setCalorias(Double.parseDouble(scanner.nextLine()));
+                receitas.get(index).setCalorias(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de calorias \n")));
                 break;
             case 6:
-                System.out.println("Digite a Porção da dieta>>");
-                receitas.get(index).setPorcao(Double.parseDouble(scanner.nextLine()));
+                receitas.get(index).setPorcao(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova porção \n")));
                 break;
             case 7:
-                System.out.println("Digite o tipo de usuario da dieta");
-                receitas.get(index).setTipoUsuario(scanner.nextLine());
+                receitas.get(index).setTipoUsuario((JOptionPane.showInputDialog("Digite o novo tipo de usuario \n")));
                 break;
         }
     }
     public static void menuUpdate(int index) {
-        String menu = "Qual seria o campo a ser atualizado? "
-                + "\n 1- Nome "
-                + "\n 2 - Sexo "
-                + "\n 3 - Nascimento "
-                + "\n 4 - login "
-                + "\n 5 - senha "
-                + "\n 6 - tipo de usuario \n";
-        System.out.println(menu);
+
+        String username = JOptionPane.showInputDialog("Qual seria o campo a ser atualizado? Digite o número  \n" +
+                "                1- Nome \n" +
+                "                2 - Sexo \n" +
+                "                3 - Nascimento \n" +
+                "                4 - Login \n" +
+                "                5 - Senha \n" +
+                "                6 - Tipo de usuario \n\n" +
+                        "");
+
+
+        String password = JOptionPane.showInputDialog("Senha");
+
         int op = Integer.parseInt(scanner.nextLine());
         switch (op) {
             case 1:
@@ -272,7 +268,15 @@ public class TrabalhoPOO {
         }
         return null;
     }
-
+    /*public void menuEscolha{
+        int red = Integer.parseInt(JOptionPane.showInputDialog(" 1 - Cadastrar Dieta \n" +
+                                                "                2 - Atualizar dieta \n" +
+                                                "                3 - Verificar dieta atual \n\n" +
+                                                "                4 - Mudar usuario \n" +
+                                                "                5 - Sair \n" +
+                                                "                6 - Tipo de usuario \n\n" +
+                                                ""));
+    }*/
     public  static void jMenuLogin(){
         int op;
         String[] options = {"Login","Cadastro","Sair"};
@@ -285,7 +289,7 @@ public class TrabalhoPOO {
                     if (user == null) {
                         jError("Username ou Senha não encontrado!");
                     } else {
-                        menuUpdate(user.getId());
+                        menuUpdate();
                     }
                     break;
                 case 1:
