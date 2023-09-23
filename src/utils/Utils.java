@@ -13,4 +13,26 @@ public class Utils {
         }
         return -1;
     }
+
+    public static  <T> T[] rearrangeArray(T[] array){
+        int qtNotNull = 0;
+
+        for(T element : array){
+            if (element != null){
+                qtNotNull ++;
+            }
+        }
+
+        T[] newArray = (T[]) new Object[qtNotNull];
+        int indexNewArray = 0;
+
+        for (T element : array){
+            if (element != null){
+                newArray[indexNewArray++] = element;
+            }
+        }
+
+       return  newArray;
+    }
+
 }

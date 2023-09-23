@@ -1,14 +1,12 @@
 package classes;
 
 import dao.PessoaDAO;
-
 import javax.swing.*;
 import java.time.LocalDate;
 
-import static utils.Utils.*;
-
 public class JMenu {
     static PessoaDAO users = new PessoaDAO();
+
     public  static void jMenuLogin(){
         int op;
         String[] options = {"Login","Cadastro","Sair"};
@@ -21,7 +19,7 @@ public class JMenu {
                     if (user == null) {
                         jError("Username ou Senha não encontrado!");
                     } else {
-                        jUpdate(user.getId());
+                        jMenu(user);
                     }
                     break;
                 case 1:
@@ -42,7 +40,11 @@ public class JMenu {
         do {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
             switch (op){
-
+                case 1:
+                    jConfirmation(pessoa.toString());
+                    break;
+                default:
+                    op = 7;
             }
         }while (op!=7);
     }
@@ -115,7 +117,7 @@ public class JMenu {
         JOptionPane.showMessageDialog(null,msg,"Sucesso",JOptionPane.INFORMATION_MESSAGE);
     }
 
-        public  static  void jRegister(){
+    public  static  void jRegister(){
         PessoaDAO users = new PessoaDAO();
         Pessoa newUser = new Pessoa();
         newUser.setNome(JOptionPane.showInputDialog("Insira o nome"));
@@ -125,5 +127,9 @@ public class JMenu {
         newUser.setSenha(JOptionPane.showInputDialog("Insira o Novo Senha"));
         newUser.setTipoUsuario(Integer.parseInt(JOptionPane.showInputDialog("Insira o novo tipo de usuário")));
         users.addUsers(newUser);
+    }
+
+    public static  void jUser(){
+
     }
 }

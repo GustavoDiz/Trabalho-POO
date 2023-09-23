@@ -72,4 +72,17 @@ public class TipoDieta {
     public void setDataModificacao(LocalDate dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
+
+    @Override
+    public String toString() {
+        return "TipoDieta{" +
+                "id='" + id + '\'' +
+                ", nome='" + nome + '\'' +
+                ", carboidrato=" + carboidrato +
+                ", proteina=" + proteina +
+                ", gordura=" + gordura +
+                ", dataCriacao=" + dataCriacao +
+                ", dataModificacao=" + dataModificacao +
+                '}';
+    }
 }

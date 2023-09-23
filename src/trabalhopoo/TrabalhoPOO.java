@@ -1,8 +1,9 @@
 package trabalhopoo;
 import classes.*;
 import dao.PessoaDAO;
+import dao.TipoDietaDAO;
+
 import javax.swing.*;
-import java.util.Scanner;
 import java.time.LocalDate;
 import static classes.JMenu.*;
 
@@ -12,36 +13,35 @@ import static classes.JMenu.*;
  *
  */
 public class TrabalhoPOO {
-    static Scanner scanner = new Scanner(System.in);
     static Pessoa[] users = new Pessoa[10];
     static AlimentoReceita[] receita = new AlimentoReceita[2];
     static TipoDieta[] tiposDeDieta = new TipoDieta[10];
 
     public static void main(String[] args) {
         PessoaDAO users = new PessoaDAO();
+        TipoDietaDAO dietsDB = new TipoDietaDAO();
+        TipoDieta[] array = dietsDB.getDietsDB();
         users.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
         users.addUsers(new Pessoa("Maria", 'F', "15-07-1985", "maria456", "senha456", 2));
         users.addUsers(new Pessoa("Carlos", 'M', "20-03-1978", "carlos789", "senha789", 1));
         users.addUsers(new Pessoa("Ana", 'F', "25-11-1995", "ana1011", "senha1011", 2));
         users.addUsers(new Pessoa("Paulo", 'M', "30-09-1980", "paulo1213", "senha1213", 1));
 
-        tiposDeDieta[0] = new TipoDieta("Dieta 1", 50.0, 20.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23));
-        tiposDeDieta[1] = new TipoDieta("Dieta 2", 40.0, 30.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23));
-        tiposDeDieta[2] = new TipoDieta("Dieta 3", 60.0, 10.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23));
-        tiposDeDieta[3] = new TipoDieta("Dieta 4", 70.0, 10.0, 20.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23));
-        tiposDeDieta[4] = new TipoDieta("Dieta 5", 30.0, 40.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23));
+        dietsDB.addDiet(new TipoDieta("Dieta 1", 50.0, 20.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+        dietsDB.addDiet(new TipoDieta("Dieta 2", 40.0, 30.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+        dietsDB.addDiet(new TipoDieta("Dieta 3", 60.0, 10.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+        dietsDB.addDiet(new TipoDieta("Dieta 4", 70.0, 10.0, 20.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+        dietsDB.addDiet(new TipoDieta("Dieta 5", 30.0, 40.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
 
-      
-      for (int i = 0; i < 2; i++) {
-            receita[i] = createRecipe();
-        }
-      
-      for (AlimentoReceita receita2 : receita){
-            System.out.println(receita2.toString());
-        }
-      jmenuUpdateFood();
 
-      jMenuLogin();
+//      for (int i = 0; i < 10; i++) {
+//            receita[i] = criarDieta();
+//        }
+      
+//      for (AlimentoReceita receita2 : receita) {
+//            System.out.println(receita2.toString());
+//        }
+        jMenuLogin();
     }
 
     private static jmenusRecipe(){
