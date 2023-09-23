@@ -28,7 +28,7 @@ public class Pessoa {
         this.id = baseId++;
     }
     
-    public Pessoa(String nome,char sexo,String dataNascimento, String login, String senha, int tipoUsuario) throws ParseException {
+    public Pessoa(String nome,char sexo,String dataNascimento, String login, String senha, int tipoUsuario){
         this.id = baseId++;
         this.nome = nome;
         this.sexo = sexo;

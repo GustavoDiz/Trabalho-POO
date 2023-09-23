@@ -1,13 +1,14 @@
 package trabalhopoo;
 
-import classes.AlimentoReceita;
-import classes.Pessoa;
+import classes.*;
+import dao.PessoaDAO;
 
 import javax.swing.*;
-import java.text.ParseException;
 import java.util.Scanner;
 import java.time.LocalDate;
 import java.util.ArrayList;
+
+import static classes.JMenu.*;
 
 
 /**
@@ -20,23 +21,19 @@ public class TrabalhoPOO {
     static AlimentoReceita[] receita = new AlimentoReceita[10];
 
     public static void main(String[] args) {
-        try {
-            Pessoa pessoa1 = new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1);
-            Pessoa pessoa2 = new Pessoa("Maria", 'F', "15-07-1985", "maria456", "senha456", 2);
-            Pessoa pessoa3 = new Pessoa("Carlos", 'M', "20-03-1978", "carlos789", "senha789", 1);
-            Pessoa pessoa4 = new Pessoa("Ana", 'F', "25-11-1995", "ana1011", "senha1011", 2);
-            Pessoa pessoa5 = new Pessoa("Paulo", 'M', "30-09-1980", "paulo1213", "senha1213", 1);
+        PessoaDAO users = new PessoaDAO();
+        users.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
+        users.addUsers(new Pessoa("Maria", 'F', "15-07-1985", "maria456", "senha456", 2));
+        users.addUsers(new Pessoa("Carlos", 'M', "20-03-1978", "carlos789", "senha789", 1));
+        users.addUsers(new Pessoa("Ana", 'F', "25-11-1995", "ana1011", "senha1011", 2));
+        users.addUsers(new Pessoa("Paulo", 'M', "30-09-1980", "paulo1213", "senha1213", 1));
 
-            Pessoa[] addPessoas = {pessoa1,pessoa2,pessoa3,pessoa4,pessoa5};
+        tiposDeDieta[0] = new TipoDieta("Dieta 1", 50.0, 20.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23));
+        tiposDeDieta[1] = new TipoDieta("Dieta 2", 40.0, 30.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23));
+        tiposDeDieta[2] = new TipoDieta("Dieta 3", 60.0, 10.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23));
+        tiposDeDieta[3] = new TipoDieta("Dieta 4", 70.0, 10.0, 20.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23));
+        tiposDeDieta[4] = new TipoDieta("Dieta 5", 30.0, 40.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23));
 
-            for (int i = 0; i < addPessoas.length; i++) {
-                users[i] = addPessoas[i];
-            }
-
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
       
       for (int i = 0; i < 10; i++) {
             receita[i] = criarDieta();
@@ -138,22 +135,7 @@ public class TrabalhoPOO {
         }
     }
 
-    public static  Pessoa jLogin(){
-        String username = JOptionPane.showInputDialog("Login");
-        String password = JOptionPane.showInputDialog("Senha");
-        for (Pessoa user:
-                users) {
-            if (user == null){
-                return  null;
-            }
-                if (user.getLogin().equals(username) && user.getSenha().equals(password)) {
-                    jConfirmation("Login feito com Sucesso!");
-                    return user;
-                }
 
-        }
-        return null;
-    }
     /*public void menuEscolha{
         int red = Integer.parseInt(JOptionPane.showInputDialog(" 1 - Cadastrar Dieta \n" +
                                                 "                2 - Atualizar dieta \n" +
@@ -163,124 +145,13 @@ public class TrabalhoPOO {
                                                 "                6 - Tipo de usuario \n\n" +
                                                 ""));
     }*/
-    public  static void jMenuLogin(){
-        int op;
-        String[] options = {"Login","Cadastro","Sair"};
-        do {
-            op = JOptionPane.showOptionDialog(null, "Bem Vindo a Nutrisoft!", "Boas Vindas!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-            System.out.println(op);
-            switch (op) {
-                case 0:
-                    Pessoa user = jLogin();
-                    if (user == null) {
-                        jError("Username ou Senha não encontrado!");
-                    } else {
-                        jUpdate(user.getId());
-                    }
-                    break;
-                case 1:
-                    jRegister();
-                    break;
-                default:
-                    op = 2;
-                    break;
-            }
-        }while (op != 2);
-    }
 
-    public static  void jError(String msg){
-        JOptionPane.showMessageDialog(null,msg,"Alerta", JOptionPane.ERROR_MESSAGE);
-    }
 
-    public static  void jConfirmation(String msg){
-        JOptionPane.showMessageDialog(null,msg,"Sucesso",JOptionPane.INFORMATION_MESSAGE);
-    }
 
-    public  static  void jRegister(){
-        int emptyIndex = findEmptyPosition();
-        Pessoa newUser = new Pessoa();
-        newUser.setNome(JOptionPane.showInputDialog("Insira o nome"));
-        newUser.setSexo(JOptionPane.showInputDialog("Insira o novo sexo \n M - Masculino \n F - Feminino").charAt(0));
-        newUser.setNascimento(LocalDate.parse(JOptionPane.showInputDialog("Insira a nova data de nascimento Exemplo 01/01/2001")));
-        newUser.setLogin(JOptionPane.showInputDialog("Insira o novo login"));
-        newUser.setSenha(JOptionPane.showInputDialog("Insira o Novo Senha"));
-        newUser.setTipoUsuario(Integer.parseInt(JOptionPane.showInputDialog("Insira o novo tipo de usuário")));
-        users[emptyIndex] = newUser;
-    }
 
-    public  static  void jUpdate(int id){
-        int op;
-        Pessoa updatedUser = findUser(id);
-        String menuUpdate = "Bem-Vindo " + updatedUser.getNome()
-                + "\n Qual seria o campo a ser atualizado? "
-                + "\n 1 - Nome "
-                + "\n 2 - Sexo "
-                + "\n 3 - Nascimento "
-                + "\n 4 - login "
-                + "\n 5 - senha "
-                + "\n 6 - tipo de usuario"
-                + "\n 7 - Sair ";
-        do {
-            op = Integer.parseInt(JOptionPane.showInputDialog(menuUpdate));
-            switch (op) {
-                case 1:
-                    updatedUser.setNome(JOptionPane.showInputDialog("Insira o Novo nome"));
-                    break;
-                case 2:
-                    updatedUser.setSexo(JOptionPane.showInputDialog("Insira o novo sexo \n M - Masculino \n F - Feminino").charAt(0));
-                    break;
-                case 3:
-                    updatedUser.setNascimento(LocalDate.parse(JOptionPane.showInputDialog("Insira a nova data de nascimento Exemplo 01-01-2001")));
-                    break;
-                case 4:
-                    updatedUser.setLogin(JOptionPane.showInputDialog("Insira o novo login"));
-                    break;
-                case 5:
-                    updatedUser.setSenha(JOptionPane.showInputDialog("Insira o Novo Senha"));
-                    break;
-                case 6:
-                    updatedUser.setTipoUsuario(Integer.parseInt(JOptionPane.showInputDialog("Insira o novo tipo de usuário")));
-                    break;
-                case 7:
-                    op = 7;
-                    break;
-                default:
-                    jError("Opção Invalida, Por favor insira novamente.");
-                    break;
-            }
-        }while (op != 7);
-    }
 
-    public static void jMenu(Pessoa pessoa){
-        String txt = "Bem-Vindo " + pessoa.getNome() + ", " +
-                "\n O que deseja? " +
-                "\n 1 - Ver Perfil";
-        int op;
-        do {
-            op = Integer.parseInt(JOptionPane.showInputDialog(txt));
-            switch (op){
-
-            }
-        }while (op!=7);
-    }
 
     // -------- UTILS ------ //
-    public static Pessoa findUser(int id){
-        for (int i = 0; i < users.length; i++) {
-            if(users[i].getId() == id){
-                return users[i];
-            }
-        }
-        return null;
-    }
 
-    public static int  findEmptyPosition(){
-        for (int i = 0; i < users.length; i++) {
-            if (users[i] == null){
-                return i;
-            }
-        }
-        return -1;
-    }
 
 }
