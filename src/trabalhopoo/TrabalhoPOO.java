@@ -44,17 +44,17 @@ public class TrabalhoPOO {
         jMenuLogin();
     }
 
-    private static jmenusRecipe(){
-        int opcao = Integer.parseInt(JOptionPane.showInputDialog("Bem vindo ao menu de dietas, informe oque você deseja \n" +
-                "                1-  Nome \n" +
-                "                2 - Quantidade de carboidratos \n" +
-                "                3 - Quantidade de proteínas \n" +
-                "                4 - Quantidade de gorduras \n" +
-                "                5 - Quantidade de calorias \n" +
-                "                6 - Porção da dieta \n" +
-                "                6 - Tipo de usuário \n\n" +
-                ""));
-    }
+//    private static jmenusRecipe(){
+//        int opcao = Integer.parseInt(JOptionPane.showInputDialog("Bem vindo ao menu de dietas, informe oque você deseja \n" +
+//                "                1-  Nome \n" +
+//                "                2 - Quantidade de carboidratos \n" +
+//                "                3 - Quantidade de proteínas \n" +
+//                "                4 - Quantidade de gorduras \n" +
+//                "                5 - Quantidade de calorias \n" +
+//                "                6 - Porção da dieta \n" +
+//                "                6 - Tipo de usuário \n\n" +
+//                ""));
+//    }
 
     private static AlimentoReceita createRecipe() {
 
