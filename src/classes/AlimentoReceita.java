@@ -17,8 +17,7 @@ public class AlimentoReceita {
     private LocalDate dataModificacao;
 
     public AlimentoReceita(){
-        this.id = fixid;
-        fixid = fixid + 1;
+        this.id = fixid++;
     }
     public int getId(){
         return id;
@@ -74,7 +73,7 @@ public class AlimentoReceita {
         this.calorias = calorias;
     }
 
-    public void setPorcao(double porcao) {
+    public void setPorcao(double porcao){
         this.porcao = porcao;
     }
 
