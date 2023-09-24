@@ -16,7 +16,6 @@ public class AvaliacaoFisica {
 
     private  double imc;
     private double tbm;
-    private  double bf;
     private double massaGorda;
     private double massaMagra;
     private LocalDate dataCriacao;
@@ -107,14 +106,6 @@ public class AvaliacaoFisica {
         this.tbm = tbm;
     }
 
-    public double getBf() {
-        return bf;
-    }
-
-    public void setBf(double bf) {
-        this.bf = bf;
-    }
-
     public double getMassaGorda() {
         return massaGorda;
     }
@@ -160,7 +151,6 @@ public class AvaliacaoFisica {
                 ", quadril=" + quadril +
                 ", imc=" + imc +
                 ", tbm=" + tbm +
-                ", bf=" + bf +
                 ", massaGorda=" + massaGorda +
                 ", massaMagra=" + massaMagra +
                 ", dataCriacao=" + dataCriacao +
@@ -168,29 +158,30 @@ public class AvaliacaoFisica {
                 '}';
     }
 
-    public double calculateIMC(){
+    public void calculateIMC(){
         double imc = this.peso / Math.pow(this.altura,2);
-        return imc;
+        this.setImc(imc);
     }
 
-    public double calculateTMB(double taxa){
-        double tmb;
+    public void calculateTMB(double taxa){
+        double result;
         if (user.getSexo() == 'M'){
-            tmb = taxa * (66 + ((13.27 * this.peso) + (5 * this.altura) - (6.8 * this.idade)));
+            result = taxa * (66 + ((13.27 * this.peso) + (5 * this.altura) - (6.8 * this.idade)));
         }else{
-            tmb = taxa * (655 + ((9.6 * this.peso) + (1.8 * this.altura) - (4.7 * this.idade)));
+            result = taxa * (655 + ((9.6 * this.peso) + (1.8 * this.altura) - (4.7 * this.idade)));
         }
-        return tbm;
+        this.setTbm(result);
     }
 
-    public double calculateBF(){
-        double bf;
+    public void calculateBF(){
+        double result;
         if(user.getSexo() == 'M'){
-            bf = 86.010 * Math.log(this.abdomen - this.pescoco) - 70.041 * Math.log(this.altura) + 36.76;
+            result = 86.010 * Math.log(this.abdomen - this.pescoco) - 70.041 * Math.log(this.altura) + 36.76;
         }else{
-            bf = 163.205 * Math.log(this.cintura + this.quadril) - 97.684 * Math.log(this.altura) - 78.387;
+            result = 163.205 * Math.log(this.cintura + this.quadril) - 97.684 * Math.log(this.altura) - 78.387;
         }
-        return bf;
+        this.setMassaGorda(result);
+        this.setMassaMagra(this.peso - result);
     }
 
 

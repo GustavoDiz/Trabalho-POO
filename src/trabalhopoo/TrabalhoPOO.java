@@ -4,6 +4,7 @@ import dao.PessoaDAO;
 import dao.TipoDietaDAO;
 import java.time.LocalDate;
 
+import static classes.JMenu.*;
 import static classes.JmenuAlimentoReceita.jmenusRecipe;
 
 
@@ -24,6 +25,6 @@ public class TrabalhoPOO {
         dietsDB.addDiet(new TipoDieta("Dieta 4", 70.0, 10.0, 20.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
         dietsDB.addDiet(new TipoDieta("Dieta 5", 30.0, 40.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
 
-        jmenusRecipe();
+        jMenuLogin();
     }
 }

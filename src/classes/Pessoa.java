@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.time.LocalDate;
+import java.util.Objects;
+
 /**
  *
  * @author gusta
@@ -115,5 +117,17 @@ public class Pessoa {
     public String toString() {
         return "Pessoa{" + "id=" + id + ", nome=" + nome + ", sexo=" + sexo + ", nascimento=" + birthday + ", login=" + login + ", senha=" + senha + ", tipoUsuario=" + tipoUsuario + ", dataCriacao=" + dataCriacao + ", dataModificacao=" + dataModificacao + '}';
     }
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pessoa pessoa = (Pessoa) o;
+        return id == pessoa.id && sexo == pessoa.sexo && tipoUsuario == pessoa.tipoUsuario && Objects.equals(nome, pessoa.nome) && Objects.equals(birthday, pessoa.birthday) && Objects.equals(login, pessoa.login) && Objects.equals(senha, pessoa.senha) && Objects.equals(dataCriacao, pessoa.dataCriacao) && Objects.equals(dataModificacao, pessoa.dataModificacao);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nome, sexo, birthday, login, senha, tipoUsuario, dataCriacao, dataModificacao);
+    }
 }

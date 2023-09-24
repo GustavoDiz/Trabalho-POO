@@ -1,6 +1,8 @@
 package dao;
 
 import classes.AvaliacaoFisica;
+import classes.Pessoa;
+
 import static utils.Utils.*;
 
 public class AvaliacaoFisicaDAO {
@@ -33,5 +35,18 @@ public class AvaliacaoFisicaDAO {
             }
         }
         return false;
+    }
+
+    public AvaliacaoFisica[] getPhysicalsByUser(Pessoa user){
+        AvaliacaoFisica[] userPhysicals = new AvaliacaoFisica[10];
+        for (int i = 0; i < physicalDB.length; i++) {
+            if (physicalDB[i] == null){
+                break;
+            }
+            if (physicalDB[i].getUser().equals(user)){
+                userPhysicals[i] = physicalDB[i];
+            }
+        }
+        return userPhysicals;
     }
 }
