@@ -17,7 +17,8 @@ public class AlimentoReceita {
     private LocalDate dataModificacao;
 
     public AlimentoReceita(){
-        this.id = fixid++;
+        this.id = fixid;
+        fixid = fixid + 1;
     }
     public int getId(){
         return id;
@@ -90,17 +91,16 @@ public class AlimentoReceita {
     }
     @Override
     public String toString() {
-        return "AlimentoReceita{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", carboidratos=" + carboidratos +
-                ", proteinas=" + proteinas +
-                ", gorduras=" + gorduras +
-                ", calorias=" + calorias +
-                ", porcao=" + porcao +
-                ", tipoUsuario='" + tipoUsuario + '\'' +
-                ", dataCriacao=" + dataCriacao +
-                ", dataModificacao=" + dataModificacao +
-                '}';
+        return  "\nid= \t" + id +
+                "\n nome= \t" + nome +
+                "\n carboidratos = \t" + carboidratos +
+                "\n proteinas = \t" + proteinas +
+                "\n gorduras = \t" + gorduras +
+                "\n calorias = \t" + calorias +
+                "\n porcao = \t" + porcao +
+                "\n tipoUsuario = \t" + tipoUsuario  +
+                "\n dataCriacao = \t" + dataCriacao +
+                "\n dataModificacao = \t" + dataModificacao +
+                '\n';
     }
 }

@@ -2,30 +2,21 @@ package trabalhopoo;
 import classes.*;
 import dao.PessoaDAO;
 import dao.TipoDietaDAO;
-
-import javax.swing.*;
 import java.time.LocalDate;
-import static classes.JMenu.*;
+
+import static classes.JmenuAlimentoReceita.jmenusRecipe;
 
 
-/**
- * @author gusta
- *
- */
 public class TrabalhoPOO {
-    static Pessoa[] users = new Pessoa[10];
-    static AlimentoReceita[] receita = new AlimentoReceita[2];
-    static TipoDieta[] tiposDeDieta = new TipoDieta[10];
-
     public static void main(String[] args) {
-        PessoaDAO users = new PessoaDAO();
-        TipoDietaDAO dietsDB = new TipoDietaDAO();
+        PessoaDAO usersDAO = new PessoaDAO(); // Renomeie a variável para evitar conflito com a classe
+        TipoDietaDAO dietsDB = new TipoDietaDAO(); // Renomeie a variável para evitar conflito com a classe
         TipoDieta[] array = dietsDB.getDietsDB();
-        users.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
-        users.addUsers(new Pessoa("Maria", 'F', "15-07-1985", "maria456", "senha456", 2));
-        users.addUsers(new Pessoa("Carlos", 'M', "20-03-1978", "carlos789", "senha789", 1));
-        users.addUsers(new Pessoa("Ana", 'F', "25-11-1995", "ana1011", "senha1011", 2));
-        users.addUsers(new Pessoa("Paulo", 'M', "30-09-1980", "paulo1213", "senha1213", 1));
+        usersDAO.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
+        usersDAO.addUsers(new Pessoa("Maria", 'F', "15-07-1985", "maria456", "senha456", 2));
+        usersDAO.addUsers(new Pessoa("Carlos", 'M', "20-03-1978", "carlos789", "senha789", 1));
+        usersDAO.addUsers(new Pessoa("Ana", 'F', "25-11-1995", "ana1011", "senha1011", 2));
+        usersDAO.addUsers(new Pessoa("Paulo", 'M', "30-09-1980", "paulo1213", "senha1213", 1));
 
         dietsDB.addDiet(new TipoDieta("Dieta 1", 50.0, 20.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
         dietsDB.addDiet(new TipoDieta("Dieta 2", 40.0, 30.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
@@ -33,111 +24,6 @@ public class TrabalhoPOO {
         dietsDB.addDiet(new TipoDieta("Dieta 4", 70.0, 10.0, 20.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
         dietsDB.addDiet(new TipoDieta("Dieta 5", 30.0, 40.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
 
-
-//      for (int i = 0; i < 10; i++) {
-//            receita[i] = criarDieta();
-//        }
-      
-//      for (AlimentoReceita receita2 : receita) {
-//            System.out.println(receita2.toString());
-//        }
-        jMenuLogin();
-    }
-
-    private static jmenusRecipe(){
-        int opcao = Integer.parseInt(JOptionPane.showInputDialog("Bem vindo ao menu de dietas, informe oque você deseja \n" +
-                "                1-  Nome \n" +
-                "                2 - Quantidade de carboidratos \n" +
-                "                3 - Quantidade de proteínas \n" +
-                "                4 - Quantidade de gorduras \n" +
-                "                5 - Quantidade de calorias \n" +
-                "                6 - Porção da dieta \n" +
-                "                6 - Tipo de usuário \n\n" +
-                ""));
-    }
-
-    private static AlimentoReceita createRecipe() {
-
-        AlimentoReceita d1 = new AlimentoReceita();
-
-        d1.setNome(JOptionPane.showInputDialog("Digite o nome da dieta"));
-
-        d1.setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de carboidratos da dieta")));
-
-        d1.setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de proteinas da dieta")));
-
-        d1.setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de gorduras da dieta")));
-
-        d1.setCalorias(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de calorias da dieta")));
-
-        d1.setPorcao(Double.parseDouble(JOptionPane.showInputDialog("Digite a porção da dieta")));
-
-        d1.setTipoUsuario(JOptionPane.showInputDialog("Digite a porção da dieta"));
-
-        d1.setDataCriacao(LocalDate.now());
-        d1.setDataModificacao(LocalDate.now());
-        return d1;
-}
-
-    public static boolean deleteByIdRecipes(int id) {
-        for (int i = 0; i < receita.length; i++) {
-            if (id == receita[i].getId()) {
-                receita[i] = null;
-                return  true;
-            }
-        }
-        return false;
-    }
-
-    public static AlimentoReceita getRecipeById(int id){
-        for(int i = 0; i < receita.length; i++) {
-            if (receita[i].getId() == id){
-                return receita[i];
-            }
-        }
-        return null;
-    }
-
-    public static void jmenuUpdateFood(){
-        int id = Integer.parseInt(JOptionPane.showInputDialog("Digite o seu ID de cadastro para ser atualizado"));
-        AlimentoReceita updatedat = TrabalhoPOO.getRecipeById(id);
-
-        int opc = Integer.parseInt(JOptionPane.showInputDialog("Qual seria o campo a ser atualizado? Digite o número  \n" +
-                "                1-  Nome \n" +
-                "                2 - Quantidade de carboidratos \n" +
-                "                3 - Quantidade de proteínas \n" +
-                "                4 - Quantidade de gorduras \n" +
-                "                5 - Quantidade de calorias \n" +
-                "                6 - Porção da dieta \n" +
-                "                6 - Tipo de usuário \n\n" +
-                ""));
-
-        if(updatedat != null){
-            switch (opc) {
-                case 1:
-                    updatedat.setNome(JOptionPane.showInputDialog("Digite o novo nome \n"));
-                    break;
-                case 2:
-                    updatedat.setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de carboidratos \n")));
-                    break;
-                case 3:
-                    updatedat.setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de proteinas \n")));
-                    break;
-                case 4:
-                    updatedat.setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de gorduras \n")));
-                    break;
-                case 5:
-                    updatedat.setCalorias(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de calorias \n")));
-                    break;
-                case 6:
-                    updatedat.setPorcao(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova porção \n")));
-                    break;
-                case 7:
-                    updatedat.setTipoUsuario((JOptionPane.showInputDialog("Digite o novo tipo de usuario \n")));
-                    break;
-            }
-        }
-        else
-            System.out.println("Dieta não existente não existente.");
+        jmenusRecipe();
     }
 }
