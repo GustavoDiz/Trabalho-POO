@@ -14,6 +14,7 @@ public class AvaliacaoFisica {
     private double quadril;
     private double abdomen;
 
+    private double bf;
     private  double imc;
     private double tbm;
     private double massaGorda;
@@ -90,6 +91,10 @@ public class AvaliacaoFisica {
         this.abdomen = abdomen;
     }
 
+    public double getBf(){return  bf;}
+
+    public double setBf(double bf){return this.bf = bf;}
+
     public double getImc() {
         return imc;
     }
@@ -149,6 +154,7 @@ public class AvaliacaoFisica {
                 ", pescoco=" + pescoco +
                 ", cintura=" + cintura +
                 ", quadril=" + quadril +
+                ", bf =" + bf +
                 ", imc=" + imc +
                 ", tbm=" + tbm +
                 ", massaGorda=" + massaGorda +
@@ -176,13 +182,122 @@ public class AvaliacaoFisica {
     public void calculateBF(){
         double result;
         if(user.getSexo() == 'M'){
-            result = 86.010 * Math.log(this.abdomen - this.pescoco) - 70.041 * Math.log(this.altura) + 36.76;
+            result = 86.010 * Math.log((this.abdomen - this.pescoco)/100) - 70.041 * Math.log(this.altura) + 36.76;
         }else{
-            result = 163.205 * Math.log(this.cintura + this.quadril) - 97.684 * Math.log(this.altura) - 78.387;
+            result = 163.205 * Math.log((this.cintura + this.quadril)/100) - 97.684 * Math.log(this.altura) - 78.387;
         }
-        this.setMassaGorda(result);
-        this.setMassaMagra(this.peso - result);
+        this.setBf(result);
+        this.setMassaGorda((result/100) * this.peso);
+        this.setMassaMagra(this.massaGorda - this.peso);
     }
 
+    public String idealBodyFat(){
+        String type = null;
+        int age = this.getIdade();
+        double bf = this.getBf();
+        if (user.getSexo() == 'M'){
+            if (age >= 20 && age <= 29) {
+                if (bf < 11) {
+                    type = "Atleta";
+                } else if (bf >= 11 && bf <= 13) {
+                    type = "Bom";
+                } else if (bf >= 14 && bf <= 20) {
+                    type = "Normal";
+                } else if (bf >= 21 && bf <= 23) {
+                    type = "Elevado";
+                } else {
+                    type = "Muito elevado";
+                }
+            } else if (age >= 30 && age <= 39) {
+                if (bf < 12) {
+                    type = "Atleta";
+                } else if (bf >= 12 && bf <= 14) {
+                    type = "Bom";
+                } else if (bf >= 15 && bf <= 21) {
+                    type = "Normal";
+                } else if (bf >= 22 && bf <= 24) {
+                    type = "Elevado";
+                } else {
+                    type = "Muito elevado";
+                }
+            } else if (age >= 40 && age <= 49) {
+                if (bf < 14) {
+                    type = "Atleta";
+                } else if (bf >= 14 && bf <= 16) {
+                    type = "Bom";
+                } else if (bf >= 17 && bf <= 23) {
+                    type = "Normal";
+                } else if (bf >= 24 && bf <= 26) {
+                    type = "Elevado";
+                } else {
+                    type = "Muito elevado";
+                }
+            } else if (age >= 50 && age <= 59) {
+                if (bf < 15) {
+                    type = "Atleta";
+                } else if (bf >= 15 && bf <= 17) {
+                    type = "Bom";
+                } else if (bf >= 18 && bf <= 24) {
+                    type = "Normal";
+                } else if (bf >= 25 && bf <= 27) {
+                    type = "Elevado";
+                } else {
+                    type = "Muito elevado";
+                }
+            }
+        }else{
+            if (age >= 20 && age <= 29) {
+                if (bf < 16) {
+                    type = "Atleta";
+                } else if (bf >= 16 && bf <= 19) {
+                    type = "Bom";
+                } else if (bf >= 20 && bf <= 28) {
+                    type = "Normal";
+                } else if (bf >= 29 && bf <= 31) {
+                    type = "Elevado";
+                } else {
+                    type = "Muito elevado";
+                }
+            } else if (age >= 30 && age <= 39) {
+                if (bf < 17) {
+                    type = "Atleta";
+                } else if (bf >= 17 && bf <= 20) {
+                    type = "Bom";
+                } else if (bf >= 21 && bf <= 29) {
+                    type = "Normal";
+                } else if (bf >= 30 && bf <= 32) {
+                    type = "Elevado";
+                } else {
+                    type = "Muito elevado";
+                }
+            } else if (age >= 40 && age <= 49) {
+                if (bf < 18) {
+                    type = "Atleta";
+                } else if (bf >= 18 && bf <= 21) {
+                    type = "Bom";
+                } else if (bf >= 22 && bf <= 30) {
+                    type = "Normal";
+                } else if (bf >= 31 && bf <= 33) {
+                    type = "Elevado";
+                } else {
+                    type = "Muito elevado";
+                }
+            } else if (age >= 50 && age <= 59) {
+                if (bf < 19) {
+                    type = "Atleta";
+                } else if (bf >= 19 && bf <= 22) {
+                    type = "Bom";
+                } else if (bf >= 23 && bf <= 31) {
+                    type = "Normal";
+                } else if (bf >= 32 && bf <= 34) {
+                    type = "Elevado";
+                } else {
+                    type = "Muito elevado";
+                }
+            }
+        }
+
+        return type;
+    }
 
 }

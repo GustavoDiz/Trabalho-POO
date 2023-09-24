@@ -169,6 +169,8 @@ public class JMenu {
                     }
                     jConfirmation(txt);
                     break;
+                case 3:
+                    break;
                 default:
                     jError("Opção Inválida, Por favor Insira novamente");
                     break;
@@ -197,5 +199,22 @@ public class JMenu {
         newAssessment.setDataCriacao(LocalDate.now());
         newAssessment.setDataModificacao(LocalDate.now());
         physical.addPhysical(newAssessment);
+        jPhysicalReport(newAssessment);
+    }
+
+    public static void jPhysicalReport(AvaliacaoFisica avaliacaoFisica){
+        String type = avaliacaoFisica.idealBodyFat();
+        String report = "Relatório Avaliação Física " +
+                "\n Nome " + avaliacaoFisica.getUser().getNome() +
+                "\n Idade " + avaliacaoFisica.getIdade() +
+                "\n Altura " + avaliacaoFisica.getAltura() +
+                "\n Peso " + avaliacaoFisica.getPeso() +
+                "\n IMC " + avaliacaoFisica.getImc() +
+                "\n TMB " + avaliacaoFisica.getTbm() +
+                "\n Massa Magra " + avaliacaoFisica.getMassaMagra() +
+                "\n Massa Gorda " + avaliacaoFisica.getMassaGorda() +
+                "\n %BF " + avaliacaoFisica.getBf() +
+                "\n Avalição Gordura Corporal " + type;
+        jConfirmation(report);
     }
 }
