@@ -140,6 +140,7 @@ public class JMenu {
         newPreference.setUser(userlogged);
         newPreference.setDataCriacao(LocalDate.now());
         newPreference.setDataModificacao(LocalDate.now());
+        preferences.addDiet(newPreference);
     }
 
     private static void jTypeDiet() {
