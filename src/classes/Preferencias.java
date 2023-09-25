@@ -45,4 +45,15 @@ public class Preferencias {
     public void setDataModificacao(LocalDate dataModificacao) {
         this.dataModificacao = dataModificacao;
     }
+
+    @Override
+    public String toString() {
+        return "Preferencias{" +
+                "id='" + id + '\'' +
+                ", user=" + user +
+                ", food=" + food +
+                ", dataCriacao=" + dataCriacao +
+                ", dataModificacao=" + dataModificacao +
+                '}';
+    }
 }

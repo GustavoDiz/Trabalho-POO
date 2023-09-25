@@ -36,7 +36,7 @@ public class jmenuRegistroDieta {
                         "3 - Quantidade de proteínas\n" +
                         "4 - Quantidade de gorduras\n" +
                         "6 - Tipo de usuário\n"));
-                
+
                 switch (opc){
                     case 1:
                         dietss2.setDiet(JOptionPane.showInputDialog("Digite a nova dieta"));
