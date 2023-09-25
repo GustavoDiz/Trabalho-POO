@@ -21,6 +21,10 @@ public class TipoDieta {
         this.dataModificacao = dataModificacao;
     }
 
+    public TipoDieta() {
+
+    }
+
     public String getId() {
         return id;
     }

@@ -4,6 +4,8 @@ import dao.AlimentoReceitaDao;
 import dao.PessoaDAO;
 import dao.TipoDietaDAO;
 import java.time.LocalDate;
+
+import static classes.JMenu.*;
 import static classes.JmenuAlimentoReceita.foodsExemple;
 import static classes.JmenuAlimentoReceita.jmenusRecipe;
 
@@ -67,6 +69,6 @@ public class TrabalhoPOO {
 
             FoodsReceiptDAO.addAlPe(alimentoPadrao);
         }
-        jmenusRecipe();
+        jMenuLogin();
     }
 }

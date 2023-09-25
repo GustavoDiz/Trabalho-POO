@@ -1,5 +1,6 @@
 package dao;
 
+import classes.Pessoa;
 import classes.Preferencias;
 import classes.TipoDieta;
 
@@ -34,5 +35,18 @@ public class PreferenciasDAO {
             }
         }
         return false;
+    }
+
+    public Preferencias[] getPreferencesByUser(Pessoa user){
+        Preferencias[] userPreferences = new Preferencias[10];
+        for (int i = 0; i < preferencesDB.length; i++) {
+            if (preferencesDB[i] == null){
+                break;
+            }
+            if (preferencesDB[i].getUser().equals(user)){
+                userPreferences[i] = preferencesDB[i];
+            }
+        }
+        return userPreferences;
     }
 }
