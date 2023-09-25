@@ -1,6 +1,9 @@
 package dao;
 
+import classes.AlimentoReceita;
 import classes.RegistroDieta;
+
+import java.util.Objects;
 
 import static utils.Utils.*;
 public class RegistroDietaDAO {
@@ -10,7 +13,7 @@ public class RegistroDietaDAO {
         return registerDB;
     }
 
-    public RegistroDieta getRegisterById(String id){
+    public RegistroDieta getRegisterByIdDiet(String id){
         for (int i = 0; i < registerDB.length; i++) {
             if (registerDB[i].getId().equals(id)){
                 return registerDB[i];
@@ -18,7 +21,6 @@ public class RegistroDietaDAO {
         }
         return null;
     }
-
     public void addRegister(RegistroDieta registro){
         int index = findEmptyPosition(registerDB);
         registerDB[index] = registro;

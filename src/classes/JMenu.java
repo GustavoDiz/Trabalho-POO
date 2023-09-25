@@ -79,7 +79,6 @@ public class JMenu {
                 jConfirmation("Login feito com Sucesso!");
                 return user;
             }
-
         }
         return null;
     }

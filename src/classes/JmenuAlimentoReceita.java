@@ -3,7 +3,6 @@ import dao.AlimentoReceitaDao;
 import classes.JMenu;
 import javax.swing.*;
 import java.time.LocalDate;
-
 import static classes.JMenu.jConfirmation;
 
 public class JmenuAlimentoReceita {
@@ -71,7 +70,6 @@ public class JmenuAlimentoReceita {
                 listaAlimentos.append(alimentoPadrao.toString()).append("\n\n");
             }
         }
-
         jConfirmation(listaAlimentos.toString());
     }
     private static void createRecipe() {
@@ -93,40 +91,46 @@ public class JmenuAlimentoReceita {
     }
 
     public static void jmenuUpdateFood(){
+        int opc2 = 0;
         String id = JOptionPane.showInputDialog("Digite o ID do alimento ou receita que deseja atualizar");
         alimento2 = alimento.getRecipeByIDFood(id);
 
-        if (alimento2 != null){
-            int opc = Integer.parseInt(JOptionPane.showInputDialog("Qual campo deseja atualizar?\n" +
-                    "1 - Nome do alimento\n" +
-                    "2 - Quantidade de carboidratos\n" +
-                    "3 - Quantidade de proteínas\n" +
-                    "4 - Quantidade de gorduras\n" +
-                    "6 - Tipo de usuário\n"));
-
-            switch (opc) {
-                case 1:
-                    alimento2.setNome(JOptionPane.showInputDialog("Digite o novo nome"));
-                    break;
-                case 2:
-                    alimento2.setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de carboidratos")));
-                    break;
-                case 3:
-                    alimento2.setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de proteínas")));
-                    break;
-                case 4:
-                    alimento2.setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de gorduras")));
-                    double valorcal = 4 * alimento2.getCarboidratos() + 4 * alimento2.getProteinas() + 9 * alimento2.getGorduras();
-                    alimento2.setCalorias(valorcal);
-                    break;
-                case 5:
-                    alimento2.setTipoUsuario(JOptionPane.showInputDialog("Digite o novo tipo de usuário"));
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "Opção inválida", "Alerta", JOptionPane.ERROR_MESSAGE);
+        do {
+            if (alimento2 != null) {
+                int opc = Integer.parseInt(JOptionPane.showInputDialog("Qual campo deseja atualizar?\n" +
+                        "1 - Nome do alimento\n" +
+                        "2 - Quantidade de carboidratos\n" +
+                        "3 - Quantidade de proteínas\n" +
+                        "4 - Quantidade de gorduras\n" +
+                        "5 - Tipo de usuário\n" +
+                        "6 - Sair\n"));
+                switch (opc) {
+                    case 1:
+                        alimento2.setNome(JOptionPane.showInputDialog("Digite o novo nome"));
+                        break;
+                    case 2:
+                        alimento2.setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de carboidratos")));
+                        break;
+                    case 3:
+                        alimento2.setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de proteínas")));
+                        break;
+                    case 4:
+                        alimento2.setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de gorduras")));
+                        double valorcal = 4 * alimento2.getCarboidratos() + 4 * alimento2.getProteinas() + 9 * alimento2.getGorduras();
+                        alimento2.setCalorias(valorcal);
+                        break;
+                    case 5:
+                        alimento2.setTipoUsuario(JOptionPane.showInputDialog("Digite o novo tipo de usuário"));
+                        break;
+                    case 6:
+                        opc2 = 6;
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(null, "Opção inválida", "Alerta", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Alimento ou receita não encontrado", "Alerta", JOptionPane.ERROR_MESSAGE);
             }
-        }else{
-            JOptionPane.showMessageDialog(null, "Alimento ou receita não encontrado", "Alerta", JOptionPane.ERROR_MESSAGE);
-        }
+        }while(opc2 != 6);
     }
 }

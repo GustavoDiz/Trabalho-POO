@@ -7,7 +7,7 @@ public class RegistroDieta {
     private String id = UUID.randomUUID().toString();
     private Pessoa user;
     private  AvaliacaoFisica physicalAssessment;
-    private  TipoDieta diet;
+    private String diet;
     private String goal;
     private double calories;
     private int nMeals;
@@ -38,11 +38,11 @@ public class RegistroDieta {
         this.physicalAssessment = physicalAssessment;
     }
 
-    public TipoDieta getDiet() {
+    public String getDiet() {
         return diet;
     }
 
-    public void setDiet(TipoDieta diet) {
+    public void setDiet(String diet) {
         this.diet = diet;
     }
 

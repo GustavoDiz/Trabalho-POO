@@ -19,7 +19,6 @@ public class AlimentoReceitaDao {
         }
         return null;
     }
-
     public AlimentoReceita searchNameFood(String nome){
         for(int i = 0; i < alimentore.length; i++){
             if(alimentore[i] != null && Objects.equals(alimentore[i].getNome(), nome)){

@@ -67,6 +67,5 @@ public class TrabalhoPOO {
 
             FoodsReceiptDAO.addAlPe(alimentoPadrao);
         }
-        jmenusRecipe();
     }
 }
