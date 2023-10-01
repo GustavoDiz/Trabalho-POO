@@ -13,6 +13,7 @@ public class JMenu {
     TipoDietaDAO dietType = new TipoDietaDAO();
     PreferenciasDAO preferences = new PreferenciasDAO();
     MensagemDAO msgs = new MensagemDAO();
+    PostDAO psts = new PostDAO();
     Pessoa userlogged;
     AlimentoReceitaDao FoodsReceiptDAO = new AlimentoReceitaDao();
     SeguirDAO follows = new SeguirDAO();
@@ -397,7 +398,22 @@ public class JMenu {
                 "\n Avalição Gordura Corporal " + type;
         jConfirmation(report);
     }
+    public void jViewPP() {
+        Post[] posts = psts.getPostByUser(userlogged.getNome());
 
+        if (posts.length != 0) {
+            StringBuilder postText = new StringBuilder("Posts de " + userlogged.getNome() + ":\n");
+
+            for (Post post : posts) {
+                if (post != null) {
+                    postText.append("\n").append(post.toString());
+                }
+            }
+            jConfirmation(postText.toString());
+
+        }else
+            jConfirmation("Nenhum post criado ainda pelo usuário");
+    }
     public void jSocial(){
         StringBuilder txt = new StringBuilder();
         txt.append("Bem Vindo a NutriSphere,").append(userlogged.getNome());
@@ -413,8 +429,14 @@ public class JMenu {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
             switch (op){
                 case 1:
+                    jViewPP();
                     break;
                 case 2:
+                    String msgPost = JOptionPane.showInputDialog("Qual o post?");
+                    Post newPost = new Post();
+                    newPost.setUser(userlogged);
+                    newPost.setMsg(msgPost);
+                    psts.addPost(newPost);
                     break;
                 case 3:
                     Mensagem[] msg = msgs.getMessagesByUser(userlogged.getNome());
