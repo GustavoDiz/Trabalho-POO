@@ -15,6 +15,7 @@ public class JMenu {
     MensagemDAO msgs = new MensagemDAO();
     Pessoa userlogged;
     AlimentoReceitaDao FoodsReceiptDAO = new AlimentoReceitaDao();
+    SeguirDAO follows = new SeguirDAO();
     public JMenu(){
         TipoDieta[] array = dietType.getDietsDB();
         users.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
@@ -400,13 +401,22 @@ public class JMenu {
     public void jSocial(){
         StringBuilder txt = new StringBuilder();
         txt.append("Bem Vindo a NutriSphere,").append(userlogged.getNome());
-        txt.append("\n 1 - Ver Mensagens").append("(2)");
-        txt.append("\n 2 - Enviar Mensagens");
+        txt.append("\n Seguidores: ").append(follows.followers(userlogged));
+        txt.append("\n 1 - Ver Posts");
+        txt.append("\n 2 - Criar Post");
+        txt.append("\n 3 - Ver Mensagens").append("(2)");
+        txt.append("\n 4 - Enviar Mensagem");
+        txt.append("\n 5 - Adicionar Amigo");
+        txt.append("\n 0 - Sair");
         int op;
         do {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
             switch (op){
                 case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
                     Mensagem[] msg = msgs.getMessagesByUser(userlogged.getNome());
                     for (Mensagem text:
                             msg) {
@@ -416,7 +426,7 @@ public class JMenu {
 
                     }
                     break;
-                case 2:
+                case 4:
                     String userName = JOptionPane.showInputDialog("Para Quem Gostaria de Enviar a Mensagem");
                     Pessoa user = users.getUser(userName);
                     if (user == null){
@@ -430,6 +440,27 @@ public class JMenu {
                         msgs.addMessage(newMsg);
                     }
                     break;
+                case 5:
+                    String username = JOptionPane.showInputDialog("Quem Gostaria de Adicionar:>_");
+                    if (username != null){
+                        Pessoa u = users.getUser(username);
+                        Seguir follow = new Seguir();
+                        follow.setFollower(userlogged);
+                        follow.setFollowed(u);
+                        follow.setDataCriacao(LocalDate.now());
+                        follow.setDataModificacao(LocalDate.now());
+                        if (follow != null){
+                            follows.addFollow(follow);
+                            jConfirmation("Amigo adicionado com sucesso.");
+                        }else{
+                            jError("Error ao adicionar o amigo,Insira Novamente.");
+                        }
+                    }else{
+                        jError("Error,Insira Novamente.");
+                    }
+                    break;
+                default:
+                    op = 0;
             }
         }while (op != 0);
 

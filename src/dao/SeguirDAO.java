@@ -1,5 +1,6 @@
 package dao;
 
+import classes.Pessoa;
 import classes.Seguir;
 import static utils.Utils.*;
 
@@ -35,5 +36,17 @@ public class SeguirDAO {
         return false;
     }
 
+    public int followers(Pessoa user){
+        int qtFollowers = 0;
+        for (int i = 0; i < followsDB.length; i++) {
+            if (followsDB[i] == null){
+                break;
+            }
+            if (followsDB[i].getFollowed().equals(user)){
+                qtFollowers++;
+            }
+        }
+        return  qtFollowers;
+    }
 
 }

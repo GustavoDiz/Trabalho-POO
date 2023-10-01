@@ -13,7 +13,6 @@ public class Seguir {
     public String getId() {
         return id;
     }
-
     public Pessoa getFollower() {
         return follower;
     }
