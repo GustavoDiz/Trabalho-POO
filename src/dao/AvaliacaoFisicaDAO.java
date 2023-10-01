@@ -6,7 +6,7 @@ import classes.Pessoa;
 import static utils.Utils.*;
 
 public class AvaliacaoFisicaDAO {
-    private static AvaliacaoFisica[] physicalDB = new AvaliacaoFisica[100];
+    private AvaliacaoFisica[] physicalDB = new AvaliacaoFisica[100];
 
     public AvaliacaoFisica[] getPhysicalDB(){
         return  physicalDB;

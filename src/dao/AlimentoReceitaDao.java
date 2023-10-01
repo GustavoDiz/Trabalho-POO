@@ -5,7 +5,7 @@ import java.util.Objects;
 import static utils.Utils.*;
 
 public class AlimentoReceitaDao {
-    private static AlimentoReceita[] alimentore = new AlimentoReceita[100];
+    private AlimentoReceita[] alimentore = new AlimentoReceita[100];
 
     public AlimentoReceita[] getAlimentore(){
         return alimentore;

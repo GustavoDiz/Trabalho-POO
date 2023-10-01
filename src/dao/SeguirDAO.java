@@ -4,7 +4,7 @@ import classes.Seguir;
 import static utils.Utils.*;
 
 public class SeguirDAO {
-    private static Seguir[] followsDB = new Seguir[100];
+    private Seguir[] followsDB = new Seguir[100];
 
     public Seguir[] getFollowsDB(){
         return followsDB;

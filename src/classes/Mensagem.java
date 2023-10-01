@@ -10,6 +10,19 @@ public class Mensagem {
     private String msg;
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
+
+    public Mensagem(Pessoa sender, Pessoa recipient, String msg) {
+        this.sender = sender;
+        this.recipient = recipient;
+        this.msg = msg;
+        this.dataCriacao = LocalDate.now();
+        this.dataModificacao = LocalDate.now();
+    }
+
+    public Mensagem() {
+
+    }
+
     public String getId() {
         return id;
     }

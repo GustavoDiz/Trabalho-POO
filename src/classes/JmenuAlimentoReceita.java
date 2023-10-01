@@ -3,7 +3,7 @@ import dao.AlimentoReceitaDao;
 import classes.JMenu;
 import javax.swing.*;
 import java.time.LocalDate;
-import static classes.JMenu.jConfirmation;
+import static utils.Utils.*;
 
 public class JmenuAlimentoReceita {
     static AlimentoReceitaDao alimento = new AlimentoReceitaDao();

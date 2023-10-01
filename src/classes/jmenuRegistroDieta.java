@@ -3,8 +3,7 @@ import classes.JmenuAlimentoReceita;
 import classes.JMenu;
 import javax.swing.*;
 import java.time.LocalDate;
-import static classes.JMenu.jConfirmation;
-
+import static utils.Utils.*;
 import dao.AlimentoReceitaDao;
 import dao.RegistroDietaDAO;
 

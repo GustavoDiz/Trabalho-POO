@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import static utils.Utils.*;
 public class RegistroDietaDAO {
-    private  static RegistroDieta[] registerDB = new RegistroDieta[100];
+    private  RegistroDieta[] registerDB = new RegistroDieta[100];
 
     public  RegistroDieta[] getRegisterDB(){
         return registerDB;

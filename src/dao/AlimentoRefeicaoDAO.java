@@ -3,7 +3,7 @@ package dao;
 import classes.AlimentoRefeicao;
 import static utils.Utils.*;
 public class AlimentoRefeicaoDAO {
-    private static AlimentoRefeicao[] mealfoodDB = new AlimentoRefeicao[100];
+    private AlimentoRefeicao[] mealfoodDB = new AlimentoRefeicao[100];
     public  AlimentoRefeicao[] getMealfoodDB(){
         return mealfoodDB;
     }

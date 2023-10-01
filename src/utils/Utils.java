@@ -2,6 +2,7 @@ package utils;
 
 import classes.Pessoa;
 
+import javax.swing.*;
 import java.lang.reflect.Array;
 
 public class Utils {
@@ -34,5 +35,14 @@ public class Utils {
 
        return  newArray;
     }
+
+    public  static void jError(String msg){
+        JOptionPane.showMessageDialog(null,msg,"Alerta", JOptionPane.ERROR_MESSAGE);
+    }
+
+    public  static void jConfirmation(String msg){
+        JOptionPane.showMessageDialog(null,msg,"Sucesso",JOptionPane.INFORMATION_MESSAGE);
+    }
+
 
 }

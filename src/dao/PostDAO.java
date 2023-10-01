@@ -3,7 +3,7 @@ package dao;
 import classes.Post;
 import static utils.Utils.*;
 public class PostDAO {
-    private static Post[] postsDB = new Post[500];
+    private Post[] postsDB = new Post[500];
 
     public Post[] getPostsDB(){
         return postsDB;

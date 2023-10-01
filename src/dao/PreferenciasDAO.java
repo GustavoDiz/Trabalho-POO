@@ -7,7 +7,7 @@ import classes.TipoDieta;
 import static utils.Utils.*;
 
 public class PreferenciasDAO {
-    private static Preferencias[] preferencesDB = new Preferencias[100];
+    private Preferencias[] preferencesDB = new Preferencias[100];
     public  Preferencias[] getPreferencesDB(){
         return  preferencesDB;
     }

@@ -4,7 +4,7 @@ import classes.TipoDieta;
 import static utils.Utils.*;
 
 public class TipoDietaDAO {
-    private static TipoDieta[] dietsDB = new TipoDieta[100];
+    private TipoDieta[] dietsDB = new TipoDieta[100];
 
     public TipoDieta[] getDietsDB(){
         return  dietsDB;

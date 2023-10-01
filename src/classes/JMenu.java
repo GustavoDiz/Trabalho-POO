@@ -1,19 +1,83 @@
 package classes;
 
 import dao.*;
-
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import static utils.Utils.*;
 
 public class JMenu {
-    static PessoaDAO users = new PessoaDAO();
-    static AlimentoReceitaDao foods = new AlimentoReceitaDao();
-    static AvaliacaoFisicaDAO physical = new AvaliacaoFisicaDAO();
-    static TipoDietaDAO dietType = new TipoDietaDAO();
-    static PreferenciasDAO preferences = new PreferenciasDAO();
-    static Pessoa userlogged;
-    public  static void jMenuLogin(){
+    PessoaDAO users = new PessoaDAO();
+    AlimentoReceitaDao foods = new AlimentoReceitaDao();
+    AvaliacaoFisicaDAO physical = new AvaliacaoFisicaDAO();
+    TipoDietaDAO dietType = new TipoDietaDAO();
+    PreferenciasDAO preferences = new PreferenciasDAO();
+    MensagemDAO msgs = new MensagemDAO();
+    Pessoa userlogged;
+    AlimentoReceitaDao FoodsReceiptDAO = new AlimentoReceitaDao();
+    public JMenu(){
+        TipoDieta[] array = dietType.getDietsDB();
+        users.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
+        users.addUsers(new Pessoa("Maria", 'F', "15-07-1985", "maria456", "senha456", 2));
+        users.addUsers(new Pessoa("Carlos", 'M', "20-03-1978", "carlos789", "senha789", 1));
+        users.addUsers(new Pessoa("Ana", 'F', "25-11-1995", "ana1011", "senha1011", 2));
+        users.addUsers(new Pessoa("Paulo", 'M', "30-09-1980", "paulo1213", "senha1213", 1));
+
+        dietType.addDiet(new TipoDieta("Dieta 1", 50.0, 20.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+        dietType.addDiet(new TipoDieta("Dieta 2", 40.0, 30.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+        dietType.addDiet(new TipoDieta("Dieta 3", 60.0, 10.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+        dietType.addDiet(new TipoDieta("Dieta 4", 70.0, 10.0, 20.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+        dietType.addDiet(new TipoDieta("Dieta 5", 30.0, 40.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+
+        msgs.addMessage(new Mensagem(users.getUserById(1),users.getUserById(2),"Teste 0"));
+        msgs.addMessage(new Mensagem(users.getUserById(2),users.getUserById(1),"Teste 1"));
+        msgs.addMessage(new Mensagem(users.getUserById(1),users.getUserById(2),"Teste 2"));
+        msgs.addMessage(new Mensagem(users.getUserById(2),users.getUserById(1),"Teste 3"));
+
+        for (int i = 1; i <= 3; i++) {
+            AlimentoReceita alimentoPadrao = new AlimentoReceita();
+            double valorcal = 0;
+
+            switch (i) {
+                case 1:
+                    alimentoPadrao.setNome("Frango grelhado");
+                    alimentoPadrao.setCarboidratos(0.0);
+                    alimentoPadrao.setProteinas(31.0);
+                    alimentoPadrao.setGorduras(3.6);
+                    valorcal = 4 * alimentoPadrao.getCarboidratos() + 4 * alimentoPadrao.getProteinas() + 9 * alimentoPadrao.getGorduras();
+                    alimentoPadrao.setCalorias(valorcal);
+                    alimentoPadrao.setPorcao(100.0);
+                    alimentoPadrao.setTipoUsuario("Musculo");
+                    break;
+
+                case 2:
+                    alimentoPadrao.setNome("Arroz");
+                    alimentoPadrao.setCarboidratos(40.0);
+                    alimentoPadrao.setProteinas(5.0);
+                    alimentoPadrao.setGorduras(1.0);
+                    valorcal = 4 * alimentoPadrao.getCarboidratos() + 4 * alimentoPadrao.getProteinas() + 9 * alimentoPadrao.getGorduras();
+                    alimentoPadrao.setCalorias(valorcal);
+                    alimentoPadrao.setPorcao(100.0);
+                    alimentoPadrao.setTipoUsuario("Musculo");
+                    break;
+
+                case 3:
+                    alimentoPadrao.setNome("Alface");
+                    alimentoPadrao.setCarboidratos(2.0);
+                    alimentoPadrao.setProteinas(1.0);
+                    alimentoPadrao.setGorduras(0.0);
+                    valorcal = 4 * alimentoPadrao.getCarboidratos() + 4 * alimentoPadrao.getProteinas() + 9 * alimentoPadrao.getGorduras();
+                    alimentoPadrao.setCalorias(valorcal);
+                    alimentoPadrao.setPorcao(50.0);
+                    alimentoPadrao.setTipoUsuario("Emagrecer");
+                    break;
+            }
+            FoodsReceiptDAO.addAlPe(alimentoPadrao);
+        }
+        jMenuLogin();
+    }
+
+    public void jMenuLogin(){
         int op;
         String[] options = {"Login","Cadastro","Sair"};
         do {
@@ -39,7 +103,7 @@ public class JMenu {
         }while (op != 2);
     }
 
-    public static void jMenu(){
+    public void jMenu(){
 
         String txt = "Bem-Vindo " + userlogged.getNome() + ", " +
                 "\n O que deseja? " +
@@ -47,6 +111,7 @@ public class JMenu {
                 "\n 2 - Atualizar Informações " +
                 "\n 3 - Avaliação Física" +
                 "\n 4 - Dieta/Alimentação" +
+                "\n 5 - NutriSphere" +
                 "\n 0 - LogOut";
         int op;
         do {
@@ -68,6 +133,9 @@ public class JMenu {
                 case 4:
                     jDiet();
                     break;
+                case 5:
+                    jSocial();
+                    break;
                 default:
                     jError("Opção Inválida, Por favor insira novamente.");
                     break;
@@ -75,7 +143,7 @@ public class JMenu {
         }while (op!=0);
     }
 
-    private static void jDiet() {
+    private void jDiet() {
         int op;
         String txt = "O que deseja? " +
                 "\n 1 - Tipo Dieta " +
@@ -97,7 +165,7 @@ public class JMenu {
         }while (op!=0);
     }
 
-    private static void jPreferences() {
+    private void jPreferences() {
         int op;
         String txt = "O que deseja? " +
                 "\n 1 - Criar Preferencias " +
@@ -118,7 +186,7 @@ public class JMenu {
         }while (op != 3);
     }
 
-    private static void jMyPreferences() {
+    private void jMyPreferences() {
         Preferencias[] myPreferences = preferences.getPreferencesByUser(userlogged);
         for (Preferencias e:
              myPreferences) {
@@ -128,7 +196,7 @@ public class JMenu {
         }
     }
 
-    private static void jCreatePreference() {
+    private void jCreatePreference() {
         Preferencias newPreference = new Preferencias();
         String nameFood = JOptionPane.showInputDialog("Nome do Alimento");
         AlimentoReceita food = foods.searchNameFood(nameFood);
@@ -143,7 +211,7 @@ public class JMenu {
         preferences.addDiet(newPreference);
     }
 
-    private static void jTypeDiet() {
+    private void jTypeDiet() {
         int op;
         String txt = "O que deseja?" +
                 "\n 1 - Criar Novo Tipo de Dieta" +
@@ -165,7 +233,7 @@ public class JMenu {
         }while(op != 3);
     }
 
-    private static void jShowTypesDiet() {
+    private void jShowTypesDiet() {
         TipoDieta[] array = dietType.getDietsDB();
         for (TipoDieta e:
              array) {
@@ -175,7 +243,7 @@ public class JMenu {
         }
     }
 
-    private static void jCreateTypeDiet() {
+    private void jCreateTypeDiet() {
         TipoDieta newDietType = new TipoDieta();
         newDietType.setNome(JOptionPane.showInputDialog("Insira o nome"));
         newDietType.setCarboidrato(Double.parseDouble(JOptionPane.showInputDialog("Quantidade de Carboidrato")));
@@ -186,7 +254,7 @@ public class JMenu {
         dietType.addDiet(newDietType);
     }
 
-    public static  Pessoa jLogin(){
+    public  Pessoa jLogin(){
         String username = JOptionPane.showInputDialog("Login");
         String password = JOptionPane.showInputDialog("Senha");
         for (Pessoa user:
@@ -202,7 +270,7 @@ public class JMenu {
         return null;
     }
 
-    public  static  void jUpdate(){
+    public   void jUpdate(){
         int op;
         String menuUpdate = "Bem-Vindo " + userlogged.getNome()
                 + "\n Qual seria o campo a ser atualizado? "
@@ -244,15 +312,7 @@ public class JMenu {
         }while (op != 7);
     }
 
-    public static  void jError(String msg){
-        JOptionPane.showMessageDialog(null,msg,"Alerta", JOptionPane.ERROR_MESSAGE);
-    }
-
-    public static  void jConfirmation(String msg){
-        JOptionPane.showMessageDialog(null,msg,"Sucesso",JOptionPane.INFORMATION_MESSAGE);
-    }
-
-    public  static  void jRegister(){
+    public   void jRegister(){
         Pessoa newUser = new Pessoa();
         newUser.setNome(JOptionPane.showInputDialog("Insira o nome"));
         newUser.setSexo(JOptionPane.showInputDialog("Insira o novo sexo \n M - Masculino \n F - Feminino").charAt(0));
@@ -265,7 +325,7 @@ public class JMenu {
         users.addUsers(newUser);
     }
 
-    public static void jMenuPhysicalAssessment(){
+    public void jMenuPhysicalAssessment(){
         String msg = "O Que Gostaria de Fazer? " +
                 "\n 1 - Fazer Avaliação Física" +
                 "\n 2 - Ver Avaliações Antigas" +
@@ -297,7 +357,7 @@ public class JMenu {
         }while (op!=0);
     }
 
-    public static  void jPhysicalAssessment(){
+    public  void jPhysicalAssessment(){
         String tax = "Qual é sua taxa de atividade: \n 1.2 - Sedentário (pouco ou nenhum exercicio)" +
                 "\n 1,375: levemente ativo (exercício leve 1 a 3 dias por semana) " +
                 "\n 1,55: moderadamente ativo (exercício moderado 6 a 7 dias por semana) " +
@@ -321,7 +381,7 @@ public class JMenu {
         jPhysicalReport(newAssessment);
     }
 
-    public static void jPhysicalReport(AvaliacaoFisica avaliacaoFisica){
+    public void jPhysicalReport(AvaliacaoFisica avaliacaoFisica){
         String type = avaliacaoFisica.idealBodyFat();
         String report = "Relatório Avaliação Física " +
                 "\n Nome " + avaliacaoFisica.getUser().getNome() +
@@ -336,4 +396,43 @@ public class JMenu {
                 "\n Avalição Gordura Corporal " + type;
         jConfirmation(report);
     }
+
+    public void jSocial(){
+        StringBuilder txt = new StringBuilder();
+        txt.append("Bem Vindo a NutriSphere,").append(userlogged.getNome());
+        txt.append("\n 1 - Ver Mensagens").append("(2)");
+        txt.append("\n 2 - Enviar Mensagens");
+        int op;
+        do {
+            op = Integer.parseInt(JOptionPane.showInputDialog(txt));
+            switch (op){
+                case 1:
+                    Mensagem[] msg = msgs.getMessagesByUser(userlogged.getNome());
+                    for (Mensagem text:
+                            msg) {
+                        if (text != null){
+                            System.out.println("\n"+text.toString());
+                        }
+
+                    }
+                    break;
+                case 2:
+                    String userName = JOptionPane.showInputDialog("Para Quem Gostaria de Enviar a Mensagem");
+                    Pessoa user = users.getUser(userName);
+                    if (user == null){
+                        jError("Usuario não encontrado, porfavor insira novamente");
+                    }else{
+                        String msgText = JOptionPane.showInputDialog("Qual é a mensagem");
+                        Mensagem newMsg = new Mensagem();
+                        newMsg.setSender(userlogged);
+                        newMsg.setRecipient(user);
+                        newMsg.setMsg(msgText);
+                        msgs.addMessage(newMsg);
+                    }
+                    break;
+            }
+        }while (op != 0);
+
+    }
+
 }
