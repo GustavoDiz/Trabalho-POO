@@ -4,6 +4,8 @@ import dao.*;
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+
 import static utils.Utils.*;
 
 public class JMenu {
@@ -14,6 +16,7 @@ public class JMenu {
     PreferenciasDAO preferences = new PreferenciasDAO();
     MensagemDAO msgs = new MensagemDAO();
     PostDAO psts = new PostDAO();
+    SeguirDAO sgd = new SeguirDAO();
     Pessoa userlogged;
     AlimentoReceitaDao FoodsReceiptDAO = new AlimentoReceitaDao();
     SeguirDAO follows = new SeguirDAO();
@@ -398,22 +401,6 @@ public class JMenu {
                 "\n Avalição Gordura Corporal " + type;
         jConfirmation(report);
     }
-    public void jViewPP() {
-        Post[] posts = psts.getPostByUser(userlogged.getNome());
-
-        if (posts.length != 0) {
-            StringBuilder postText = new StringBuilder("Posts de " + userlogged.getNome() + ":\n");
-
-            for (Post post : posts) {
-                if (post != null) {
-                    postText.append("\n").append(post.toString());
-                }
-            }
-            jConfirmation(postText.toString());
-
-        }else
-            jConfirmation("Nenhum post criado ainda pelo usuário");
-    }
     public void jSocial(){
         StringBuilder txt = new StringBuilder();
         txt.append("Bem Vindo a NutriSphere,").append(userlogged.getNome());
@@ -429,7 +416,24 @@ public class JMenu {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
             switch (op){
                 case 1:
-                    jViewPP();
+
+                    Pessoa[] seguidores = sgd.getFollowers(userlogged);;
+
+                    for (int x = 0; x < seguidores.length ; x++){
+                        Post[] posts = psts.getPostByUser(seguidores[x]);
+
+                        if (posts.length != 0) {
+                            StringBuilder postText = new StringBuilder("Posts de " + seguidores[x] + ":\n");
+
+                            for (Post post : posts) {
+                                if (post != null) {
+                                    postText.append("\n").append(post.toString());
+                                }
+                            }
+                            jConfirmation(postText.toString());
+                        }else
+                            jConfirmation("Nenhum post criado ainda pelo usuário");
+                    }
                     break;
                 case 2:
                     String msgPost = JOptionPane.showInputDialog("Qual o post?");

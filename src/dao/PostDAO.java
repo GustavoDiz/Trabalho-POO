@@ -1,13 +1,12 @@
 package dao;
 
-import classes.Mensagem;
+import classes.Pessoa;
 import classes.Post;
 
 import java.util.Arrays;
 
 import static utils.Utils.*;
 
-import dao.SeguirDAO;
 public class PostDAO {
     private Post[] postsDB = new Post[500];
 
@@ -28,12 +27,12 @@ public class PostDAO {
         postsDB[index] = post;
     }
 
-    public Post[] getPostByUser(String name) {
+    public Post[] getPostByUser(Pessoa name) {
         Post[] userPosts = new Post[postsDB.length];
         int y = 0;
 
         for (int i = 0; i < postsDB.length; i++) {
-            if (postsDB[i] != null && postsDB[i].getUser().getNome().equals(name)) {
+            if (postsDB[i] != null && postsDB[i].getUser().equals(name)) {
                 userPosts[y++] = postsDB[i];
             }
         }
@@ -49,5 +48,22 @@ public class PostDAO {
         }
         return false;
     }
+
+    /*public Post[] getPostByFollowers(String[] users){
+        Post[] userPosts = new Post[10];
+        Post[] usernew = new Post[10];
+        userPosts = getPostByFollowers()
+
+        int y = 0;
+        for(int i = 0 ; i < 10; i++){
+
+            for(y = 0; y < 10; y++){
+                if (postsDB[i] != null && postsDB[i].getUser().getNome().equals()) {
+                    usernew[y] = postsDB[i];
+                }
+            }
+        }
+        return usernew;
+    }*/
 
 }
