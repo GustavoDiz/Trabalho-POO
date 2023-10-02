@@ -27,17 +27,19 @@ public class PostDAO {
         postsDB[index] = post;
     }
 
-    public Post[] getPostByUser(Pessoa name) {
+    public Post[] getPostByUser(Pessoa user) {
         Post[] userPosts = new Post[postsDB.length];
         int y = 0;
 
         for (int i = 0; i < postsDB.length; i++) {
-            if (postsDB[i] != null && postsDB[i].getUser().equals(name)) {
+            if (postsDB[i] != null && postsDB[i].getUser().equals(user)) {
                 userPosts[y++] = postsDB[i];
             }
         }
+        // Certifique-se de retornar um array com o tamanho correto
         return Arrays.copyOf(userPosts, y);
     }
+
     public boolean deletePost(String id){
         for (int i = 0; i < postsDB.length; i++) {
             if (postsDB[i].getId().equals(id)){

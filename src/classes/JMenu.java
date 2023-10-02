@@ -416,24 +416,27 @@ public class JMenu {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
             switch (op){
                 case 1:
+                    Pessoa[] seguindo = sgd.getFollowers(userlogged);
+                    StringBuilder postText = new StringBuilder("Posts das pessoas que você está seguindo:\n");
 
-                    Pessoa[] seguidores = sgd.getFollowers(userlogged);;
+                    for (Pessoa pessoa : seguindo) {
+                        if (pessoa != null) {
+                            Post[] posts = psts.getPostByUser(pessoa);
 
-                    for (int x = 0; x < seguidores.length ; x++){
-                        Post[] posts = psts.getPostByUser(seguidores[x]);
+                            if (posts.length != 0) {
+                                postText.append("\nPosts de ").append(pessoa.getNome()).append(":\n");
 
-                        if (posts.length != 0) {
-                            StringBuilder postText = new StringBuilder("Posts de " + seguidores[x] + ":\n");
-
-                            for (Post post : posts) {
-                                if (post != null) {
-                                    postText.append("\n").append(post.toString());
+                                for (Post post : posts) {
+                                    if (post != null) {
+                                        postText.append(post.toString()).append("\n");
+                                    }
                                 }
+                            } else {
+                                postText.append("\nNenhum post criado ainda pelo usuário ").append(pessoa.getNome()).append("\n");
                             }
-                            jConfirmation(postText.toString());
-                        }else
-                            jConfirmation("Nenhum post criado ainda pelo usuário");
+                        }
                     }
+                    jConfirmation(postText.toString());
                     break;
                 case 2:
                     String msgPost = JOptionPane.showInputDialog("Qual o post?");
