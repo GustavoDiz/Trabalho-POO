@@ -16,10 +16,9 @@ public class JMenu {
     PreferenciasDAO preferences = new PreferenciasDAO();
     MensagemDAO msgs = new MensagemDAO();
     PostDAO psts = new PostDAO();
-    SeguirDAO sgd = new SeguirDAO();
-    Pessoa userlogged;
     AlimentoReceitaDao FoodsReceiptDAO = new AlimentoReceitaDao();
     SeguirDAO follows = new SeguirDAO();
+    Pessoa userlogged;
     public JMenu(){
         TipoDieta[] array = dietType.getDietsDB();
         users.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
@@ -410,21 +409,16 @@ public class JMenu {
         txt.append("\n 3 - Ver Mensagens").append("(2)");
         txt.append("\n 4 - Enviar Mensagem");
         txt.append("\n 5 - Adicionar Amigo");
+        txt.append("\n 6 - Follows DEBUG");
         txt.append("\n 0 - Sair");
         int op;
         do {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
             switch (op){
                 case 1:
-                    Pessoa[] seguindo = sgd.getFollowers(userlogged);
-                    StringBuilder postText = new StringBuilder("Posts das pessoas que você está seguindo:\n");
-
-                    for (Pessoa pessoa : seguindo) {
-                        if (pessoa != null) {
-                            Post[] posts = psts.getPostByUser(pessoa);
-
-                            if (posts.length != 0) {
-                                postText.append("\nPosts de ").append(pessoa.getNome()).append(":\n");
+                    Pessoa[] seguidores = follows.getFollowers(userlogged);;
+                    for (int x = 0; x < seguidores.length ; x++){
+                        Post[] posts = psts.getPostByUser(seguidores[x]);
 
                                 for (Post post : posts) {
                                     if (post != null) {
@@ -434,6 +428,10 @@ public class JMenu {
                             } else {
                                 postText.append("\nNenhum post criado ainda pelo usuário ").append(pessoa.getNome()).append("\n");
                             }
+                            jConfirmation(postText.toString());
+                        }else {
+                            jConfirmation("Nenhum post criado ainda pelo usuário");
+                            break;
                         }
                     }
                     jConfirmation(postText.toString());
@@ -486,6 +484,14 @@ public class JMenu {
                         }
                     }else{
                         jError("Error,Insira Novamente.");
+                    }
+                    break;
+                case 6:
+                    for (Seguir s:
+                         follows.getFollowsDB()) {
+                        if (s != null){
+                            System.out.println(s);
+                        }
                     }
                     break;
                 default:
