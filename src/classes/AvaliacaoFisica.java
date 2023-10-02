@@ -1,6 +1,9 @@
 package classes;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
+import java.util.Locale;
 import java.util.UUID;
 
 public class AvaliacaoFisica {
@@ -25,7 +28,6 @@ public class AvaliacaoFisica {
     public String getId() {
         return id;
     }
-
 
     public Pessoa getUser() {
         return user;
@@ -165,30 +167,36 @@ public class AvaliacaoFisica {
     }
 
     public void calculateIMC(){
-        double imc = this.peso / Math.pow(this.altura,2);
-        this.setImc(imc);
+        DecimalFormat df = new DecimalFormat("0.00",new DecimalFormatSymbols(Locale.ENGLISH));
+        double imc = this.peso / Math.pow(this.altura /100,2);
+        double result = Double.parseDouble(df.format(imc));
+        this.setImc(result);
     }
 
     public void calculateTMB(double taxa){
         double result;
+        DecimalFormat df = new DecimalFormat("0.00",new DecimalFormatSymbols(Locale.ENGLISH));
         if (user.getSexo() == 'M'){
             result = taxa * (66 + ((13.27 * this.peso) + (5 * this.altura) - (6.8 * this.idade)));
         }else{
             result = taxa * (655 + ((9.6 * this.peso) + (1.8 * this.altura) - (4.7 * this.idade)));
         }
+        result = Double.parseDouble(df.format(result));
         this.setTbm(result);
     }
 
     public void calculateBF(){
         double result;
+        DecimalFormat df = new DecimalFormat("0.00",new DecimalFormatSymbols(Locale.ENGLISH));
         if(user.getSexo() == 'M'){
-            result = 86.010 * Math.log((this.abdomen - this.pescoco)/100) - 70.041 * Math.log(this.altura) + 36.76;
+            result = 86.010 * Math.log((this.abdomen - this.pescoco)) - 70.041 * Math.log(this.altura) + 36.76;
         }else{
-            result = 163.205 * Math.log((this.cintura + this.quadril)/100) - 97.684 * Math.log(this.altura) - 78.387;
+            result = 163.205 * Math.log((this.cintura + this.quadril)) - 97.684 * Math.log(this.altura) - 78.387;
         }
+        result = Double.parseDouble(df.format(result));
         this.setBf(result);
-        this.setMassaGorda((result/100) * this.peso);
-        this.setMassaMagra(this.massaGorda - this.peso);
+        this.setMassaGorda(Double.parseDouble(df.format((result/100) * this.peso)));
+        this.setMassaMagra(Double.parseDouble(df.format(this.peso - this.massaGorda)));
     }
 
     public String idealBodyFat(){
