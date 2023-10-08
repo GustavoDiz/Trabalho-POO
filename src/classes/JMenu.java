@@ -419,16 +419,19 @@ public class JMenu {
                     Pessoa[] seguidores = follows.getFollowers(userlogged);;
                     for (int x = 0; x < seguidores.length ; x++){
                         Post[] posts = psts.getPostByUser(seguidores[x]);
-                        if (posts.length != 0) {
-                            StringBuilder postText = new StringBuilder("Posts de " + seguidores[x].getNome() + ":\n");
-                            for (Post post : posts) {
-                                if (post != null) {
-                                    postText.append("\n").append(post.getMsg());
+
+                                for (Post post : posts) {
+                                    if (post != null) {
+                                        postText.append(post.toString()).append("\n");
+                                    }
                                 }
+                            } else {
+                                postText.append("\nNenhum post criado ainda pelo usuário ").append(pessoa.getNome()).append("\n");
                             }
                             jConfirmation(postText.toString());
                         }
                     }
+                    jConfirmation(postText.toString());
                     break;
                 case 2:
                     String msgPost = JOptionPane.showInputDialog("Qual o post?");
