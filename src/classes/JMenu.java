@@ -22,6 +22,7 @@ public class JMenu {
     Pessoa userlogged;
 
     public JMenu() {
+        TipoDieta[] array = dietType.getDietsDB();
         users.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
         users.addUsers(new Pessoa("Maria", 'F', "15-07-1985", "maria456", "senha456", 2));
         users.addUsers(new Pessoa("Carlos", 'M', "20-03-1978", "carlos789", "senha789", 1));
@@ -372,8 +373,6 @@ public class JMenu {
         jConfirmation(report);
     }
 
-    
-
     public void jSocial() {
         StringBuilder txt = new StringBuilder();
         txt.append("Bem Vindo a NutriSphere,").append(userlogged.getNome());
@@ -458,9 +457,9 @@ public class JMenu {
                     }
                     break;
                 case 6:
-                    for (Seguir s :
+                    for (Seguir s:
                             follows.getFollowsDB()) {
-                        if (s != null) {
+                        if (s != null){
                             System.out.println(s);
                         }
                     }
@@ -471,5 +470,5 @@ public class JMenu {
         } while (op != 0);
 
     }
-
 }
+
