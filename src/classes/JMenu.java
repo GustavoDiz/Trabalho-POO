@@ -1,6 +1,7 @@
 package classes;
 
 import dao.*;
+
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -16,7 +17,7 @@ public class JMenu {
     PreferenciasDAO preferences = new PreferenciasDAO();
     MensagemDAO msgs = new MensagemDAO();
     PostDAO psts = new PostDAO();
-    AlimentoReceitaDao FoodsReceiptDAO = new AlimentoReceitaDao();
+    AlimentoReceitaDao foods = new AlimentoReceitaDao();
     SeguirDAO follows = new SeguirDAO();
     Pessoa userlogged;
 
@@ -28,57 +29,20 @@ public class JMenu {
         users.addUsers(new Pessoa("Ana", 'F', "25-11-1995", "ana1011", "senha1011", 2));
         users.addUsers(new Pessoa("Paulo", 'M', "30-09-1980", "paulo1213", "senha1213", 1));
 
-        dietType.addDiet(new TipoDieta("Dieta 1", 50.0, 20.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
-        dietType.addDiet(new TipoDieta("Dieta 2", 40.0, 30.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
-        dietType.addDiet(new TipoDieta("Dieta 3", 60.0, 10.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
-        dietType.addDiet(new TipoDieta("Dieta 4", 70.0, 10.0, 20.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
-        dietType.addDiet(new TipoDieta("Dieta 5", 30.0, 40.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+        dietType.addDiet(new TipoDieta("Equilibrada", 40.0, 30.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+        dietType.addDiet(new TipoDieta("Low Carb", 30.0, 30.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+        dietType.addDiet(new TipoDieta("Cetogênica", 60.0, 10.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
+        dietType.addDiet(new TipoDieta("Atleta", 70.0, 10.0, 20.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
 
         msgs.addMessage(new Mensagem(users.getUserById(1), users.getUserById(2), "Teste 0"));
         msgs.addMessage(new Mensagem(users.getUserById(2), users.getUserById(1), "Teste 1"));
         msgs.addMessage(new Mensagem(users.getUserById(1), users.getUserById(2), "Teste 2"));
         msgs.addMessage(new Mensagem(users.getUserById(2), users.getUserById(1), "Teste 3"));
 
-        for (int i = 1; i <= 3; i++) {
-            AlimentoReceita alimentoPadrao = new AlimentoReceita();
-            double valorcal = 0;
+        foods.addAlPe(new AlimentoReceita("Frango Grelhado", 0.0, 31.0, 3.6, 100.0, "Musculo"));
+        foods.addAlPe(new AlimentoReceita("Arroz", 40.0, 31.0, 3.6, 100.0, "Musculo"));
+        foods.addAlPe(new AlimentoReceita("Alface", 2.0, 1.0, 0.0, 100.0, "Musculo"));
 
-            switch (i) {
-                case 1:
-                    alimentoPadrao.setNome("Frango grelhado");
-                    alimentoPadrao.setCarboidratos(0.0);
-                    alimentoPadrao.setProteinas(31.0);
-                    alimentoPadrao.setGorduras(3.6);
-                    valorcal = 4 * alimentoPadrao.getCarboidratos() + 4 * alimentoPadrao.getProteinas() + 9 * alimentoPadrao.getGorduras();
-                    alimentoPadrao.setCalorias(valorcal);
-                    alimentoPadrao.setPorcao(100.0);
-                    alimentoPadrao.setTipoUsuario("Musculo");
-                    break;
-
-                case 2:
-                    alimentoPadrao.setNome("Arroz");
-                    alimentoPadrao.setCarboidratos(40.0);
-                    alimentoPadrao.setProteinas(5.0);
-                    alimentoPadrao.setGorduras(1.0);
-                    valorcal = 4 * alimentoPadrao.getCarboidratos() + 4 * alimentoPadrao.getProteinas() + 9 * alimentoPadrao.getGorduras();
-                    alimentoPadrao.setCalorias(valorcal);
-                    alimentoPadrao.setPorcao(100.0);
-                    alimentoPadrao.setTipoUsuario("Musculo");
-                    break;
-
-                case 3:
-                    alimentoPadrao.setNome("Alface");
-                    alimentoPadrao.setCarboidratos(2.0);
-                    alimentoPadrao.setProteinas(1.0);
-                    alimentoPadrao.setGorduras(0.0);
-                    valorcal = 4 * alimentoPadrao.getCarboidratos() + 4 * alimentoPadrao.getProteinas() + 9 * alimentoPadrao.getGorduras();
-                    alimentoPadrao.setCalorias(valorcal);
-                    alimentoPadrao.setPorcao(50.0);
-                    alimentoPadrao.setTipoUsuario("Emagrecer");
-                    break;
-            }
-            FoodsReceiptDAO.addAlPe(alimentoPadrao);
-        }
         jMenuLogin();
     }
 
@@ -162,6 +126,13 @@ public class JMenu {
             switch (op) {
                 case 1:
                     jTypeDiet();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    jAlimento();
                     break;
                 case 5:
                     jPreferences();
@@ -416,23 +387,23 @@ public class JMenu {
         int op;
         do {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
-            switch (op){
+            switch (op) {
                 case 1:
                     Pessoa[] seguidores = follows.getFollowers(userlogged);
-                        for (int x = 0; x < seguidores.length ; x++){
-                            Post[] posts = psts.getPostByUser(seguidores[x]);
-                            if (posts.length != 0) {
-                                StringBuilder postText = new StringBuilder("Posts de " + seguidores[x].getNome() + ":\n");
-                                for (Post post : posts) {
-                                    if (post != null) {
-                                        postText.append("\n").append(post.getMsg());
-                                    }
+                    for (int x = 0; x < seguidores.length; x++) {
+                        Post[] posts = psts.getPostByUser(seguidores[x]);
+                        if (posts.length != 0) {
+                            StringBuilder postText = new StringBuilder("Posts de " + seguidores[x].getNome() + ":\n");
+                            for (Post post : posts) {
+                                if (post != null) {
+                                    postText.append("\n").append(post.getMsg());
                                 }
-                                jConfirmation(postText.toString());
-                            }else{
-                                jError("Posts Vazios");
                             }
+                            jConfirmation(postText.toString());
+                        } else {
+                            jError("Posts Vazios");
                         }
+                    }
                     break;
                 case 2:
                     String msgPost = JOptionPane.showInputDialog("Qual o post?");
@@ -443,19 +414,19 @@ public class JMenu {
                     break;
                 case 3:
                     Mensagem[] msg = msgs.getMessagesByUser(userlogged.getNome());
-                    for (Mensagem text:
+                    for (Mensagem text :
                             msg) {
-                        if (text != null){
-                            System.out.println("\n"+text.toString());
+                        if (text != null) {
+                            System.out.println("\n" + text.toString());
                         }
                     }
                     break;
                 case 4:
                     String userName = JOptionPane.showInputDialog("Para Quem Gostaria de Enviar a Mensagem");
                     Pessoa user = users.getUser(userName);
-                    if (user == null){
+                    if (user == null) {
                         jError("Usuario não encontrado, porfavor insira novamente");
-                    }else{
+                    } else {
                         String msgText = JOptionPane.showInputDialog("Qual é a mensagem");
                         Mensagem newMsg = new Mensagem();
                         newMsg.setSender(userlogged);
@@ -466,10 +437,10 @@ public class JMenu {
                     break;
                 case 5:
                     String username = JOptionPane.showInputDialog("Quem Gostaria de Adicionar:>_");
-                    if (username != null){
+                    if (username != null) {
                         Pessoa u;
                         u = users.getUser(username);
-                        if (u != null){
+                        if (u != null) {
                             Seguir follow = new Seguir();
                             follow.setFollower(userlogged);
                             follow.setFollowed(u);
@@ -477,10 +448,10 @@ public class JMenu {
                             follow.setDataModificacao(LocalDate.now());
                             follows.addFollow(follow);
                             jConfirmation("Amigo adicionado com sucesso.");
-                        }else{
+                        } else {
                             jError("Error ao adicionar o amigo,Insira Novamente.");
                         }
-                    }else{
+                    } else {
                         jError("Error,Insira Novamente.");
                     }
                     break;
