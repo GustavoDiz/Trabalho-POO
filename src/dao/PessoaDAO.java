@@ -25,6 +25,9 @@ public class PessoaDAO {
     }
     public Pessoa getUser(String pessoa){
         for (int i = 0; i < users.length; i++) {
+            if (users[i] == null){
+                break;
+            }
             if (users[i].getNome().equals(pessoa)){
                 return users[i];
             }

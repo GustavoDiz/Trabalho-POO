@@ -3,9 +3,6 @@ package dao;
 import classes.Pessoa;
 import classes.Post;
 import classes.Seguir;
-
-import java.util.Arrays;
-
 import static utils.Utils.*;
 
 public class SeguirDAO {
@@ -64,8 +61,11 @@ public class SeguirDAO {
                     followedUsers[followedIndex++] = seguir.getFollowed();
                 }
             }
+            if (followsDB[i].getFollower().equals(user)) {
+                followers[i] = followsDB[i].getFollowed();
+            }
 
-            return Arrays.copyOf(followedUsers, followedIndex);
+            followers = rearrangeArray(followers);
+            return  followers;
     }
-
 }
