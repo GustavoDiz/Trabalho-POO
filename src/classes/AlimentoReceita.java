@@ -16,9 +16,25 @@ public class AlimentoReceita {
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
+    public  AlimentoReceita(String nome, double carboidratos, double proteinas, double gorduras, double porcao, String tipoUsuario){
+        this.id = fixid++;
+        this.nome = nome;
+        this.carboidratos = carboidratos;
+        this.proteinas = proteinas;
+        this.gorduras = gorduras;
+        this.calorias = (4*carboidratos) + (4*proteinas) + (9*gorduras);
+        this.porcao = 100.0;
+        this.tipoUsuario = tipoUsuario;
+        this.dataCriacao = LocalDate.now();
+        this.dataModificacao = LocalDate.now();
+    }
+
     public AlimentoReceita(){
         this.id = fixid++;
     }
+
+
+
     public int getId(){
         return id;
     }
@@ -69,8 +85,8 @@ public class AlimentoReceita {
         this.gorduras = gorduras;
     }
 
-    public void setCalorias(double calorias) {
-        this.calorias = calorias;
+    public void setCalorias() {
+        this.calorias = (4*carboidratos) + (4*proteinas) + (9*gorduras);
     }
 
     public void setPorcao(double porcao){

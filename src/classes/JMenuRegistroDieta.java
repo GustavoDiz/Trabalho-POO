@@ -1,32 +1,29 @@
 package classes;
-import classes.JmenuAlimentoReceita;
-import classes.JMenu;
 import javax.swing.*;
 import java.time.LocalDate;
-import static utils.Utils.*;
-import dao.AlimentoReceitaDao;
+
 import dao.RegistroDietaDAO;
 
 
-public class jmenuRegistroDieta {
-    static RegistroDietaDAO dietss = new RegistroDietaDAO();
+public class JMenuRegistroDieta {
+    static RegistroDietaDAO diets = new RegistroDietaDAO();
     static RegistroDieta dietss2 = new RegistroDieta();
     private static void createDiet() {
-        RegistroDieta newdiet = new RegistroDieta();
+        RegistroDieta newDiet = new RegistroDieta();
         {
-            newdiet.setDiet(JOptionPane.showInputDialog("Insira o nome da dieta"));
-            newdiet.setGoal(JOptionPane.showInputDialog("Digite sua meta"));
-            newdiet.setnMeals(Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade de refeições")));
-            newdiet.setDataCriacao(LocalDate.now());
-            newdiet.setDataModificacao(LocalDate.now());
-            dietss.addRegister(newdiet);
+            newDiet.setDiet(JOptionPane.showInputDialog("Insira o nome da dieta"));
+            newDiet.setGoal(JOptionPane.showInputDialog("Digite sua meta"));
+            newDiet.setnMeals(Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade de refeições")));
+            newDiet.setDataCriacao(LocalDate.now());
+            newDiet.setDataModificacao(LocalDate.now());
+            diets.addRegister(newDiet);
             JOptionPane.showMessageDialog(null, "Dieta criada com sucesso");
         }
     }
     public static void jmenuUpdateDiet(){
         int opc2 = 0;
         String id = JOptionPane.showInputDialog("Digite o ID do alimento ou receita que deseja atualizar");
-        dietss2 = dietss.getRegisterByIdDiet(id);
+        dietss2 = diets.getRegisterByIdDiet(id);
         do {
             if (dietss2 != null){
                 int opc = Integer.parseInt(JOptionPane.showInputDialog("Qual campo deseja atualizar?\n" +
