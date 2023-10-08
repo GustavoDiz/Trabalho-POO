@@ -419,19 +419,14 @@ public class JMenu {
                     Pessoa[] seguidores = follows.getFollowers(userlogged);;
                     for (int x = 0; x < seguidores.length ; x++){
                         Post[] posts = psts.getPostByUser(seguidores[x]);
-
                         if (posts.length != 0) {
-                            StringBuilder postText = new StringBuilder("Posts de " + seguidores[x] + ":\n");
-
+                            StringBuilder postText = new StringBuilder("Posts de " + seguidores[x].getNome() + ":\n");
                             for (Post post : posts) {
                                 if (post != null) {
-                                    postText.append("\n").append(post.toString());
+                                    postText.append("\n").append(post.getMsg());
                                 }
                             }
                             jConfirmation(postText.toString());
-                        }else {
-                            jConfirmation("Nenhum post criado ainda pelo usuário");
-                            break;
                         }
                     }
                     break;
@@ -469,13 +464,14 @@ public class JMenu {
                 case 5:
                     String username = JOptionPane.showInputDialog("Quem Gostaria de Adicionar:>_");
                     if (username != null){
-                        Pessoa u = users.getUser(username);
-                        Seguir follow = new Seguir();
-                        follow.setFollower(userlogged);
-                        follow.setFollowed(u);
-                        follow.setDataCriacao(LocalDate.now());
-                        follow.setDataModificacao(LocalDate.now());
-                        if (follow != null){
+                        Pessoa u;
+                        u = users.getUser(username);
+                        if (u != null){
+                            Seguir follow = new Seguir();
+                            follow.setFollower(userlogged);
+                            follow.setFollowed(u);
+                            follow.setDataCriacao(LocalDate.now());
+                            follow.setDataModificacao(LocalDate.now());
                             follows.addFollow(follow);
                             jConfirmation("Amigo adicionado com sucesso.");
                         }else{

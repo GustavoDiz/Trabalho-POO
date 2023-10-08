@@ -58,8 +58,8 @@ public class SeguirDAO {
             if (followsDB[i] == null) {
                 break;
             }
-            if (followsDB[i].getFollowed().equals(user)) {
-                followers[i] = followsDB[i].getFollower();
+            if (followsDB[i].getFollower().equals(user)) {
+                followers[i] = followsDB[i].getFollowed();
             }
         }
         return  followers;
