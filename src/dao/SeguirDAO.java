@@ -1,6 +1,7 @@
 package dao;
 
 import classes.Pessoa;
+import classes.Post;
 import classes.Seguir;
 
 import java.util.Arrays;
@@ -53,16 +54,18 @@ public class SeguirDAO {
         return qtFollowers;
     }
     public Pessoa[] getFollowers(Pessoa user){
-        Pessoa[] followers = new Pessoa[10];
-        for (int i = 0; i < followsDB.length; i++) {
-            if (followsDB[i] == null) {
-                break;
+            SeguirDAO seguirDAO = new SeguirDAO();
+            Seguir[] follows = seguirDAO.getFollowsDB();
+            Pessoa[] followedUsers = new Pessoa[follows.length];
+            int followedIndex = 0;
+
+            for (Seguir seguir : follows) {
+                if (seguir != null && seguir.getFollower().equals(user)) {
+                    followedUsers[followedIndex++] = seguir.getFollowed();
+                }
             }
-            if (followsDB[i].getFollowed().equals(user)) {
-                followers[i] = followsDB[i].getFollower();
-            }
-        }
-        return  followers;
+
+            return Arrays.copyOf(followedUsers, followedIndex);
     }
 
 }

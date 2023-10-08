@@ -19,7 +19,8 @@ public class JMenu {
     AlimentoReceitaDao FoodsReceiptDAO = new AlimentoReceitaDao();
     SeguirDAO follows = new SeguirDAO();
     Pessoa userlogged;
-    public JMenu(){
+
+    public JMenu() {
         TipoDieta[] array = dietType.getDietsDB();
         users.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
         users.addUsers(new Pessoa("Maria", 'F', "15-07-1985", "maria456", "senha456", 2));
@@ -33,10 +34,10 @@ public class JMenu {
         dietType.addDiet(new TipoDieta("Dieta 4", 70.0, 10.0, 20.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
         dietType.addDiet(new TipoDieta("Dieta 5", 30.0, 40.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
 
-        msgs.addMessage(new Mensagem(users.getUserById(1),users.getUserById(2),"Teste 0"));
-        msgs.addMessage(new Mensagem(users.getUserById(2),users.getUserById(1),"Teste 1"));
-        msgs.addMessage(new Mensagem(users.getUserById(1),users.getUserById(2),"Teste 2"));
-        msgs.addMessage(new Mensagem(users.getUserById(2),users.getUserById(1),"Teste 3"));
+        msgs.addMessage(new Mensagem(users.getUserById(1), users.getUserById(2), "Teste 0"));
+        msgs.addMessage(new Mensagem(users.getUserById(2), users.getUserById(1), "Teste 1"));
+        msgs.addMessage(new Mensagem(users.getUserById(1), users.getUserById(2), "Teste 2"));
+        msgs.addMessage(new Mensagem(users.getUserById(2), users.getUserById(1), "Teste 3"));
 
         for (int i = 1; i <= 3; i++) {
             AlimentoReceita alimentoPadrao = new AlimentoReceita();
@@ -81,9 +82,9 @@ public class JMenu {
         jMenuLogin();
     }
 
-    public void jMenuLogin(){
+    public void jMenuLogin() {
         int op;
-        String[] options = {"Login","Cadastro","Sair"};
+        String[] options = {"Login", "Cadastro", "Sair"};
         do {
             op = JOptionPane.showOptionDialog(null, "Bem Vindo a Nutrisoft!", "Boas Vindas!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
             System.out.println(op);
@@ -104,10 +105,10 @@ public class JMenu {
                     op = 2;
                     break;
             }
-        }while (op != 2);
+        } while (op != 2);
     }
 
-    public void jMenu(){
+    public void jMenu() {
 
         String txt = "Bem-Vindo " + userlogged.getNome() + ", " +
                 "\n O que deseja? " +
@@ -120,7 +121,7 @@ public class JMenu {
         int op;
         do {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
-            switch (op){
+            switch (op) {
                 case 0:
                     userlogged = null;
                     op = 0;
@@ -144,7 +145,7 @@ public class JMenu {
                     jError("Opção Inválida, Por favor insira novamente.");
                     break;
             }
-        }while (op!=0);
+        } while (op != 0);
     }
 
     private void jDiet() {
@@ -156,9 +157,9 @@ public class JMenu {
                 "\n 4 - Alimentos" +
                 "\n 5 - Preferencias " +
                 "\n 0 - Sair";
-        do{
+        do {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
-            switch (op){
+            switch (op) {
                 case 1:
                     jTypeDiet();
                     break;
@@ -166,7 +167,7 @@ public class JMenu {
                     jPreferences();
                     break;
             }
-        }while (op!=0);
+        } while (op != 0);
     }
 
     private void jPreferences() {
@@ -174,9 +175,9 @@ public class JMenu {
         String txt = "O que deseja? " +
                 "\n 1 - Criar Preferencias " +
                 "\n 2 - Ver suas Preferencias";
-        do{
+        do {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
-            switch (op){
+            switch (op) {
                 case 1:
                     jCreatePreference();
                     break;
@@ -187,14 +188,14 @@ public class JMenu {
                     op = 3;
                     break;
             }
-        }while (op != 3);
+        } while (op != 3);
     }
 
     private void jMyPreferences() {
         Preferencias[] myPreferences = preferences.getPreferencesByUser(userlogged);
-        for (Preferencias e:
-             myPreferences) {
-            if (e != null){
+        for (Preferencias e :
+                myPreferences) {
+            if (e != null) {
                 jConfirmation(e.toString());
             }
         }
@@ -204,9 +205,9 @@ public class JMenu {
         Preferencias newPreference = new Preferencias();
         String nameFood = JOptionPane.showInputDialog("Nome do Alimento");
         AlimentoReceita food = foods.searchNameFood(nameFood);
-        if (food != null){
+        if (food != null) {
             newPreference.setFood(food);
-        }else {
+        } else {
             jError("Comida nao encontrada, Por favor Insira novamente");
         }
         newPreference.setUser(userlogged);
@@ -223,7 +224,7 @@ public class JMenu {
                 "\n 3 - Sair";
         do {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
-            switch (op){
+            switch (op) {
                 case 1:
                     jCreateTypeDiet();
                     break;
@@ -234,14 +235,14 @@ public class JMenu {
                     op = 3;
                     break;
             }
-        }while(op != 3);
+        } while (op != 3);
     }
 
     private void jShowTypesDiet() {
         TipoDieta[] array = dietType.getDietsDB();
-        for (TipoDieta e:
-             array) {
-            if (e != null){
+        for (TipoDieta e :
+                array) {
+            if (e != null) {
                 jConfirmation(e.toString());
             }
         }
@@ -258,13 +259,13 @@ public class JMenu {
         dietType.addDiet(newDietType);
     }
 
-    public  Pessoa jLogin(){
+    public Pessoa jLogin() {
         String username = JOptionPane.showInputDialog("Login");
         String password = JOptionPane.showInputDialog("Senha");
-        for (Pessoa user:
+        for (Pessoa user :
                 users.getUsers()) {
-            if (user == null){
-                return  null;
+            if (user == null) {
+                return null;
             }
             if (user.getLogin().equals(username) && user.getSenha().equals(password)) {
                 jConfirmation("Login feito com Sucesso!");
@@ -274,7 +275,7 @@ public class JMenu {
         return null;
     }
 
-    public   void jUpdate(){
+    public void jUpdate() {
         int op;
         String menuUpdate = "Bem-Vindo " + userlogged.getNome()
                 + "\n Qual seria o campo a ser atualizado? "
@@ -313,14 +314,14 @@ public class JMenu {
                     jError("Opção Invalida, Por favor insira novamente.");
                     break;
             }
-        }while (op != 7);
+        } while (op != 7);
     }
 
-    public   void jRegister(){
+    public void jRegister() {
         Pessoa newUser = new Pessoa();
         newUser.setNome(JOptionPane.showInputDialog("Insira o nome"));
         newUser.setSexo(JOptionPane.showInputDialog("Insira o novo sexo \n M - Masculino \n F - Feminino").charAt(0));
-        newUser.setNascimento(LocalDate.parse(JOptionPane.showInputDialog("Insira a nova data de nascimento Exemplo 01/01/2001"),DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        newUser.setNascimento(LocalDate.parse(JOptionPane.showInputDialog("Insira a nova data de nascimento Exemplo 01/01/2001"), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         newUser.setLogin(JOptionPane.showInputDialog("Insira o novo login"));
         newUser.setSenha(JOptionPane.showInputDialog("Insira o Novo Senha"));
         newUser.setTipoUsuario(Integer.parseInt(JOptionPane.showInputDialog("Insira o novo tipo de usuário")));
@@ -329,23 +330,23 @@ public class JMenu {
         users.addUsers(newUser);
     }
 
-    public void jMenuPhysicalAssessment(){
+    public void jMenuPhysicalAssessment() {
         String msg = "O Que Gostaria de Fazer? " +
                 "\n 1 - Fazer Avaliação Física" +
                 "\n 2 - Ver Avaliações Antigas" +
                 "\n 0 - Sair";
         int op;
-        do{
+        do {
             op = Integer.parseInt(JOptionPane.showInputDialog(msg));
-            switch (op){
+            switch (op) {
                 case 1:
                     jPhysicalAssessment();
                     break;
                 case 2:
                     String txt = "";
                     AvaliacaoFisica[] teste = physical.getPhysicalsByUser(userlogged);
-                    for (AvaliacaoFisica avalicao:
-                         teste) {
+                    for (AvaliacaoFisica avalicao :
+                            teste) {
                         if (avalicao != null) {
                             txt += "\n " + avalicao.toString();
                         }
@@ -358,10 +359,10 @@ public class JMenu {
                     jError("Opção Inválida, Por favor Insira novamente");
                     break;
             }
-        }while (op!=0);
+        } while (op != 0);
     }
 
-    public  void jPhysicalAssessment(){
+    public void jPhysicalAssessment() {
         String tax = "Qual é sua taxa de atividade: \n 1.2 - Sedentário (pouco ou nenhum exercicio)" +
                 "\n 1,375: levemente ativo (exercício leve 1 a 3 dias por semana) " +
                 "\n 1,55: moderadamente ativo (exercício moderado 6 a 7 dias por semana) " +
@@ -385,7 +386,7 @@ public class JMenu {
         jPhysicalReport(newAssessment);
     }
 
-    public void jPhysicalReport(AvaliacaoFisica avaliacaoFisica){
+    public void jPhysicalReport(AvaliacaoFisica avaliacaoFisica) {
         String type = avaliacaoFisica.idealBodyFat();
         String report = "Relatório Avaliação Física " +
                 "\n Nome " + avaliacaoFisica.getUser().getNome() +
@@ -400,7 +401,8 @@ public class JMenu {
                 "\n Avalição Gordura Corporal " + type;
         jConfirmation(report);
     }
-    public void jSocial(){
+
+    public void jSocial() {
         StringBuilder txt = new StringBuilder();
         txt.append("Bem Vindo a NutriSphere,").append(userlogged.getNome());
         txt.append("\n Seguidores: ").append(follows.followers(userlogged));
@@ -420,13 +422,13 @@ public class JMenu {
                     for (int x = 0; x < seguidores.length ; x++){
                         Post[] posts = psts.getPostByUser(seguidores[x]);
 
-                                for (Post post : posts) {
-                                    if (post != null) {
-                                        postText.append(post.toString()).append("\n");
-                                    }
+                        if (posts.length != 0) {
+                            StringBuilder postText = new StringBuilder("Posts de " + seguidores[x] + ":\n");
+
+                            for (Post post : posts) {
+                                if (post != null) {
+                                    postText.append("\n").append(post.toString());
                                 }
-                            } else {
-                                postText.append("\nNenhum post criado ainda pelo usuário ").append(pessoa.getNome()).append("\n");
                             }
                             jConfirmation(postText.toString());
                         }else {
@@ -434,7 +436,6 @@ public class JMenu {
                             break;
                         }
                     }
-                    jConfirmation(postText.toString());
                     break;
                 case 2:
                     String msgPost = JOptionPane.showInputDialog("Qual o post?");
@@ -488,7 +489,7 @@ public class JMenu {
                     break;
                 case 6:
                     for (Seguir s:
-                         follows.getFollowsDB()) {
+                            follows.getFollowsDB()) {
                         if (s != null){
                             System.out.println(s);
                         }
@@ -497,8 +498,8 @@ public class JMenu {
                 default:
                     op = 0;
             }
-        }while (op != 0);
+        } while (op != 0);
 
     }
-
 }
+

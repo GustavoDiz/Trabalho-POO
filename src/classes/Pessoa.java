@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.time.LocalDate;
 import java.util.Objects;
+import dao.PostDAO;
 
 /**
  *
