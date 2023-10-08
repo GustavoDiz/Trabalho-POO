@@ -4,6 +4,7 @@ import classes.Pessoa;
 
 import javax.swing.*;
 import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class Utils {
     public static <T> int  findEmptyPosition(T[] array){
@@ -24,7 +25,7 @@ public class Utils {
             }
         }
 
-        T[] newArray = (T[]) new Object[qtNotNull];
+        T[] newArray = Arrays.copyOf(array, qtNotNull);
         int indexNewArray = 0;
 
         for (T element : array){

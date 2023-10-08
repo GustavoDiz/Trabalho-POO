@@ -36,8 +36,8 @@ public class PostDAO {
                 userPosts[y++] = postsDB[i];
             }
         }
-        // Certifique-se de retornar um array com o tamanho correto
-        return Arrays.copyOf(userPosts, y);
+        userPosts = rearrangeArray(userPosts);
+        return userPosts;
     }
 
     public boolean deletePost(String id){

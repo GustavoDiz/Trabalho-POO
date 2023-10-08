@@ -2,9 +2,6 @@ package dao;
 
 import classes.Pessoa;
 import classes.Seguir;
-
-import java.util.Arrays;
-
 import static utils.Utils.*;
 
 public class SeguirDAO {
@@ -62,6 +59,7 @@ public class SeguirDAO {
                 followers[i] = followsDB[i].getFollowed();
             }
         }
+        followers = rearrangeArray(followers);
         return  followers;
     }
 

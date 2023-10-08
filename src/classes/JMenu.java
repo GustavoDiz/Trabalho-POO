@@ -416,22 +416,21 @@ public class JMenu {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
             switch (op){
                 case 1:
-                    Pessoa[] seguidores = follows.getFollowers(userlogged);;
-                    for (int x = 0; x < seguidores.length ; x++){
-                        Post[] posts = psts.getPostByUser(seguidores[x]);
-
+                    Pessoa[] seguidores = follows.getFollowers(userlogged);
+                        for (int x = 0; x < seguidores.length ; x++){
+                            Post[] posts = psts.getPostByUser(seguidores[x]);
+                            if (posts.length != 0) {
+                                StringBuilder postText = new StringBuilder("Posts de " + seguidores[x].getNome() + ":\n");
                                 for (Post post : posts) {
                                     if (post != null) {
-                                        postText.append(post.toString()).append("\n");
+                                        postText.append("\n").append(post.getMsg());
                                     }
                                 }
-                            } else {
-                                postText.append("\nNenhum post criado ainda pelo usuário ").append(pessoa.getNome()).append("\n");
+                                jConfirmation(postText.toString());
+                            }else{
+                                jError("Posts Vazios");
                             }
-                            jConfirmation(postText.toString());
                         }
-                    }
-                    jConfirmation(postText.toString());
                     break;
                 case 2:
                     String msgPost = JOptionPane.showInputDialog("Qual o post?");
