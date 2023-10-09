@@ -34,4 +34,13 @@ public class TipoDietaDAO {
         }
         return false;
     }
+
+    public TipoDieta getDietByName(String dietTypeName) {
+        for (int i = 0; i < dietsDB.length; i++) {
+            if (dietsDB[i].getNome().equals(dietTypeName)){
+                return dietsDB[i];
+            }
+        }
+        return null;
+    }
 }

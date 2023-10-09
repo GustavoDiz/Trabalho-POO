@@ -7,8 +7,8 @@ public class RegistroDieta {
     private String id = UUID.randomUUID().toString();
     private Pessoa user;
     private  AvaliacaoFisica physicalAssessment;
-    private String diet;
-    private String goal;
+    private TipoDieta diet;
+    private int goal;
     private double calories;
     private int nMeals;
     private LocalDate dataCriacao;
@@ -38,19 +38,19 @@ public class RegistroDieta {
         this.physicalAssessment = physicalAssessment;
     }
 
-    public String getDiet() {
+    public TipoDieta getDiet() {
         return diet;
     }
 
-    public void setDiet(String diet) {
+    public void setDiet(TipoDieta diet) {
         this.diet = diet;
     }
 
-    public String getGoal() {
+    public int getGoal() {
         return goal;
     }
 
-    public void setGoal(String goal) {
+    public void setGoal(int goal) {
         this.goal = goal;
     }
 

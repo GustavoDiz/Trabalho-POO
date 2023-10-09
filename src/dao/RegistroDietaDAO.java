@@ -1,6 +1,7 @@
 package dao;
 
 import classes.AlimentoReceita;
+import classes.Pessoa;
 import classes.RegistroDieta;
 
 import java.util.Objects;
@@ -37,4 +38,15 @@ public class RegistroDietaDAO {
         return false;
     }
 
+    public RegistroDieta getRegisterByUser(Pessoa user) {
+        for (int i = 0; i < registerDB.length; i++) {
+            if (registerDB[i] == null){
+                break;
+            }
+            if (registerDB[i].getUser().equals(user)){
+                return registerDB[i];
+            }
+        }
+        return null;
+    }
 }

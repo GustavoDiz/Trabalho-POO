@@ -17,12 +17,11 @@ public class JMenu {
     PreferenciasDAO preferences = new PreferenciasDAO();
     MensagemDAO msgs = new MensagemDAO();
     PostDAO psts = new PostDAO();
-    AlimentoReceitaDao foods = new AlimentoReceitaDao();
+    RegistroDietaDAO diets = new RegistroDietaDAO();
     SeguirDAO follows = new SeguirDAO();
     Pessoa userlogged;
 
     public JMenu() {
-        TipoDieta[] array = dietType.getDietsDB();
         users.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
         users.addUsers(new Pessoa("Maria", 'F', "15-07-1985", "maria456", "senha456", 2));
         users.addUsers(new Pessoa("Carlos", 'M', "20-03-1978", "carlos789", "senha789", 1));
@@ -128,17 +127,76 @@ public class JMenu {
                     jTypeDiet();
                     break;
                 case 2:
+                    jRegisterDiet();
                     break;
                 case 3:
                     break;
                 case 4:
-                    jAlimento();
+
                     break;
                 case 5:
                     jPreferences();
                     break;
             }
         } while (op != 0);
+    }
+
+    private void jRegisterDiet(){
+        int op;
+        StringBuilder txt = new StringBuilder();
+        txt.append("Menu Dieta, Selecione a opção");
+        txt.append("\n 1 - Ver Dieta Atual");
+        txt.append("\n 2 - Adicionar Dieta");
+        txt.append("\n 3 - Atualizar Dieta");
+        txt.append("\n 0 - Sair");
+        do{
+            op = Integer.parseInt(JOptionPane.showInputDialog(txt));
+            switch (op){
+                case 1:
+                    RegistroDieta currentDiet = diets.getRegisterByUser(userlogged);
+                    if (currentDiet == null){
+                        jError("Você não possui nenhuma dieta.");
+                    }else{
+                        jConfirmation(currentDiet.toString());
+                    }
+                    break;
+                case 2:
+                    if (diets.getRegisterByUser(userlogged) == null){
+                        RegistroDieta newDiet = new RegistroDieta();
+                        newDiet.setUser(userlogged);
+                        newDiet.setPhysicalAssessment(physical.getPhysicalByUser(userlogged));
+                        String dietTypeName = JOptionPane.showInputDialog("Qual o Nome do Tipo de Dieta");
+                        newDiet.setDiet(dietType.getDietByName(dietTypeName));
+                        newDiet.setGoal(Integer.parseInt(JOptionPane.showInputDialog("Qual seu objetivo: \n 1 - Manter o Peso \n 2 - Perder Peso \n 3 - Ganhar Peso")));
+                        double calories = (4 * newDiet.getDiet().getCarboidrato()) + (4 * newDiet.getDiet().getProteina()) + (9 * newDiet.getDiet().getGordura());
+                        newDiet.setCalories(calories);
+                        newDiet.setnMeals(Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Refeições")));
+                        newDiet.setDataCriacao(LocalDate.now());
+                        newDiet.setDataModificacao(LocalDate.now());
+                        diets.addRegister(newDiet);
+                    }else{
+                        jError("Ja adicioda a Dieta,se tiver alguma alteração Atualize as Informações");
+                    }
+                    break;
+                case 3:
+                    RegistroDieta dietUpdated = diets.getRegisterByUser(userlogged);
+                    dietUpdated.setDiet(dietType.getDietByName(JOptionPane.showInputDialog("Qual o Nome do Tipo de Dieta")));
+                    dietUpdated.setDataModificacao(LocalDate.now());
+                    break;
+                case 4:
+                    for (int i = 0; i < diets.getRegisterDB().length; i++) {
+                        if (diets.getRegisterDB()[i] != null){
+                            System.out.println( diets.getRegisterDB()[i].toString());
+                        }
+                    }
+                    break;
+                case 0:
+                    break;
+                default:
+                    jError("Opção Inválida,Insira novamente");
+                    break;
+            }
+        }while (op != 0);
     }
 
     private void jPreferences() {

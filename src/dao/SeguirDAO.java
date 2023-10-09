@@ -3,6 +3,7 @@ package dao;
 import classes.Pessoa;
 import classes.Post;
 import classes.Seguir;
+
 import static utils.Utils.*;
 
 public class SeguirDAO {
@@ -50,22 +51,18 @@ public class SeguirDAO {
         }
         return qtFollowers;
     }
-    public Pessoa[] getFollowers(Pessoa user){
-            SeguirDAO seguirDAO = new SeguirDAO();
-            Seguir[] follows = seguirDAO.getFollowsDB();
-            Pessoa[] followedUsers = new Pessoa[follows.length];
-            int followedIndex = 0;
 
-            for (Seguir seguir : follows) {
-                if (seguir != null && seguir.getFollower().equals(user)) {
-                    followedUsers[followedIndex++] = seguir.getFollowed();
-                }
+    public Pessoa[] getFollowers(Pessoa user) {
+        Pessoa[] followers = new Pessoa[10];
+        for (int i = 0; i < followsDB.length; i++) {
+            if (followsDB[i] == null) {
+                break;
             }
             if (followsDB[i].getFollower().equals(user)) {
                 followers[i] = followsDB[i].getFollowed();
             }
-
-            followers = rearrangeArray(followers);
-            return  followers;
+        }
+        followers = rearrangeArray(followers);
+        return followers;
     }
 }

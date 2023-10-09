@@ -80,7 +80,7 @@ public class JmenuAlimentoReceita {
             newreceipss.setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de de proteinas desse alimento")));
             newreceipss.setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de gorduras desse alimento")));
             double valorcal = 4 * newreceipss.getCarboidratos() + 4 * newreceipss.getProteinas() + 9 * newreceipss.getGorduras();
-            newreceipss.setCalorias(valorcal);
+            newreceipss.setCalorias();
             newreceipss.setTipoUsuario(JOptionPane.showInputDialog("Digite o tipo de usuário da dieta"));
             newreceipss.setDataCriacao(LocalDate.now());
             newreceipss.setDataModificacao(LocalDate.now());
@@ -117,7 +117,7 @@ public class JmenuAlimentoReceita {
                     case 4:
                         alimento2.setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de gorduras")));
                         double valorcal = 4 * alimento2.getCarboidratos() + 4 * alimento2.getProteinas() + 9 * alimento2.getGorduras();
-                        alimento2.setCalorias(valorcal);
+                        alimento2.setCalorias();
                         break;
                     case 5:
                         alimento2.setTipoUsuario(JOptionPane.showInputDialog("Digite o novo tipo de usuário"));
