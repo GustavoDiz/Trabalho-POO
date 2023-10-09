@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class AlimentoReceita {
 
-    private static int fixid = 1;
+    private static int fixid = 0;
     private int id;
     private String nome;
     private double carboidratos;
@@ -16,25 +16,21 @@ public class AlimentoReceita {
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
-    public  AlimentoReceita(String nome, double carboidratos, double proteinas, double gorduras, double porcao, String tipoUsuario){
-        this.id = fixid++;
+    public  AlimentoReceita(String nome, double carboidratos, double proteinas, double gorduras, double porcao){
+        this.id = ++fixid;
         this.nome = nome;
         this.carboidratos = carboidratos;
         this.proteinas = proteinas;
         this.gorduras = gorduras;
         this.calorias = (4*carboidratos) + (4*proteinas) + (9*gorduras);
         this.porcao = 100.0;
-        this.tipoUsuario = tipoUsuario;
         this.dataCriacao = LocalDate.now();
         this.dataModificacao = LocalDate.now();
     }
-
     public AlimentoReceita(){
-        this.id = fixid++;
+        this.id = fixid;
+        fixid++;
     }
-
-
-
     public int getId(){
         return id;
     }
@@ -55,9 +51,6 @@ public class AlimentoReceita {
     }
     public double getPorcao(){
         return porcao;
-    }
-    public String getipoUsuario(){
-        return tipoUsuario;
     }
 
     public LocalDate getDataCriacao(LocalDate now) {
@@ -85,16 +78,12 @@ public class AlimentoReceita {
         this.gorduras = gorduras;
     }
 
-    public void setCalorias() {
-        this.calorias = (4*carboidratos) + (4*proteinas) + (9*gorduras);
+    public void setCalorias(double calorias) {
+        this.calorias = calorias;
     }
 
     public void setPorcao(double porcao){
-        this.porcao = porcao;
-    }
-
-    public void setTipoUsuario(String tipoUsuario) {
-        this.tipoUsuario = tipoUsuario;
+        this.porcao = 100;
     }
 
     public void setDataCriacao(LocalDate dataCriacao) {
@@ -113,7 +102,6 @@ public class AlimentoReceita {
                 "\n gorduras = \t" + gorduras +
                 "\n calorias = \t" + calorias +
                 "\n porcao = \t" + porcao +
-                "\n tipoUsuario = \t" + tipoUsuario  +
                 "\n dataCriacao = \t" + dataCriacao +
                 "\n dataModificacao = \t" + dataModificacao +
                 '\n';

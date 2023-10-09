@@ -35,9 +35,9 @@ public class AlimentoReceitaDao {
         }
     }
 
-    public boolean deleteRecipe(String id){
+    public boolean deleteRecipe(String nm){
         for (int i = 0; i < alimentore.length; i++) {
-            if (alimentore[i] != null && Objects.equals(String.valueOf(alimentore[i].getId()), id)){
+            if (alimentore[i] != null && Objects.equals(String.valueOf(alimentore[i].getNome()), nm)){
                 alimentore[i] = null;
                 rearrangeArray(alimentore);
                 return true;
