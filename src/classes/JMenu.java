@@ -477,7 +477,6 @@ public class JMenu {
                         if (text != null) {
                             System.out.println("\n" + text.toString());
                         }
-
                     }
                     break;
                 case 4:
