@@ -7,21 +7,25 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+import static classes.JmenuAlimentoReceita.*;
 import static utils.Utils.*;
 
 public class JMenu {
     PessoaDAO users = new PessoaDAO();
-    AlimentoReceitaDao foods = new AlimentoReceitaDao();
     AvaliacaoFisicaDAO physical = new AvaliacaoFisicaDAO();
     TipoDietaDAO dietType = new TipoDietaDAO();
     PreferenciasDAO preferences = new PreferenciasDAO();
     MensagemDAO msgs = new MensagemDAO();
     PostDAO psts = new PostDAO();
     RegistroDietaDAO diets = new RegistroDietaDAO();
+    static AlimentoReceitaDao foods = new AlimentoReceitaDao();
+
     SeguirDAO follows = new SeguirDAO();
     Pessoa userlogged;
 
     public JMenu() {
+        double valorcal2;
+        TipoDieta[] array = dietType.getDietsDB();
         users.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
         users.addUsers(new Pessoa("Maria", 'F', "15-07-1985", "maria456", "senha456", 2));
         users.addUsers(new Pessoa("Carlos", 'M', "20-03-1978", "carlos789", "senha789", 1));
@@ -38,9 +42,9 @@ public class JMenu {
         msgs.addMessage(new Mensagem(users.getUserById(1), users.getUserById(2), "Teste 2"));
         msgs.addMessage(new Mensagem(users.getUserById(2), users.getUserById(1), "Teste 3"));
 
-        foods.addAlPe(new AlimentoReceita("Frango Grelhado", 0.0, 31.0, 3.6, 100.0, "Musculo"));
-        foods.addAlPe(new AlimentoReceita("Arroz", 40.0, 31.0, 3.6, 100.0, "Musculo"));
-        foods.addAlPe(new AlimentoReceita("Alface", 2.0, 1.0, 0.0, 100.0, "Musculo"));
+        foods.addAlPe(new AlimentoReceita("Frango Grelhado", 0.0, 31.0, 3.6, 100.0));
+        foods.addAlPe(new AlimentoReceita("Arroz", 40.0, 31.0, 3.6, 100.0));
+        foods.addAlPe(new AlimentoReceita("Alface", 2.0, 1.0, 0.0, 100.0));
 
         jMenuLogin();
     }
@@ -80,6 +84,7 @@ public class JMenu {
                 "\n 3 - Avaliação Física" +
                 "\n 4 - Dieta/Alimentação" +
                 "\n 5 - NutriSphere" +
+                "\n 6 - Alimentos atuais" +
                 "\n 0 - LogOut";
         int op;
         do {
@@ -104,6 +109,8 @@ public class JMenu {
                 case 5:
                     jSocial();
                     break;
+                case 6:
+                    jmenusRecipe();
                 default:
                     jError("Opção Inválida, Por favor insira novamente.");
                     break;
@@ -133,6 +140,7 @@ public class JMenu {
                     break;
                 case 4:
 
+                    jmenusRecipe();
                     break;
                 case 5:
                     jPreferences();
