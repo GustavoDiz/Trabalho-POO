@@ -8,7 +8,6 @@ import static classes.JMenu.foods;
 import static utils.Utils.*;
 
 public class JmenuAlimentoReceita {
-    static AlimentoReceitaDao alimento = new AlimentoReceitaDao();
     static AlimentoReceita alimento2 = new AlimentoReceita();
 
     public static void jmenusRecipe() {
@@ -31,7 +30,7 @@ public class JmenuAlimentoReceita {
                     break;
                 case 2:
                     idName = JOptionPane.showInputDialog("Por favor, informe o nome do alimento");
-                    alimento2 = alimento.searchNameFood(idName);
+                    alimento2 = foods.searchNameFood(idName);
                     if (alimento2 != null) {
                         jConfirmation("Dados do Alimento \n\n" + alimento2.toString());
                     } else {
@@ -43,10 +42,10 @@ public class JmenuAlimentoReceita {
                     break;
                 case 4:
                     idName = JOptionPane.showInputDialog("Por favor, informe o nome desse alimento");
-                    alimento2 = alimento.searchNameFood(idName);
+                    alimento2 = foods.searchNameFood(idName);
 
                     if (alimento2 != null) {
-                        alimento.deleteRecipe(idName);
+                        foods.deleteRecipe(idName);
                         JOptionPane.showMessageDialog(null, "Alimento excluído com sucesso");
                     } else {
                         JOptionPane.showMessageDialog(null, "Alimento não encontrado", "Alerta", JOptionPane.ERROR_MESSAGE);
@@ -62,15 +61,17 @@ public class JmenuAlimentoReceita {
     public static void foodsExemples(){
             AlimentoReceita[] alimentosPadroes = foods.getAlimentore();
 
-            StringBuilder listaAlimentos = new StringBuilder("Alimentos atuais:\n");
+            StringBuilder listaAlimentos = new StringBuilder("Alimentos:\n");
 
             for (AlimentoReceita alimentoPadrao : alimentosPadroes) {
+
                 if (alimentoPadrao != null) {
+                    System.out.println("abababab");
                     listaAlimentos.append(alimentoPadrao.toString()).append("\n\n");
                 }
             }
-
             jConfirmation(listaAlimentos.toString());
+
         }
     private static void createRecipe() {
         AlimentoReceita newreceipss = new AlimentoReceita();
@@ -79,8 +80,7 @@ public class JmenuAlimentoReceita {
             newreceipss.setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de carboidratos desse alimento")));
             newreceipss.setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de de proteinas desse alimento")));
             newreceipss.setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a quantidade de gorduras desse alimento")));
-            double valorcal = 4 * newreceipss.getCarboidratos() + 4 * newreceipss.getProteinas() + 9 * newreceipss.getGorduras();
-            newreceipss.setCalorias(valorcal);
+            newreceipss.setCalorias();
             newreceipss.setDataCriacao(LocalDate.now());
             newreceipss.setDataModificacao(LocalDate.now());
 
@@ -92,7 +92,7 @@ public class JmenuAlimentoReceita {
     public static void jmenuUpdateFood(){
         int opc2 = 0;
         String id = JOptionPane.showInputDialog("Digite o nome do alimento que você deseja atualizar");
-        alimento2 = alimento.searchNameFood(id);
+        alimento2 = foods.searchNameFood(id);
         do {
             if (alimento2 != null) {
                 double valorcal = 0;
@@ -108,18 +108,12 @@ public class JmenuAlimentoReceita {
                         break;
                     case 2:
                         alimento2.setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de carboidratos")));
-                        valorcal = 4 * alimento2.getCarboidratos() + 4 * alimento2.getProteinas() + 9 * alimento2.getGorduras();
-                        alimento2.setCalorias(valorcal);
                         break;
                     case 3:
                         alimento2.setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de proteínas")));
-                        valorcal = 4 * alimento2.getCarboidratos() + 4 * alimento2.getProteinas() + 9 * alimento2.getGorduras();
-                        alimento2.setCalorias(valorcal);
                         break;
                     case 4:
                         alimento2.setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de gorduras")));
-                        valorcal = 4 * alimento2.getCarboidratos() + 4 * alimento2.getProteinas() + 9 * alimento2.getGorduras();
-                        alimento2.setCalorias(valorcal);
                         break;
                     case 5:
                         opc2 = 5;
@@ -127,6 +121,7 @@ public class JmenuAlimentoReceita {
                     default:
                         JOptionPane.showMessageDialog(null, "Opção inválida", "Alerta", JOptionPane.ERROR_MESSAGE);
                 }
+                alimento2.setCalorias();
             } else {
                 JOptionPane.showMessageDialog(null, "Alimento ou receita não encontrado", "Alerta", JOptionPane.ERROR_MESSAGE);
             }

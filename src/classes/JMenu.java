@@ -37,10 +37,10 @@ public class JMenu {
         dietType.addDiet(new TipoDieta("Cetogênica", 60.0, 10.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
         dietType.addDiet(new TipoDieta("Atleta", 70.0, 10.0, 20.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
 
-        msgs.addMessage(new Mensagem(users.getUserById(1), users.getUserById(2), "Teste 0"));
+        /*msgs.addMessage(new Mensagem(users.getUserById(1), users.getUserById(2), "Teste 0"));
         msgs.addMessage(new Mensagem(users.getUserById(2), users.getUserById(1), "Teste 1"));
         msgs.addMessage(new Mensagem(users.getUserById(1), users.getUserById(2), "Teste 2"));
-        msgs.addMessage(new Mensagem(users.getUserById(2), users.getUserById(1), "Teste 3"));
+        msgs.addMessage(new Mensagem(users.getUserById(2), users.getUserById(1), "Teste 3"));*/
 
         foods.addAlPe(new AlimentoReceita("Frango Grelhado", 0.0, 31.0, 3.6, 100.0));
         foods.addAlPe(new AlimentoReceita("Arroz", 40.0, 31.0, 3.6, 100.0));
@@ -139,7 +139,6 @@ public class JMenu {
                 case 3:
                     break;
                 case 4:
-
                     jmenusRecipe();
                     break;
                 case 5:
@@ -183,7 +182,7 @@ public class JMenu {
                         newDiet.setDataModificacao(LocalDate.now());
                         diets.addRegister(newDiet);
                     }else{
-                        jError("Ja adicioda a Dieta,se tiver alguma alteração Atualize as Informações");
+                        jError("Ja adicioda a Dieta, se tiver alguma alteração Atualize as Informações");
                     }
                     break;
                 case 3:
@@ -358,7 +357,7 @@ public class JMenu {
         Pessoa newUser = new Pessoa();
         newUser.setNome(JOptionPane.showInputDialog("Insira o nome"));
         newUser.setSexo(JOptionPane.showInputDialog("Insira o novo sexo \n M - Masculino \n F - Feminino").charAt(0));
-        newUser.setNascimento(LocalDate.parse(JOptionPane.showInputDialog("Insira a nova data de nascimento Exemplo 01/01/2001"), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        newUser.setNascimento(LocalDate.parse(JOptionPane.showInputDialog("Insira a nova data de nascimento Exemplo 25-09-1999"), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
         newUser.setLogin(JOptionPane.showInputDialog("Insira o novo login"));
         newUser.setSenha(JOptionPane.showInputDialog("Insira o Novo Senha"));
         newUser.setTipoUsuario(Integer.parseInt(JOptionPane.showInputDialog("Insira o novo tipo de usuário")));
@@ -441,7 +440,7 @@ public class JMenu {
 
     public void jSocial() {
         StringBuilder txt = new StringBuilder();
-        txt.append("Bem Vindo a NutriSphere,").append(userlogged.getNome());
+        txt.append("Bem Vindo a NutriSphere, ").append(userlogged.getNome());
         txt.append("\n Seguidores: ").append(follows.followers(userlogged));
         txt.append("\n 1 - Ver Posts");
         txt.append("\n 2 - Criar Post");
@@ -456,21 +455,37 @@ public class JMenu {
             switch (op) {
                 case 1:
                     Pessoa[] seguidores = follows.getFollowers(userlogged);
+                    Post[] myPosts = psts.getPostByUser(userlogged);
+                    boolean verifyyme = false;
+
+                    StringBuilder postText = new StringBuilder();
+
+                    if (myPosts.length > 0) {
+                        verifyyme = true;
+                        postText.append("Meus posts ").append(":");
+                        for (Post post : myPosts) {
+                            postText.append("\n").append(post.getMsg());
+                        }
+                        postText.append("\n");
+                    }
                     for (int x = 0; x < seguidores.length; x++) {
                         Post[] posts = psts.getPostByUser(seguidores[x]);
+                        postText.append("\n");
                         if (posts.length != 0) {
-                            StringBuilder postText = new StringBuilder("Posts de " + seguidores[x].getNome() + ":\n");
+                            postText.append("Posts de ").append(seguidores[x].getNome()).append(":");
                             for (Post post : posts) {
-                                if (post != null) {
-                                    postText.append("\n").append(post.getMsg());
-                                }
+                                postText.append("\n").append(post.getMsg());
                             }
-                            jConfirmation(postText.toString());
-                        } else {
-                            jError("Posts Vazios");
+                            postText.append("\n");
                         }
                     }
+                    if (verifyyme || postText.length() > 0) {
+                        jConfirmation(postText.toString());
+                    } else {
+                        jError("Posts Vazios");
+                    }
                     break;
+
                 case 2:
                     String msgPost = JOptionPane.showInputDialog("Qual o post?");
                     Post newPost = new Post();
@@ -480,11 +495,20 @@ public class JMenu {
                     break;
                 case 3:
                     Mensagem[] msg = msgs.getMessagesByUser(userlogged.getNome());
-                    for (Mensagem text :
-                            msg) {
-                        if (text != null) {
-                            System.out.println("\n" + text.toString());
+
+                    StringBuilder messageee = new StringBuilder();
+
+                    for (Mensagem mensagens : msg) {
+                        if (mensagens != null) {
+                            Pessoa sender = mensagens.getSender();
+                            messageee.append("Mensagem de ").append(sender.getNome()).append("\n");
+                            messageee.append("Conteúdo : ").append(mensagens.getMsg()).append("\n\n");
                         }
+                    }
+                    if (messageee.length() > 0) {
+                        jConfirmation(messageee.toString());
+                    } else {
+                        jError("Nenhuma mensagem recebida, mas fique tranquilo, não é culpa sua.");
                     }
                     break;
                 case 4:
