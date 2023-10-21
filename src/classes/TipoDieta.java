@@ -4,7 +4,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class TipoDieta {
-    private String id = UUID.randomUUID().toString();
+    private static int baseId = 1;
+    private int id;
     private String nome;
     private double carboidrato;
     private double proteina;
@@ -12,7 +13,10 @@ public class TipoDieta {
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
+    public TipoDieta(){this.id = baseId++;}
+
     public TipoDieta(String nome, double carboidrato, double proteina, double gordura, LocalDate dataCriacao, LocalDate dataModificacao) {
+        this.id = baseId++;
         this.nome = nome;
         this.carboidrato = carboidrato;
         this.proteina = proteina;
@@ -20,12 +24,7 @@ public class TipoDieta {
         this.dataCriacao = dataCriacao;
         this.dataModificacao = dataModificacao;
     }
-
-    public TipoDieta() {
-
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 

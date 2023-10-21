@@ -9,9 +9,9 @@ public class RefeicaoDAO {
         return mealDB;
     }
 
-    public Refeicao getMealById(String id){
+    public Refeicao getMealById(int id){
         for (int i = 0; i < mealDB.length; i++) {
-            if (mealDB[i].getId().equals(id)){
+            if (mealDB[i].getId() == id){
                 return mealDB[i];
             }
         }
@@ -23,9 +23,9 @@ public class RefeicaoDAO {
         mealDB[index] = refeicao;
     }
 
-    public boolean deleteMeal(String id){
+    public boolean deleteMeal(int id){
         for (int i = 0; i < mealDB.length; i++) {
-            if (mealDB[i].getId().equals(id)){
+            if (mealDB[i].getId() == id){
                 mealDB[i] = null;
                 rearrangeArray(mealDB);
                 return true;

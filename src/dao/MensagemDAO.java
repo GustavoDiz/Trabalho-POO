@@ -9,9 +9,9 @@ public class MensagemDAO {
         return messagesDB;
     }
 
-    public Mensagem getMessageById(String id){
+    public Mensagem getMessageById(int id){
         for (int i = 0; i < messagesDB.length; i++) {
-            if (messagesDB[i].getId().equals(id)){
+            if (messagesDB[i].getId() == id){
                 return messagesDB[i];
             }
         }
@@ -23,9 +23,9 @@ public class MensagemDAO {
         messagesDB[index] = msg;
     }
 
-    public boolean deleteMessage(String id){
+    public boolean deleteMessage(int id){
         for (int i = 0; i < messagesDB.length; i++) {
-            if (messagesDB[i].getId().equals(id)){
+            if (messagesDB[i].getId() == id){
                 messagesDB[i] = null;
                 rearrangeArray(messagesDB);
                 return true;

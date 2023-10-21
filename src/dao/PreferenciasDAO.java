@@ -12,9 +12,9 @@ public class PreferenciasDAO {
         return  preferencesDB;
     }
 
-    public Preferencias getPreferencesById(String id){
+    public Preferencias getPreferencesById(int id){
         for (int i = 0; i < preferencesDB.length; i++) {
-            if (preferencesDB[i].getId().equals(id)){
+            if (preferencesDB[i].getId() == id){
                 return preferencesDB[i];
             }
         }
@@ -26,9 +26,9 @@ public class PreferenciasDAO {
         preferencesDB[id] = preferencias;
     }
 
-    public boolean deleteDiet(String id){
+    public boolean deleteDiet(int id){
         for (int i = 0; i < preferencesDB.length; i++) {
-            if (preferencesDB[i].getId().equals(id)){
+            if (preferencesDB[i].getId() == id){
                 preferencesDB[i] = null;
                 rearrangeArray(preferencesDB);
                 return true;

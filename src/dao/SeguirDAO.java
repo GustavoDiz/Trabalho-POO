@@ -14,9 +14,9 @@ public class SeguirDAO {
     }
 
 
-    public Seguir getFollowByID(String id) {
+    public Seguir getFollowByID(int id) {
         for (int i = 0; i < followsDB.length; i++) {
-            if (followsDB[i].getId().equals(id)) {
+            if (followsDB[i].getId() == id) {
                 return followsDB[i];
             }
         }
@@ -28,9 +28,9 @@ public class SeguirDAO {
         followsDB[index] = seguir;
     }
 
-    public boolean deleteFollow(String id) {
+    public boolean deleteFollow(int id) {
         for (int i = 0; i < followsDB.length; i++) {
-            if (followsDB[i].getId().equals(id)) {
+            if (followsDB[i].getId() == id) {
                 followsDB[i] = null;
                 rearrangeArray(followsDB);
                 return true;

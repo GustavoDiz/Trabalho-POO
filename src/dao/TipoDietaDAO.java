@@ -10,9 +10,9 @@ public class TipoDietaDAO {
         return  dietsDB;
     }
 
-    public  TipoDieta getDietByID(String id){
+    public  TipoDieta getDietByID(int id){
         for (int i = 0; i < dietsDB.length; i++) {
-            if (dietsDB[i].getId().equals(id)){
+            if (dietsDB[i].getId() == id ){
                 return dietsDB[i];
             }
         }
@@ -24,9 +24,9 @@ public class TipoDietaDAO {
         dietsDB[id] = dieta;
     }
 
-    public boolean deleteDiet(String id){
+    public boolean deleteDiet(int id){
         for (int i = 0; i < dietsDB.length; i++) {
-            if (dietsDB[i].getId().equals(id)){
+            if (dietsDB[i].getId() == id){
                 dietsDB[i] = null;
                 rearrangeArray(dietsDB);
                 return true;
