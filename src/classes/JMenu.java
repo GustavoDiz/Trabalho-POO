@@ -5,6 +5,7 @@ import dao.*;
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 
 import static classes.JmenuAlimentoReceita.*;
@@ -112,6 +113,7 @@ public class JMenu {
                     break;
                 case 6:
                     jmenusRecipe();
+                    break;
                 default:
                     jError("Opção Inválida, Por favor insira novamente.");
                     break;
@@ -458,10 +460,30 @@ public class JMenu {
                     userlogged.setNome(JOptionPane.showInputDialog("Insira o Novo nome"));
                     break;
                 case 2:
-                    userlogged.setSexo(JOptionPane.showInputDialog("Insira o novo sexo \n M - Masculino \n F - Feminino").charAt(0));
+                    do{
+                        String sexoInput = JOptionPane.showInputDialog("Insira o novo sexo \n M - Masculino \n F - Feminino");
+                        if (sexoInput.length() == 1 && (sexoInput.charAt(0) == 'M' || sexoInput.charAt(0) == 'F')){
+                            userlogged.setSexo(sexoInput.charAt(0));
+                            break;
+                        }else{
+                            JOptionPane.showMessageDialog(null, "Sexo inválido. Por favor, insira M para Masculino ou F para Feminino.");
+                        }
+                    }while(true);
                     break;
                 case 3:
-                    userlogged.setNascimento(LocalDate.parse(JOptionPane.showInputDialog("Insira a nova data de nascimento Exemplo 01-01-2001")));
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+                    do{
+                        try{
+                            String dataNascimentoInput = JOptionPane.showInputDialog("Insira a nova data de nascimento Exemplo 25-09-1999");
+                            userlogged.setNascimento(LocalDate.parse(dataNascimentoInput, formatter));
+                            break;
+
+                        } catch (DateTimeParseException e) {
+                            JOptionPane.showMessageDialog(null, "Data de nascimento inválida. Use o formato dd-MM-yyyy.");
+                        }
+
+                    }while (true);
                     break;
                 case 4:
                     userlogged.setLogin(JOptionPane.showInputDialog("Insira o novo login"));
@@ -483,16 +505,51 @@ public class JMenu {
     }
 
     public void jRegister() {
-        Pessoa newUser = new Pessoa();
-        newUser.setNome(JOptionPane.showInputDialog("Insira o nome"));
-        newUser.setSexo(JOptionPane.showInputDialog("Insira o novo sexo \n M - Masculino \n F - Feminino").charAt(0));
-        newUser.setNascimento(LocalDate.parse(JOptionPane.showInputDialog("Insira a nova data de nascimento Exemplo 25-09-1999"), DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-        newUser.setLogin(JOptionPane.showInputDialog("Insira o novo login"));
-        newUser.setSenha(JOptionPane.showInputDialog("Insira o Novo Senha"));
-        newUser.setTipoUsuario(Integer.parseInt(JOptionPane.showInputDialog("Insira o novo tipo de usuário")));
-        newUser.setDataCriacao(LocalDate.now());
-        newUser.setDataModicacao(LocalDate.now());
-        users.addUsers(newUser);
+
+            Pessoa newUser = new Pessoa();
+
+            newUser.setNome(JOptionPane.showInputDialog("Insira o nome"));
+
+            do{
+                String sexoInput = JOptionPane.showInputDialog("Insira o sexo \n M - Masculino \n F - Feminino");
+                if (sexoInput.length() == 1 && (sexoInput.charAt(0) == 'M' || sexoInput.charAt(0) == 'F')){
+                    newUser.setSexo(sexoInput.charAt(0));
+                    break;
+                }else{
+                    JOptionPane.showMessageDialog(null, "Sexo inválido. Por favor, insira M para Masculino ou F para Feminino.");
+                }
+            }while(true);
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+            do{
+                try{
+
+                    String dataNascimentoInput = JOptionPane.showInputDialog("Insira a data de nascimento Exemplo 25-09-1999");
+                    newUser.setNascimento(LocalDate.parse(dataNascimentoInput, formatter));
+                    break;
+
+                } catch (DateTimeParseException e) {
+                    JOptionPane.showMessageDialog(null, "Data de nascimento inválida. Use o formato dd-MM-yyyy.");
+                }
+            }while (true);
+
+            newUser.setLogin(JOptionPane.showInputDialog("Insira o novo login"));
+            newUser.setSenha(JOptionPane.showInputDialog("Insira o Novo Senha"));
+
+            do{
+                try {
+                    newUser.setTipoUsuario(Integer.parseInt(JOptionPane.showInputDialog("Insira o novo tipo de usuário '1 - comum' '2 - DEV'")));
+                    break;
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null, "Tipo de usuário inválido. Insira um número válido.");
+                }
+            }while (true);
+
+            newUser.setDataCriacao(LocalDate.now());
+            newUser.setDataModicacao(LocalDate.now());
+
+            users.addUsers(newUser);
     }
 
     public void jMenuPhysicalAssessment() {
@@ -504,6 +561,8 @@ public class JMenu {
         do {
             op = Integer.parseInt(JOptionPane.showInputDialog(msg));
             switch (op) {
+                case 0:
+                    break;
                 case 1:
                     jPhysicalAssessment();
                     break;
@@ -535,14 +594,84 @@ public class JMenu {
                 "\n 1,9: extra ativo (exercício muito difícil, treinamento ou trabalho físico)";
         AvaliacaoFisica newAssessment = new AvaliacaoFisica();
         newAssessment.setUser(userlogged);
-        newAssessment.setPeso(Double.parseDouble(JOptionPane.showInputDialog("Insira o Peso em kg: (Exemplo: 67.0)")));
-        newAssessment.setAltura(Double.parseDouble(JOptionPane.showInputDialog("Insira a altura em cm: (Exemplo: 180)")));
-        newAssessment.setIdade(Integer.parseInt(JOptionPane.showInputDialog("Insira a sua idade:")));
-        newAssessment.setPescoco(Double.parseDouble(JOptionPane.showInputDialog("Insira a medida do seu Pescoço em cm: (Exemplo: 20.5)")));
-        newAssessment.setCintura(Double.parseDouble(JOptionPane.showInputDialog("Insira a medida da sua Cintura em cm: (Exemplo: 20.5)")));
+
+        String var1 = " ";
+        do{
+            try{
+
+                var1 = (JOptionPane.showInputDialog("Insira o Peso em kg (Exemplo: 67.0)"));
+                newAssessment.setPeso(Double.parseDouble(var1));
+                break;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Número invalido, digite novamente.");
+            }
+        }while (true);
+
+        do{
+            try{
+                var1 = (JOptionPane.showInputDialog("Insira a altura em cm (Exemplo: 180)"));
+                newAssessment.setAltura(Double.parseDouble(var1));
+                break;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Altura invalida, digite novamente, digite novamente.");
+            }
+        }while (true);
+
+        do{
+            try{
+                var1 = (JOptionPane.showInputDialog("Insira a sua idade"));
+                newAssessment.setIdade(Integer.parseInt(var1));
+                break;
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Idade inválida, digite novamente.");
+            }
+        }while (true);
+
+        do{
+            try{
+                var1 = (JOptionPane.showInputDialog("Insira a medida do seu Pescoço em cm (Exemplo: 20.5)"));
+                newAssessment.setPescoco(Double.parseDouble(var1));
+                break;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "A medida do pescoço inválido, digite novamente.");
+            }
+        }while (true);
+
+        do{
+            try{
+                var1 = (JOptionPane.showInputDialog("Insira a medida da sua cintura em cm (Exemplo: 40.2)"));
+                newAssessment.setCintura(Double.parseDouble(var1));
+                break;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Medida da cintura invalida, insira novamente.");
+            }
+        }while (true);
+
+        do{
+            try{
+                var1 = (JOptionPane.showInputDialog("Insira a medida do quadril"));
+                newAssessment.setQuadril(Double.parseDouble(var1));
+                break;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Medida do quadril invalida, insira novamente.");
+            }
+        }while (true);
+
+        do{
+            try{
+                var1 = (JOptionPane.showInputDialog("Insira a do seu Abdômen (Exemplo: 43.5)"));
+                newAssessment.setAbdomen(Double.parseDouble(var1));
+                break;
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Medida do abdômen inválida, digite novamente.");
+            }
+        }while (true);
+
         newAssessment.setQuadril(Double.parseDouble(JOptionPane.showInputDialog("Insira a medida do seu Quadril em cm: (Exemplo: 20.5)")));
         newAssessment.setAbdomen(Double.parseDouble(JOptionPane.showInputDialog("Insira a medida do seu Abdomen em cm: (Exemplo: 20.5)")));
         newAssessment.calculateIMC();
+
         newAssessment.calculateTMB(Double.parseDouble(JOptionPane.showInputDialog(tax)));
         newAssessment.calculateBF();
         newAssessment.setDataCriacao(LocalDate.now());

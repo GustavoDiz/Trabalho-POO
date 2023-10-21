@@ -4,7 +4,8 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class RegistroDieta {
-    private String id = UUID.randomUUID().toString();
+    private static int baseId = 1;
+    private int id;
     private Pessoa user;
     private  AvaliacaoFisica physicalAssessment;
     private TipoDieta diet;
@@ -14,11 +15,13 @@ public class RegistroDieta {
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
-    public String getId() {
+    public RegistroDieta(){this.id = baseId++;}
+
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

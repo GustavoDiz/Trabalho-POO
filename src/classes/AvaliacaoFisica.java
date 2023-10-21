@@ -7,7 +7,8 @@ import java.util.Locale;
 import java.util.UUID;
 
 public class AvaliacaoFisica {
-    private String id = UUID.randomUUID().toString();
+    private static int baseId = 1;
+    private int id;
     private Pessoa user;
     private double peso;
     private double altura;
@@ -16,7 +17,6 @@ public class AvaliacaoFisica {
     private double cintura;
     private double quadril;
     private double abdomen;
-
     private double bf;
     private  double imc;
     private double tbm;
@@ -25,10 +25,12 @@ public class AvaliacaoFisica {
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
-    public String getId() {
+    public AvaliacaoFisica(){
+        this.id = baseId++;
+    }
+    public int getId() {
         return id;
     }
-
     public Pessoa getUser() {
         return user;
     }

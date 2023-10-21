@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class AlimentoReceita {
 
-    private static int fixid = 0;
+    private static int baseId = 1;
     private int id;
     private String nome;
     private double carboidratos;
@@ -16,7 +16,7 @@ public class AlimentoReceita {
     private LocalDate dataModificacao;
 
     public  AlimentoReceita(String nome, double carboidratos, double proteinas, double gorduras, double porcao){
-        this.id = ++fixid;
+        this.id = baseId++;
         this.nome = nome;
         this.carboidratos = carboidratos;
         this.proteinas = proteinas;
@@ -28,8 +28,7 @@ public class AlimentoReceita {
     }
 
     public AlimentoReceita(){
-        this.id = fixid;
-        fixid++;
+        this.id = baseId++;
     }
     public int getId(){
         return id;

@@ -12,9 +12,9 @@ public class AvaliacaoFisicaDAO {
         return  physicalDB;
     }
 
-    public AvaliacaoFisica getPhysicalByID(String id){
+    public AvaliacaoFisica getPhysicalByID(int id){
         for (int i = 0; i < physicalDB.length; i++) {
-            if (physicalDB[i].getId().equals(id)){
+            if (physicalDB[i].getId() == id){
                 return physicalDB[i];
             }
         }
@@ -26,9 +26,9 @@ public class AvaliacaoFisicaDAO {
         physicalDB[index] = avaliacao;
     }
 
-    public boolean deletePhysical(String id){
+    public boolean deletePhysical(int id){
         for (int i = 0; i < physicalDB.length; i++) {
-            if (physicalDB[i].getId().equals(id)){
+            if (physicalDB[i].getId() == id){
                 physicalDB[i] = null;
                 rearrangeArray(physicalDB);
                 return true;

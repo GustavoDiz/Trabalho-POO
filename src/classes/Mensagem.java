@@ -4,12 +4,15 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Mensagem {
-    private String id = UUID.randomUUID().toString();
+    private static int baseId = 1;
+    private int id;
     private Pessoa sender;
     private Pessoa recipient;
     private String msg;
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
+
+    public Mensagem(){this.id = baseId++;}
 
     public Mensagem(Pessoa sender, Pessoa recipient, String msg) {
         this.sender = sender;
@@ -18,16 +21,11 @@ public class Mensagem {
         this.dataCriacao = LocalDate.now();
         this.dataModificacao = LocalDate.now();
     }
-
-    public Mensagem() {
-
-    }
-
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

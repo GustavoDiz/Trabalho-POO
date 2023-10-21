@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Refeicao {
-    private static int fixid = 0;
+    private static int baseId = 1;
     private int id;
     private  String nome;
     private  Pessoa user;
@@ -29,6 +29,10 @@ public class Refeicao {
 
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
+
+    public Refeicao(){
+        this.id = baseId++;
+    }
 
     public int getId() {
         return id;

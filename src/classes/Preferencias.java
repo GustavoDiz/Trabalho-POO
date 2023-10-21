@@ -4,13 +4,16 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Preferencias {
-    private String id = UUID.randomUUID().toString();
+    private static int baseId = 1;
+    private int id;
     private Pessoa user;
     private AlimentoReceita food;
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
-    public String getId() {
+    public Preferencias(){this.id = baseId++;}
+
+    public int getId() {
         return id;
     }
 

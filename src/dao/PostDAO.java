@@ -14,9 +14,9 @@ public class PostDAO {
         return postsDB;
     }
 
-    public  Post getPostById(String id){
+    public  Post getPostById(int id){
         for (int i = 0; i < postsDB.length; i++) {
-            if (postsDB[i].getId().equals(id)){
+            if (postsDB[i].getId() == id){
                 return postsDB[i];
             }
         }
@@ -40,9 +40,9 @@ public class PostDAO {
         return userPosts;
     }
 
-    public boolean deletePost(String id){
+    public boolean deletePost(int id){
         for (int i = 0; i < postsDB.length; i++) {
-            if (postsDB[i].getId().equals(id)){
+            if (postsDB[i].getId() == id){
                 postsDB[i] = null;
                 rearrangeArray(postsDB);
                 return true;

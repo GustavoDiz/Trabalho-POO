@@ -8,7 +8,6 @@ import static classes.JMenu.foods;
 import static utils.Utils.*;
 
 public class JmenuAlimentoReceita {
-    static AlimentoReceita alimento2 = new AlimentoReceita();
 
     public static void jmenusRecipe() {
         int opcao, flag;
@@ -19,18 +18,18 @@ public class JmenuAlimentoReceita {
                     "3 - Atualizar alimentos\n" +
                     "4 - Excluir alimentos  \n" +
                     "5 - Verificar alimentos existentes \n" +
-                    "6 - Sair \n"));
+                    "0 - Sair \n"));
 
             String idName;
             switch (opcao) {
-                case 6:
+                case 0:
                     break;
                 case 1:
                     createRecipe();
                     break;
                 case 2:
                     idName = JOptionPane.showInputDialog("Por favor, informe o nome do alimento");
-                    alimento2 = foods.searchNameFood(idName);
+                    AlimentoReceita alimento2  = foods.searchNameFood(idName);
                     if (alimento2 != null) {
                         jConfirmation("Dados do Alimento \n\n" + alimento2.toString());
                     } else {
@@ -54,8 +53,11 @@ public class JmenuAlimentoReceita {
                 case 5:
                     foodsExemples();
                     break;
+                default:
+                    jError("Opção Inválida, Por favor insira novamente.");
+                    break;
             }
-        } while (opcao != 6);
+        } while (opcao != 0);
     }
 
     public static void foodsExemples(){
@@ -66,7 +68,6 @@ public class JmenuAlimentoReceita {
             for (AlimentoReceita alimentoPadrao : alimentosPadroes) {
 
                 if (alimentoPadrao != null) {
-                    System.out.println("abababab");
                     listaAlimentos.append(alimentoPadrao.toString()).append("\n\n");
                 }
             }
@@ -92,9 +93,9 @@ public class JmenuAlimentoReceita {
     public static void jmenuUpdateFood(){
         int opc2 = 0;
         String id = JOptionPane.showInputDialog("Digite o nome do alimento que você deseja atualizar");
-        alimento2 = foods.searchNameFood(id);
+        AlimentoReceita alimento3  = foods.searchNameFood(id);
         do {
-            if (alimento2 != null) {
+            if (alimento3 != null) {
                 double valorcal = 0;
                 int opc = Integer.parseInt(JOptionPane.showInputDialog("Qual campo deseja atualizar?\n" +
                         "1 - Nome do alimento\n" +
@@ -104,26 +105,72 @@ public class JmenuAlimentoReceita {
                         "5 - Sair\n"));
                 switch (opc) {
                     case 1:
-                        alimento2.setNome(JOptionPane.showInputDialog("Digite o novo nome"));
+                        do{
+                            String foodInput = JOptionPane.showInputDialog("Digite o novo nome do alimento (mínimo 2 letras)");
+                            if (foodInput != null && foodInput.length() >= 2){
+                                alimento3.setNome(foodInput);
+                                break;
+                            }else{
+                                JOptionPane.showMessageDialog(null, "Campo vazio, digite novamente o nome do alimento");
+                            }
+                        }while(true);
                         break;
                     case 2:
-                        alimento2.setCarboidratos(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de carboidratos")));
-                        break;
+                            String input1 = (JOptionPane.showInputDialog("Digite a nova quantidade de carboidratos"));
+
+                            if (input1 != null) {
+                                try {
+                                    double carboInput = Double.parseDouble(input1);
+                                    alimento3.setCarboidratos(carboInput);
+                                } catch (NumberFormatException e) {
+                                    JOptionPane.showMessageDialog(null, "Entrada inválida. Digite uma quantidade validade carboidratos.");
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Entrada vazia, informe corretamente.");
+                            }
+                            break;
+
                     case 3:
-                        alimento2.setProteinas(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de proteínas")));
+
+                        String input2 = (JOptionPane.showInputDialog("Digite a nova quantidade de proteínas"));
+
+                        if (input2 != null) {
+                            try {
+                                double proteinInput = Double.parseDouble(input2);
+                                alimento3.setProteinas(proteinInput);
+                            } catch (NumberFormatException e) {
+                                JOptionPane.showMessageDialog(null, "Entrada invalida, digite uma quantidade valida de proteinas.");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Entrada vazia, informe corretamente.");
+                        }
                         break;
                     case 4:
-                        alimento2.setGorduras(Double.parseDouble(JOptionPane.showInputDialog("Digite a nova quantidade de gorduras")));
+                        String input3 = (JOptionPane.showInputDialog("Digite a nova quantidade de proteínas"));
+
+                        if (input3 != null) {
+                            try {
+                                double fatInput = Double.parseDouble(input3);
+                                alimento3.setGorduras(fatInput);
+                            } catch (NumberFormatException e) {
+                                JOptionPane.showMessageDialog(null, "Entrada invalida, digite uma quantidade valida de gorduras.");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Entrada vazia, informe corretamente.");
+                        }
                         break;
                     case 5:
                         opc2 = 5;
                         break;
                     default:
-                        JOptionPane.showMessageDialog(null, "Opção inválida", "Alerta", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, 
+                                "Opção inválida", "Alerta", JOptionPane.ERROR_MESSAGE);
+                        break;
                 }
-                alimento2.setCalorias();
+                alimento3.setCalorias();
             } else {
                 JOptionPane.showMessageDialog(null, "Alimento ou receita não encontrado", "Alerta", JOptionPane.ERROR_MESSAGE);
+                break;
             }
         }while(opc2 != 5);
     }

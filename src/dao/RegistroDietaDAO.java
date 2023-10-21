@@ -14,9 +14,9 @@ public class RegistroDietaDAO {
         return registerDB;
     }
 
-    public RegistroDieta getRegisterByIdDiet(String id){
+    public RegistroDieta getRegisterByIdDiet(int id){
         for (int i = 0; i < registerDB.length; i++) {
-            if (registerDB[i].getId().equals(id)){
+            if (registerDB[i].getId() == id){
                 return registerDB[i];
             }
         }
@@ -27,9 +27,9 @@ public class RegistroDietaDAO {
         registerDB[index] = registro;
     }
 
-    public boolean deleteRegister(String id){
+    public boolean deleteRegister(int id){
         for (int i = 0; i < registerDB.length; i++) {
-            if (registerDB[i].getId().equals(id)){
+            if (registerDB[i].getId() == id){
                 registerDB[i] = null;
                 rearrangeArray(registerDB);
                 return true;

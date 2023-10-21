@@ -4,13 +4,16 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Post {
-    private String id = UUID.randomUUID().toString();
+    private static int baseId = 1;
+    private int id;
     private Pessoa user;
     private String msg;
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
-    public String getId() {
+    public Post(){this.id = baseId++;}
+
+    public int getId() {
         return id;
     }
 

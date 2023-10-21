@@ -4,13 +4,15 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Seguir {
-    private String id = UUID.randomUUID().toString();
+    private static int baseId = 1;
+    private int id;
     private Pessoa follower;
     private Pessoa followed;
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
-    public String getId() {
+    public Seguir(){this.id = baseId++;}
+    public int getId() {
         return id;
     }
     public Pessoa getFollower() {
