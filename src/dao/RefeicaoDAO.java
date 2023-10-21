@@ -1,5 +1,7 @@
 package dao;
 
+import classes.Pessoa;
+import classes.Post;
 import classes.Refeicao;
 import static utils.Utils.*;
 public class RefeicaoDAO {
@@ -9,9 +11,9 @@ public class RefeicaoDAO {
         return mealDB;
     }
 
-    public Refeicao getMealById(String id){
+    public Refeicao getMealById(int id){
         for (int i = 0; i < mealDB.length; i++) {
-            if (mealDB[i].getId().equals(id)){
+            if (mealDB[i].getId() == id){
                 return mealDB[i];
             }
         }
@@ -23,9 +25,9 @@ public class RefeicaoDAO {
         mealDB[index] = refeicao;
     }
 
-    public boolean deleteMeal(String id){
+    public boolean deleteMeal(int id){
         for (int i = 0; i < mealDB.length; i++) {
-            if (mealDB[i].getId().equals(id)){
+            if (mealDB[i].getId() == id){
                 mealDB[i] = null;
                 rearrangeArray(mealDB);
                 return true;
@@ -33,5 +35,19 @@ public class RefeicaoDAO {
         }
         return false;
     }
+
+    public Refeicao[] getMealsByUser(Pessoa user) {
+       Refeicao[] userMeals = new Refeicao[mealDB.length];
+       int y = 0;
+
+        for (int i = 0; i < mealDB.length; i++) {
+            if (mealDB[i] != null && mealDB[i].getUser().equals(user)){
+                userMeals[y++] = mealDB[i];
+            }
+        }
+        userMeals = rearrangeArray(userMeals);
+        return userMeals;
+    }
+
 
 }

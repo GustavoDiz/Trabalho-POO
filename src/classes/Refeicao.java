@@ -4,17 +4,33 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class Refeicao {
-    private String id = UUID.randomUUID().toString();
+    private static int fixid = 0;
+    private int id;
     private  String nome;
     private  Pessoa user;
     private TipoDieta dietType;
     private double carboidrato;
     private double proteina;
     private double gordura;
+    private double calorias;
+
+    public Refeicao(){
+        this.id = fixid;
+        fixid++;
+    }
+
+    public double getCalorias() {
+        return calorias;
+    }
+
+    public void setCalorias(double calorias) {
+        this.calorias = calorias;
+    }
+
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -90,6 +106,7 @@ public class Refeicao {
                 ", nome='" + nome + '\'' +
                 ", user=" + user +
                 ", dietType=" + dietType +
+                ", calorias=" + calorias +
                 ", carboidrato=" + carboidrato +
                 ", proteina=" + proteina +
                 ", gordura=" + gordura +

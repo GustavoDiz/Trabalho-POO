@@ -4,9 +4,10 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 public class AlimentoRefeicao {
-    private String id = UUID.randomUUID().toString();
+    private static int fixid = 0;
+    private int id;
     private Refeicao meal;
-    private AlimentoRefeicao food;
+    private AlimentoReceita food;
     private double portion;
     private double protein;
     private double fat;
@@ -14,7 +15,12 @@ public class AlimentoRefeicao {
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
-    public String getId() {
+    public AlimentoRefeicao(){
+        this.id = fixid;
+        fixid++;
+    }
+
+    public int getId() {
         return id;
     }
 
@@ -26,11 +32,11 @@ public class AlimentoRefeicao {
         this.meal = meal;
     }
 
-    public AlimentoRefeicao getFood() {
+    public AlimentoReceita getFood() {
         return food;
     }
 
-    public void setFood(AlimentoRefeicao food) {
+    public void setFood(AlimentoReceita food) {
         this.food = food;
     }
 

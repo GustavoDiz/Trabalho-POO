@@ -1,6 +1,9 @@
 package dao;
 
+import classes.AlimentoReceita;
 import classes.AlimentoRefeicao;
+import classes.Refeicao;
+
 import static utils.Utils.*;
 public class AlimentoRefeicaoDAO {
     private AlimentoRefeicao[] mealfoodDB = new AlimentoRefeicao[100];
@@ -8,9 +11,9 @@ public class AlimentoRefeicaoDAO {
         return mealfoodDB;
     }
 
-    public  AlimentoRefeicao getMealFoodById(String id){
+    public  AlimentoRefeicao getMealFoodById(int id){
         for (int i = 0; i < mealfoodDB.length; i++) {
-            if (mealfoodDB[i].getId().equals(id)){
+            if (mealfoodDB[i].getId() == id){
                 return mealfoodDB[i];
             }
         }
@@ -22,9 +25,9 @@ public class AlimentoRefeicaoDAO {
         mealfoodDB[index] = mealfood;
     }
 
-    public boolean deleteMealFood(String id){
+    public boolean deleteMealFood(int id){
         for (int i = 0; i < mealfoodDB.length; i++) {
-            if (mealfoodDB[i].getId().equals(id)){
+            if (mealfoodDB[i].getId() == id){
                 mealfoodDB[i] = null;
                 rearrangeArray(mealfoodDB);
                 return true;
@@ -33,4 +36,18 @@ public class AlimentoRefeicaoDAO {
         return false;
     }
 
+    public AlimentoReceita[] getFoodsByMeal(Refeicao refeicao){
+        AlimentoReceita[] result = new AlimentoReceita[5];
+        int y = 0;
+        for (int i = 0; i < mealfoodDB.length; i++){
+            if (mealfoodDB[i] == null){
+                break;
+            }
+            if (mealfoodDB[i].getMeal().equals(refeicao)){
+                result[y++] = mealfoodDB[i].getFood();
+            }
+        }
+        result = rearrangeArray(result);
+        return result;
+    }
 }

@@ -11,9 +11,12 @@ public class AlimentoReceitaDao {
         return alimentore;
     }
 
-    public AlimentoReceita getRecipeByIDFood(String id){
+    public AlimentoReceita getRecipeByIDFood(int id){
         for (int i = 0; i < alimentore.length; i++) {
-            if (alimentore[i] != null && Objects.equals(String.valueOf(alimentore[i].getId()), id)) {
+            if (alimentore[i] == null){
+                break;
+            }
+            if (alimentore[i].getId() == id){
                 return alimentore[i];
             }
         }
