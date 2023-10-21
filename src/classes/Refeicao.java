@@ -15,8 +15,7 @@ public class Refeicao {
     private double calorias;
 
     public Refeicao(){
-        this.id = fixid;
-        fixid++;
+        this.id = baseId++;
     }
 
     public double getCalorias() {
@@ -29,10 +28,6 @@ public class Refeicao {
 
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
-
-    public Refeicao(){
-        this.id = baseId++;
-    }
 
     public int getId() {
         return id;
