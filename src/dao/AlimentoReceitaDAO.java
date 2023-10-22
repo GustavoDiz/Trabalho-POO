@@ -4,7 +4,7 @@ import classes.AlimentoReceita;
 import java.util.Objects;
 import static utils.Utils.*;
 
-public class AlimentoReceitaDao {
+public class AlimentoReceitaDAO {
     private AlimentoReceita[] alimentore = new AlimentoReceita[100];
 
     public AlimentoReceita[] getAlimentore(){

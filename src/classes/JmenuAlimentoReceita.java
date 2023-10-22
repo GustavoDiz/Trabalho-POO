@@ -1,6 +1,4 @@
 package classes;
-import dao.AlimentoReceitaDao;
-import classes.JMenu;
 import javax.swing.*;
 import java.time.LocalDate;
 

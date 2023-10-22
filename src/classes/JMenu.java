@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Arrays;
 
 import static classes.JmenuAlimentoReceita.*;
 import static utils.Utils.*;
@@ -19,7 +18,7 @@ public class JMenu {
     MensagemDAO msgs = new MensagemDAO();
     PostDAO psts = new PostDAO();
     RegistroDietaDAO diets = new RegistroDietaDAO();
-    static AlimentoReceitaDao foods = new AlimentoReceitaDao();
+    static AlimentoReceitaDAO foods = new AlimentoReceitaDAO();
     AlimentoRefeicaoDAO mealFoods = new AlimentoRefeicaoDAO();
     SeguirDAO follows = new SeguirDAO();
     RefeicaoDAO meals = new RefeicaoDAO();
