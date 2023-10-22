@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import static mvc.view.JmenuAlimentoReceita.*;
+import static mvc.view.JMenuAlimentoReceita.*;
 import static utils.Utils.*;
 
 public class JMenu {
@@ -25,7 +25,6 @@ public class JMenu {
     static Pessoa userlogged;
 
     public JMenu() {
-        TipoDieta[] array = dietType.getDietsDB();
         users.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
         users.addUsers(new Pessoa("Maria", 'F', "15-07-1985", "maria456", "senha456", 2));
         users.addUsers(new Pessoa("Carlos", 'M', "20-03-1978", "carlos789", "senha789", 1));
@@ -39,7 +38,10 @@ public class JMenu {
 
         foods.addAlPe(new AlimentoReceita("Frango Grelhado", 0.0, 31.0, 3.6, 100.0));
         foods.addAlPe(new AlimentoReceita("Arroz", 40.0, 31.0, 3.6, 100.0));
+        foods.addAlPe(new AlimentoReceita("Feijão", 40.0, 31.0, 3.6, 100.0));
         foods.addAlPe(new AlimentoReceita("Alface", 2.0, 1.0, 0.0, 100.0));
+        foods.addAlPe(new AlimentoReceita("Tomate", 1.0, 0.5, 0.2, 100.0));
+        foods.addAlPe(new AlimentoReceita("Salmão", 20.0, 10.0, 5.0,100.0));
 
         jMenuLogin();
     }
@@ -79,7 +81,6 @@ public class JMenu {
                 "\n 3 - Avaliação Física" +
                 "\n 4 - Dieta/Alimentação" +
                 "\n 5 - NutriSphere" +
-                "\n 6 - Alimentos atuais" +
                 "\n 0 - LogOut";
         int op;
         do {
@@ -103,9 +104,6 @@ public class JMenu {
                 case 5:
                     jSocial();
                     break;
-                case 6:
-                    jmenusRecipe();
-                    break;
                 default:
                     jError("Opção Inválida, Por favor insira novamente.");
                     break;
@@ -122,9 +120,12 @@ public class JMenu {
                 "\n 4 - Alimentos" +
                 "\n 5 - Preferencias " +
                 "\n 0 - Sair";
+
         do {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
             switch (op) {
+                case 0:
+                    break;
                 case 1:
                     jTypeDiet();
                     break;
@@ -135,7 +136,7 @@ public class JMenu {
                     jMenuAddMeal();
                     break;
                 case 4:
-                    jmenusRecipe();
+                    jMenusRecipe();
                     break;
                 case 5:
                     jPreferences();
@@ -171,8 +172,8 @@ public class JMenu {
                         for (Refeicao refeicao:
                              myMeals) {
                             if (refeicao != null){
-                                info.append("\n " + refeicao.toString());
-                                System.out.println(refeicao.toString());
+                                info.append("\n " + refeicao);
+                                System.out.println(refeicao);
                             }
                         }
                         jConfirmation(info.toString());
@@ -329,14 +330,9 @@ public class JMenu {
                 case 3:
                     RegistroDieta dietUpdated = diets.getRegisterByUser(userlogged);
                     dietUpdated.setDiet(dietType.getDietByName(JOptionPane.showInputDialog("Qual o Nome do Tipo de Dieta")));
+                    dietUpdated.setGoal(Integer.parseInt(JOptionPane.showInputDialog("Qual seu objetivo: \n 1 - Manter o Peso \n 2 - Perder Peso \n 3 - Ganhar Peso")));
+                    dietUpdated.setnMeals(Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Refeições")));
                     dietUpdated.setDataModificacao(LocalDate.now());
-                    break;
-                case 4:
-                    for (int i = 0; i < diets.getRegisterDB().length; i++) {
-                        if (diets.getRegisterDB()[i] != null){
-                            System.out.println( diets.getRegisterDB()[i].toString());
-                        }
-                    }
                     break;
                 case 0:
                     break;
@@ -351,10 +347,13 @@ public class JMenu {
         int op;
         String txt = "O que deseja? " +
                 "\n 1 - Criar Preferencias " +
-                "\n 2 - Ver suas Preferencias";
+                "\n 2 - Ver suas Preferencias"+
+                "\n 0 - Sair";
         do {
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
             switch (op) {
+                case 0:
+                    break;
                 case 1:
                     jCreatePreference();
                     break;
@@ -468,12 +467,14 @@ public class JMenu {
             switch (op) {
                 case 1:
                     userlogged.setNome(JOptionPane.showInputDialog("Insira o Novo nome"));
+                    userlogged.setDataModicacao(LocalDate.now());
                     break;
                 case 2:
                     do{
                         String sexoInput = JOptionPane.showInputDialog("Insira o novo sexo \n M - Masculino \n F - Feminino");
                         if (sexoInput.length() == 1 && (sexoInput.charAt(0) == 'M' || sexoInput.charAt(0) == 'F')){
                             userlogged.setSexo(sexoInput.charAt(0));
+                            userlogged.setDataModicacao(LocalDate.now());
                             break;
                         }else{
                             JOptionPane.showMessageDialog(null, "Sexo inválido. Por favor, insira M para Masculino ou F para Feminino.");
@@ -482,11 +483,11 @@ public class JMenu {
                     break;
                 case 3:
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-
                     do{
                         try{
                             String dataNascimentoInput = JOptionPane.showInputDialog("Insira a nova data de nascimento Exemplo 25-09-1999");
                             userlogged.setNascimento(LocalDate.parse(dataNascimentoInput, formatter));
+                            userlogged.setDataModicacao(LocalDate.now());
                             break;
 
                         } catch (DateTimeParseException e) {
@@ -497,15 +498,17 @@ public class JMenu {
                     break;
                 case 4:
                     userlogged.setLogin(JOptionPane.showInputDialog("Insira o novo login"));
+                    userlogged.setDataModicacao(LocalDate.now());
                     break;
                 case 5:
                     userlogged.setSenha(JOptionPane.showInputDialog("Insira o Novo Senha"));
+                    userlogged.setDataModicacao(LocalDate.now());
                     break;
                 case 6:
                     userlogged.setTipoUsuario(Integer.parseInt(JOptionPane.showInputDialog("Insira o novo tipo de usuário")));
+                    userlogged.setDataModicacao(LocalDate.now());
                     break;
                 case 7:
-                    op = 7;
                     break;
                 default:
                     jError("Opção Invalida, Por favor insira novamente.");
@@ -582,12 +585,10 @@ public class JMenu {
                     for (AvaliacaoFisica avalicao :
                             teste) {
                         if (avalicao != null) {
-                            txt += "\n " + avalicao.toString();
+                            txt += "\n " + avalicao;
                         }
                     }
                     jConfirmation(txt);
-                    break;
-                case 3:
                     break;
                 default:
                     jError("Opção Inválida, Por favor Insira novamente");
@@ -706,10 +707,9 @@ public class JMenu {
         txt.append("\n Seguidores: ").append(follows.followers(userlogged));
         txt.append("\n 1 - Ver Posts");
         txt.append("\n 2 - Criar Post");
-        txt.append("\n 3 - Ver Mensagens").append("(2)");
+        txt.append("\n 3 - Ver Mensagens");
         txt.append("\n 4 - Enviar Mensagem");
         txt.append("\n 5 - Adicionar Amigo");
-        txt.append("\n 6 - Follows DEBUG");
         txt.append("\n 0 - Sair");
         int op;
         do {
@@ -719,7 +719,6 @@ public class JMenu {
                     Pessoa[] seguidores = follows.getFollowers(userlogged);
                     Post[] myPosts = psts.getPostByUser(userlogged);
                     boolean verifyyme = false;
-
                     StringBuilder postText = new StringBuilder();
 
                     if (myPosts.length > 0) {
@@ -805,14 +804,6 @@ public class JMenu {
                         }
                     } else {
                         jError("Error,Insira Novamente.");
-                    }
-                    break;
-                case 6:
-                    for (Seguir s:
-                            follows.getFollowsDB()) {
-                        if (s != null){
-                            System.out.println(s);
-                        }
                     }
                     break;
                 default:

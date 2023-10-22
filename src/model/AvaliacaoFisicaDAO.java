@@ -51,7 +51,6 @@ public class AvaliacaoFisicaDAO {
     }
 
     public AvaliacaoFisica getPhysicalByUser(Pessoa user){
-        AvaliacaoFisica userPhysicals = new AvaliacaoFisica();
         for (int i = 0; i < physicalDB.length; i++) {
             if (physicalDB[i] == null){
                 break;
