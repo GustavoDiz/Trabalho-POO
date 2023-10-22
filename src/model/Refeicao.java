@@ -1,32 +1,37 @@
-package classes;
+package model;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
-public class TipoDieta {
+public class Refeicao {
     private static int baseId = 1;
     private int id;
-    private String nome;
+    private  String nome;
+    private  Pessoa user;
+    private TipoDieta dietType;
     private double carboidrato;
     private double proteina;
     private double gordura;
+    private double calorias;
+
+    public Refeicao(){
+        this.id = baseId++;
+    }
+
+    public double getCalorias() {
+        return calorias;
+    }
+
+    public void setCalorias(double calorias) {
+        this.calorias = calorias;
+    }
+
     private LocalDate dataCriacao;
     private LocalDate dataModificacao;
 
-    public TipoDieta(){this.id = baseId++;}
-
-    public TipoDieta(String nome, double carboidrato, double proteina, double gordura, LocalDate dataCriacao, LocalDate dataModificacao) {
-        this.id = baseId++;
-        this.nome = nome;
-        this.carboidrato = carboidrato;
-        this.proteina = proteina;
-        this.gordura = gordura;
-        this.dataCriacao = dataCriacao;
-        this.dataModificacao = dataModificacao;
-    }
     public int getId() {
         return id;
     }
+
 
     public String getNome() {
         return nome;
@@ -34,6 +39,22 @@ public class TipoDieta {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public Pessoa getUser() {
+        return user;
+    }
+
+    public void setUser(Pessoa user) {
+        this.user = user;
+    }
+
+    public TipoDieta getDietType() {
+        return dietType;
+    }
+
+    public void setDietType(TipoDieta dietType) {
+        this.dietType = dietType;
     }
 
     public double getCarboidrato() {
@@ -78,9 +99,12 @@ public class TipoDieta {
 
     @Override
     public String toString() {
-        return "TipoDieta{" +
+        return "Refeicao{" +
                 "id='" + id + '\'' +
                 ", nome='" + nome + '\'' +
+                ", user=" + user +
+                ", dietType=" + dietType +
+                ", calorias=" + calorias +
                 ", carboidrato=" + carboidrato +
                 ", proteina=" + proteina +
                 ", gordura=" + gordura +

@@ -1,6 +1,6 @@
-package dao;
+package model;
 
-import classes.Pessoa;
+import model.Pessoa;
 
 import static utils.Utils.findEmptyPosition;
 

@@ -1,9 +1,6 @@
 package utils;
 
-import classes.Pessoa;
-
 import javax.swing.*;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Utils {

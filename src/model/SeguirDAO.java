@@ -1,8 +1,7 @@
-package dao;
+package model;
 
-import classes.Pessoa;
-import classes.Post;
-import classes.Seguir;
+import model.Pessoa;
+import model.Seguir;
 
 import static utils.Utils.*;
 

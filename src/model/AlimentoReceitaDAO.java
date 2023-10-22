@@ -1,16 +1,14 @@
-package dao;
+package model;
 
-import classes.AlimentoReceita;
+import model.AlimentoReceita;
 import java.util.Objects;
 import static utils.Utils.*;
 
 public class AlimentoReceitaDAO {
     private AlimentoReceita[] alimentore = new AlimentoReceita[100];
-
     public AlimentoReceita[] getAlimentore(){
         return alimentore;
     }
-
     public AlimentoReceita getRecipeByIDFood(int id){
         for (int i = 0; i < alimentore.length; i++) {
             if (alimentore[i] == null){
@@ -38,9 +36,9 @@ public class AlimentoReceitaDAO {
         }
     }
 
-    public boolean deleteRecipe(String nm){
+    public boolean deleteRecipe(int id){
         for (int i = 0; i < alimentore.length; i++) {
-            if (alimentore[i] != null && Objects.equals(String.valueOf(alimentore[i].getNome()), nm)){
+            if (alimentore[i].getId() == id){
                 alimentore[i] = null;
                 rearrangeArray(alimentore);
                 return true;

@@ -1,8 +1,8 @@
-package dao;
+package model;
 
-import classes.AlimentoReceita;
-import classes.AlimentoRefeicao;
-import classes.Refeicao;
+import model.AlimentoReceita;
+import model.AlimentoRefeicao;
+import model.Refeicao;
 
 import static utils.Utils.*;
 public class AlimentoRefeicaoDAO {

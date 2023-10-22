@@ -1,10 +1,9 @@
-package classes;
+package model;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.util.Locale;
-import java.util.UUID;
 
 public class AvaliacaoFisica {
     private static int baseId = 1;

@@ -1,6 +1,6 @@
-package dao;
+package model;
 
-import classes.TipoDieta;
+import model.TipoDieta;
 import static utils.Utils.*;
 
 public class TipoDietaDAO {

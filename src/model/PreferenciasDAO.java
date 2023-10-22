@@ -1,8 +1,7 @@
-package dao;
+package model;
 
-import classes.Pessoa;
-import classes.Preferencias;
-import classes.TipoDieta;
+import model.Pessoa;
+import model.Preferencias;
 
 import static utils.Utils.*;
 
@@ -45,6 +44,19 @@ public class PreferenciasDAO {
             }
             if (preferencesDB[i].getUser().equals(user)){
                 userPreferences[i] = preferencesDB[i];
+            }
+        }
+        return userPreferences;
+    }
+
+    public AlimentoReceita[] getFoodsPreferencesByUser(Pessoa user){
+        AlimentoReceita[] userPreferences = new AlimentoReceita[10];
+        for (int i = 0; i < preferencesDB.length; i++) {
+            if (preferencesDB[i] == null){
+                break;
+            }
+            if (preferencesDB[i].getUser().equals(user)){
+                userPreferences[i] = preferencesDB[i].getFood();
             }
         }
         return userPreferences;

@@ -1,8 +1,10 @@
-package classes;
+package mvc.view;
+import model.AlimentoReceita;
+import mvc.view.JMenu;
+
 import javax.swing.*;
 import java.time.LocalDate;
 
-import static classes.JMenu.foods;
 import static utils.Utils.*;
 
 public class JmenuAlimentoReceita {
@@ -18,7 +20,6 @@ public class JmenuAlimentoReceita {
                     "5 - Verificar alimentos existentes \n" +
                     "0 - Sair \n"));
 
-            String idName;
             switch (opcao) {
                 case 0:
                     break;
@@ -26,8 +27,8 @@ public class JmenuAlimentoReceita {
                     createRecipe();
                     break;
                 case 2:
-                    idName = JOptionPane.showInputDialog("Por favor, informe o nome do alimento");
-                    AlimentoReceita alimento2  = foods.searchNameFood(idName);
+                    int id  = Integer.parseInt(JOptionPane.showInputDialog("Por favor, informe o ID do alimento"));
+                    AlimentoReceita alimento2  = mvc.view.JMenu.foods.getRecipeByIDFood(id);
                     if (alimento2 != null) {
                         jConfirmation("Dados do Alimento \n\n" + alimento2.toString());
                     } else {
@@ -38,14 +39,12 @@ public class JmenuAlimentoReceita {
                     jmenuUpdateFood();
                     break;
                 case 4:
-                    idName = JOptionPane.showInputDialog("Por favor, informe o nome desse alimento");
-                    alimento2 = foods.searchNameFood(idName);
-
-                    if (alimento2 != null) {
-                        foods.deleteRecipe(idName);
-                        JOptionPane.showMessageDialog(null, "Alimento excluído com sucesso");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Alimento não encontrado", "Alerta", JOptionPane.ERROR_MESSAGE);
+                    int idDelete  = Integer.parseInt(JOptionPane.showInputDialog("Por favor, informe o nome desse alimento"));
+                    mvc.view.JMenu.foods.deleteRecipe(idDelete);
+                    if (mvc.view.JMenu.foods.deleteRecipe(idDelete)){
+                        jConfirmation("Comida Deletada com Sucesso");
+                    }else{
+                        jError("Comida não Encontrada, Por favor insira novamente");
                     }
                     break;
                 case 5:
@@ -59,7 +58,7 @@ public class JmenuAlimentoReceita {
     }
 
     public static void foodsExemples(){
-            AlimentoReceita[] alimentosPadroes = foods.getAlimentore();
+            AlimentoReceita[] alimentosPadroes = mvc.view.JMenu.foods.getAlimentore();
 
             StringBuilder listaAlimentos = new StringBuilder("Alimentos:\n");
 
@@ -83,7 +82,7 @@ public class JmenuAlimentoReceita {
             newreceipss.setDataCriacao(LocalDate.now());
             newreceipss.setDataModificacao(LocalDate.now());
 
-            foods.addAlPe(newreceipss);
+            mvc.view.JMenu.foods.addAlPe(newreceipss);
             JOptionPane.showMessageDialog(null, "Alimento criado com sucesso");
         }
     }
@@ -91,7 +90,7 @@ public class JmenuAlimentoReceita {
     public static void jmenuUpdateFood(){
         int opc2 = 0;
         String id = JOptionPane.showInputDialog("Digite o nome do alimento que você deseja atualizar");
-        AlimentoReceita alimento3  = foods.searchNameFood(id);
+        AlimentoReceita alimento3  = JMenu.foods.searchNameFood(id);
         do {
             if (alimento3 != null) {
                 double valorcal = 0;

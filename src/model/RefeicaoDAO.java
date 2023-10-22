@@ -1,8 +1,7 @@
-package dao;
+package model;
 
-import classes.Pessoa;
-import classes.Post;
-import classes.Refeicao;
+import model.Pessoa;
+import model.Refeicao;
 import static utils.Utils.*;
 public class RefeicaoDAO {
     private Refeicao[] mealDB = new Refeicao[100];

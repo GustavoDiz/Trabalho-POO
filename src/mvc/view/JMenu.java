@@ -1,13 +1,13 @@
-package classes;
+package mvc.view;
 
-import dao.*;
+import model.*;
 
 import javax.swing.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-import static classes.JmenuAlimentoReceita.*;
+import static mvc.view.JmenuAlimentoReceita.*;
 import static utils.Utils.*;
 
 public class JMenu {
@@ -25,7 +25,6 @@ public class JMenu {
     static Pessoa userlogged;
 
     public JMenu() {
-        double valorcal2;
         TipoDieta[] array = dietType.getDietsDB();
         users.addUsers(new Pessoa("João", 'M', "10-05-1990", "joao123", "senha123", 1));
         users.addUsers(new Pessoa("Maria", 'F', "15-07-1985", "maria456", "senha456", 2));
@@ -37,11 +36,6 @@ public class JMenu {
         dietType.addDiet(new TipoDieta("Low Carb", 30.0, 30.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
         dietType.addDiet(new TipoDieta("Cetogênica", 60.0, 10.0, 30.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
         dietType.addDiet(new TipoDieta("Atleta", 70.0, 10.0, 20.0, LocalDate.of(2023, 9, 23), LocalDate.of(2023, 9, 23)));
-
-        /*msgs.addMessage(new Mensagem(users.getUserById(1), users.getUserById(2), "Teste 0"));
-        msgs.addMessage(new Mensagem(users.getUserById(2), users.getUserById(1), "Teste 1"));
-        msgs.addMessage(new Mensagem(users.getUserById(1), users.getUserById(2), "Teste 2"));
-        msgs.addMessage(new Mensagem(users.getUserById(2), users.getUserById(1), "Teste 3"));*/
 
         foods.addAlPe(new AlimentoReceita("Frango Grelhado", 0.0, 31.0, 3.6, 100.0));
         foods.addAlPe(new AlimentoReceita("Arroz", 40.0, 31.0, 3.6, 100.0));
@@ -93,7 +87,6 @@ public class JMenu {
             switch (op) {
                 case 0:
                     userlogged = null;
-                    op = 0;
                     break;
                 case 1:
                     jConfirmation(userlogged.toString());
@@ -147,6 +140,9 @@ public class JMenu {
                 case 5:
                     jPreferences();
                     break;
+                default:
+                    jError("Opção Inválida, Por favor insira novamente.");
+                    break;
             }
         } while (op != 0);
     }
@@ -160,7 +156,13 @@ public class JMenu {
         txt.append("\n 3 - Adicionar Alimentos a Refeição");
         txt.append("\n 4 - Deletar Refeição");
         txt.append("\n 0 - Sair");
+        RegistroDieta hasDiet = diets.getRegisterByUser(userlogged);
+
         do {
+            if (hasDiet == null){
+                jError("Você não possui nenhuma dieta,Por favor insira antes de criar as Refeições");
+                break;
+            }
             op = Integer.parseInt(JOptionPane.showInputDialog(txt));
             switch (op){
                 case 1:
@@ -197,12 +199,18 @@ public class JMenu {
                     jMenuAddMealFood(foundMeal);
                     break;
                 case 4:
-
-                    break;
-                case 0:
+                    StringBuilder delete = new StringBuilder();
+                    delete.append("Informe o ID do alimento a ser deletado");
+                    int index = Integer.parseInt(JOptionPane.showInputDialog(delete));
+                    meals.deleteMeal(index);
+                    if(meals.deleteMeal(index)){
+                        jConfirmation("Refeição Deletada Com Sucesso");
+                    }else{
+                        jError("Refeição não Encontrada!Por Favor Insira Novamente");
+                    }
                     break;
                 default:
-                    jError("Opção Inválida, Insira novamente");
+                    jError("Opção Inválida, Por favor insira novamente.");
                     break;
             }
         }while (op != 0);
@@ -214,7 +222,10 @@ public class JMenu {
         double fat = refeicao.getGordura();
         double carb = refeicao.getCarboidrato();
         double protein = refeicao.getProteina();
-        AlimentoReceita[] listFoods = foods.getAlimentore();
+        AlimentoReceita[] listFoods = preferences.getFoodsPreferencesByUser(userlogged);
+        if (listFoods[0] == null){
+            listFoods = foods.getAlimentore();
+        }
         AlimentoReceita[] selectedFoods = mealFoods.getFoodsByMeal(refeicao);
         StringBuilder txt = new StringBuilder();
         txt.append("Refeição:  \t" + refeicao.getNome());
@@ -587,19 +598,16 @@ public class JMenu {
 
     public void jPhysicalAssessment() {
         String tax = "Qual é sua taxa de atividade: \n 1.2 - Sedentário (pouco ou nenhum exercicio)" +
-                "\n 1,375: levemente ativo (exercício leve 1 a 3 dias por semana) " +
-                "\n 1,55: moderadamente ativo (exercício moderado 6 a 7 dias por semana) " +
-                "\n 1,725: muito ativo (exercício intenso todos os dias ou exercício duas vezes ao dia) " +
-                "\n 1,9: extra ativo (exercício muito difícil, treinamento ou trabalho físico)";
+                "\n 1.375: levemente ativo (exercício leve 1 a 3 dias por semana) " +
+                "\n 1.55: moderadamente ativo (exercício moderado 6 a 7 dias por semana) " +
+                "\n 1.725: muito ativo (exercício intenso todos os dias ou exercício duas vezes ao dia) " +
+                "\n 1.9: extra ativo (exercício muito difícil, treinamento ou trabalho físico)";
         AvaliacaoFisica newAssessment = new AvaliacaoFisica();
         newAssessment.setUser(userlogged);
-
-        String var1 = " ";
         do{
             try{
-
-                var1 = (JOptionPane.showInputDialog("Insira o Peso em kg (Exemplo: 67.0)"));
-                newAssessment.setPeso(Double.parseDouble(var1));
+                String peso = (JOptionPane.showInputDialog("Insira o Peso em kg (Exemplo: 67.0)"));
+                newAssessment.setPeso(Double.parseDouble(peso));
                 break;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Número invalido, digite novamente.");
@@ -608,8 +616,8 @@ public class JMenu {
 
         do{
             try{
-                var1 = (JOptionPane.showInputDialog("Insira a altura em cm (Exemplo: 180)"));
-                newAssessment.setAltura(Double.parseDouble(var1));
+                String  altura = (JOptionPane.showInputDialog("Insira a altura em cm (Exemplo: 180)"));
+                newAssessment.setAltura(Double.parseDouble(altura));
                 break;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Altura invalida, digite novamente, digite novamente.");
@@ -618,8 +626,8 @@ public class JMenu {
 
         do{
             try{
-                var1 = (JOptionPane.showInputDialog("Insira a sua idade"));
-                newAssessment.setIdade(Integer.parseInt(var1));
+                String idade = (JOptionPane.showInputDialog("Insira a sua idade"));
+                newAssessment.setIdade(Integer.parseInt(idade));
                 break;
 
             } catch (NumberFormatException e) {
@@ -629,8 +637,8 @@ public class JMenu {
 
         do{
             try{
-                var1 = (JOptionPane.showInputDialog("Insira a medida do seu Pescoço em cm (Exemplo: 20.5)"));
-                newAssessment.setPescoco(Double.parseDouble(var1));
+                String pescoco = (JOptionPane.showInputDialog("Insira a medida do seu Pescoço em cm (Exemplo: 20.5)"));
+                newAssessment.setPescoco(Double.parseDouble(pescoco));
                 break;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "A medida do pescoço inválido, digite novamente.");
@@ -639,8 +647,8 @@ public class JMenu {
 
         do{
             try{
-                var1 = (JOptionPane.showInputDialog("Insira a medida da sua cintura em cm (Exemplo: 40.2)"));
-                newAssessment.setCintura(Double.parseDouble(var1));
+                String cintura = (JOptionPane.showInputDialog("Insira a medida da sua cintura em cm (Exemplo: 40.2)"));
+                newAssessment.setCintura(Double.parseDouble(cintura));
                 break;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Medida da cintura invalida, insira novamente.");
@@ -649,8 +657,8 @@ public class JMenu {
 
         do{
             try{
-                var1 = (JOptionPane.showInputDialog("Insira a medida do quadril"));
-                newAssessment.setQuadril(Double.parseDouble(var1));
+                String quadril = (JOptionPane.showInputDialog("Insira a medida do quadril"));
+                newAssessment.setQuadril(Double.parseDouble(quadril));
                 break;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Medida do quadril invalida, insira novamente.");
@@ -659,18 +667,15 @@ public class JMenu {
 
         do{
             try{
-                var1 = (JOptionPane.showInputDialog("Insira a do seu Abdômen (Exemplo: 43.5)"));
-                newAssessment.setAbdomen(Double.parseDouble(var1));
+                String abdomen = (JOptionPane.showInputDialog("Insira a do seu Abdômen (Exemplo: 43.5)"));
+                newAssessment.setAbdomen(Double.parseDouble(abdomen));
                 break;
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Medida do abdômen inválida, digite novamente.");
             }
         }while (true);
 
-        newAssessment.setQuadril(Double.parseDouble(JOptionPane.showInputDialog("Insira a medida do seu Quadril em cm: (Exemplo: 20.5)")));
-        newAssessment.setAbdomen(Double.parseDouble(JOptionPane.showInputDialog("Insira a medida do seu Abdomen em cm: (Exemplo: 20.5)")));
         newAssessment.calculateIMC();
-
         newAssessment.calculateTMB(Double.parseDouble(JOptionPane.showInputDialog(tax)));
         newAssessment.calculateBF();
         newAssessment.setDataCriacao(LocalDate.now());

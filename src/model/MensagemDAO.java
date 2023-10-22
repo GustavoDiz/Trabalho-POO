@@ -1,6 +1,6 @@
-package dao;
+package model;
 
-import classes.Mensagem;
+import model.Mensagem;
 import static utils.Utils.*;
 public class MensagemDAO {
     private Mensagem[] messagesDB = new Mensagem[100];

@@ -1,5 +1,5 @@
 package trabalhopoo;
-import classes.*;
+import mvc.view.JMenu;
 
 public class TrabalhoPOO {
     public static void main(String[] args) {

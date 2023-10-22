@@ -1,9 +1,7 @@
-package dao;
+package model;
 
-import classes.Pessoa;
-import classes.Post;
-
-import java.util.Arrays;
+import model.Pessoa;
+import model.Post;
 
 import static utils.Utils.*;
 

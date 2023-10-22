@@ -1,7 +1,6 @@
-package classes;
+package model;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 public class AlimentoRefeicao {
     private static int fixid = 0;

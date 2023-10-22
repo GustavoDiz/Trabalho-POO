@@ -1,10 +1,7 @@
-package dao;
+package model;
 
-import classes.AlimentoReceita;
-import classes.Pessoa;
-import classes.RegistroDieta;
-
-import java.util.Objects;
+import model.Pessoa;
+import model.RegistroDieta;
 
 import static utils.Utils.*;
 public class RegistroDietaDAO {

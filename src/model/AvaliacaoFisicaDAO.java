@@ -1,7 +1,7 @@
-package dao;
+package model;
 
-import classes.AvaliacaoFisica;
-import classes.Pessoa;
+import model.AvaliacaoFisica;
+import model.Pessoa;
 
 import static utils.Utils.*;
 
